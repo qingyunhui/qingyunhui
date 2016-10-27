@@ -1,0 +1,157 @@
+<#include "/macro.include"/>
+<#assign className = table.className>   
+<#assign classNameFirstLower = table.classNameFirstLower>
+<#assign namespace>${className}.</#assign>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<#macro mapperEl value type>${r"#"}${value}:${type?upper_case}${r"#"}</#macro>
+<mapper namespace="${basepackage}.biz.dao.${className}Mapping">
+	<resultMap type="${basepackage}.biz.po.${className}" id="BaseResultMap">
+		<#list table.columns as column>
+        <result property="${column.columnNameFirstLower}" column="${column.sqlName}" javaType="${column.simpleJavaType}"/>
+		</#list>
+	</resultMap>
+	
+	<sql id="full-columns" >
+		<#list table.columns as column>
+        t.${column.sqlName}<#if column_has_next>,</#if>
+        </#list>
+	</sql>
+
+	<insert id="insert" parameterType="${basepackage}.biz.po.${className}" >
+		<![CDATA[
+	        INSERT INTO ${table.sqlName} (
+	        <#list table.notPkColumns as column>
+	            ${column.sqlName} <#if column_has_next>,</#if>
+	        </#list>
+	        ) VALUES (
+	        <#list table.notPkColumns as column>
+	        	<#if column.sqlName =="deleted" >0<#elseif column.sqlName =="create_time">now()<#else>${r'#{'}${column.columnNameFirstLower}}</#if><#if column_has_next>,</#if>
+	        </#list>
+	        )
+	    ]]>
+    	<selectKey resultType="${table.getPkColumn().javaType}" keyProperty="${table.getPkColumn().columnNameFirstLower}">
+			SELECT LAST_INSERT_ID() AS ${table.getPkColumn().sqlName}
+        </selectKey>
+	</insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List" >
+		<![CDATA[
+	        INSERT INTO ${table.sqlName} (
+	        <#list table.notPkColumns as column>
+	            ${column.sqlName} <#if column_has_next>,</#if>
+	        </#list>
+	        ) VALUES 
+	        <foreach collection="list" item="item" index="index" separator=",">
+	        (
+	        <#list table.notPkColumns as column>
+	        	<#if column.sqlName =="deleted" >0<#elseif column.sqlName =="create_time">now()<#else>${r'#{'}${column.columnNameFirstLower}}</#if><#if column_has_next>,</#if>
+	        </#list>
+	        )
+	        </foreach>
+	    ]]>
+	</insert>
+	
+	<update id="delete" parameterType="${table.getPkColumn().javaType}">
+        UPDATE ${table.sqlName} SET deleted=1 
+        WHERE deleted=0 AND
+        	${table.getPkColumn().sqlName} = ${r'#{value}'}
+	</update>
+	<update id="deleteBatch" parameterType="list" >
+        UPDATE ${table.sqlName} SET deleted=1 
+        WHERE deleted=0 AND
+        	${table.getPkColumn().sqlName} IN 
+        <foreach collection="list" item = "id" open="(" separator="," close=")">
+        	${r'#'}{id}
+		</foreach>
+	</update>
+	
+	<update id="update" parameterType="${basepackage}.biz.po.${className}">
+        UPDATE ${table.sqlName} 
+        <set>
+        <#list table.notPkColumns as column>
+        	<#if column.sqlName =="edit_time" >
+        		now(),
+        	<#else>
+            	${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}},
+            </#if>
+        </#list>
+        </set>
+        WHERE deleted=0
+        <#list table.pkColumns as column>
+        	AND ${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}}
+        </#list>
+	</update>
+	
+	<update id="updateSelective" parameterType="${basepackage}.biz.po.${className}">
+        UPDATE ${table.sqlName} 
+        <set>
+        <#list table.notPkColumns as column>
+        	<if test="@OGNL@isNotEmpty(${column.columnNameFirstLower})">
+	            ${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}},
+	        </if>
+        </#list>
+        </set>
+        WHERE deleted=0
+        <#list table.pkColumns as column>
+        	AND ${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}}
+        </#list>    
+	</update>
+	
+	<select id="getById" parameterType="${table.getPkColumn().javaType}" resultMap="BaseResultMap">
+	   	SELECT <include refid="full-columns" />
+       	<![CDATA[
+       	FROM ${table.sqlName} t
+       	WHERE t.${table.getPkColumn().sqlName} = ${r'#{value}'}
+		]]>
+    </select>
+	
+	<select id="queryAll" parameterType="map" resultMap="BaseResultMap">
+		SELECT <include refid="full-columns" />
+	    FROM ${table.sqlName} t
+		<where>
+        <#list table.columns as column>
+        <#if column.sqlTypeName?upper_case != "BLOB" && column.sqlTypeName?upper_case != "CLOB">
+			<if test="@OGNL@isNotEmpty(${column.columnNameFirstLower})">
+	            AND t.${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}}
+	        </if>
+        </#if>
+        </#list>
+		</where>
+		<if test="@OGNL@isNotEmpty(orderColumn) ">
+        ORDER BY t.${r'${'}orderColumn} <if test="@OGNL@isNotEmpty(orderDirection) ">${r'${'}orderDirection}</if>
+        </if>
+	</select>
+	
+	<select id="queryPage" parameterType="map" resultMap="BaseResultMap">
+		SELECT 
+        <include refid="full-columns" />
+            FROM ${table.sqlName} t
+		<where>
+        <#list table.columns as column>
+        <#if column.sqlTypeName?upper_case != "BLOB" && column.sqlTypeName?upper_case != "CLOB">
+	        <if test="@OGNL@isNotEmpty(${column.columnNameFirstLower})">
+	            AND t.${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}}
+	        </if>
+        </#if>
+        </#list>
+		</where>
+		<if test="@OGNL@isNotEmpty(orderColumn) ">
+        ORDER BY t.${r'${'}orderColumn} <if test="@OGNL@isNotEmpty(orderDirection) ">${r'${'}orderDirection}</if>
+        </if>
+        LIMIT ${r'#{'}start}, ${r'#{'}pageSize}
+	</select>
+
+	<select id="queryCount" parameterType="map" resultType="java.lang.Integer">
+		select count(${table.getPkColumn().sqlName}) FROM ${table.sqlName} 
+        <where>
+        	<#list table.columns as column>
+           	<#if column.sqlTypeName?upper_case != "BLOB" && column.sqlTypeName?upper_case != "CLOB">
+	        	<if test="@OGNL@isNotEmpty(${column.columnNameFirstLower})">
+	            AND ${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}}
+	        	</if>
+           	</#if>
+           	</#list>
+        </where>
+	</select>
+</mapper>

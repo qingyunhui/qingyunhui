@@ -1,0 +1,58 @@
+<#-- 本文件包含一些公共的函数,本文件会被其它模板自动include -->
+<#assign moduleName = "trade">
+
+<#-- 将value变成jsp el表达式,主要由于FreeMarker生成表达式不方便 -->
+<#macro jspEl value>${r"${"}${value}}</#macro>
+
+<#-- 生成java构造函数 -->
+<#macro generateConstructor constructor>
+	public ${constructor}(){
+	}
+
+	public ${constructor}(<#list table.compositeIdColumns as column>${column.simpleJavaType} ${column.columnNameFirstLower}<#if column_has_next>,</#if></#list>){
+	<#list table.compositeIdColumns as column>
+		<#if column.pk>
+		this.${column.columnNameFirstLower} = ${column.columnNameFirstLower};
+		</#if>
+	</#list>
+	}
+
+</#macro>
+<#macro generateJavaColumns>
+	<#list table.columns as column>
+	
+	public void set${column.columnName}(${column.simpleJavaType} ${column.columnNameFirstLower}){
+		this.${column.columnNameFirstLower} = ${column.columnNameFirstLower};
+	}
+	
+	public ${column.simpleJavaType} get${column.columnName}(){
+		return ${column.columnNameFirstLower};
+	}
+	</#list>
+</#macro>
+
+<#macro generateJavaColumnsWithoutDeleted>
+	<#list table.columns as column>
+	<#if  column.columnNameFirstLower != 'deleted'>
+	
+	public void set${column.columnName}(${column.simpleJavaType} ${column.columnNameFirstLower}){
+		this.${column.columnNameFirstLower} = ${column.columnNameFirstLower};
+	}
+	public ${column.simpleJavaType} get${column.columnName}(){
+		return ${column.columnNameFirstLower};
+	}
+    </#if>
+	</#list>
+</#macro>
+
+<#macro generateJavaColumnsDto>
+	<#list table.columns as column>
+	
+	public void set${column.underscoreName?cap_first}(${column.simpleJavaType} ${column.columnNameFirstLower}){
+		this.${column.columnNameFirstLower} = ${column.columnNameFirstLower};
+	}
+	public ${column.simpleJavaType} get${column.columnName}(){
+		return ${column.columnNameFirstLower};
+	}
+	</#list>
+</#macro>

@@ -1,0 +1,7 @@
+/**
+ * @author qing.yunhui 
+ * @Since 2011<#if now??>-${now?string('yyyy')}</#if>
+ * @create <#if now??>${now?string('yyyy-MM-dd HH:mm:ss')}</#if>
+ * @history
+ */
+ 
