@@ -21,16 +21,16 @@ public class RSATester {
     
     public static void main(String[] args) throws Exception {
         test();
-        testSign();
+//       testSign();
     }
 
     static void test() throws Exception {
         System.err.println("公钥加密——私钥解密");
-        String source = "这是一行没有任何意义的文字，你看完了等于没看，不是吗？";
+        String source = "jdbc:mysql://127.0.0.1:3306/movie?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true";
         System.out.println("\r加密前文字：\r\n" + source);
-        byte[] data = source.getBytes();
+        byte[] data = source.getBytes("UTF-8");
         byte[] encodedData = RSAUtils.encryptByPublicKey(data, publicKey);
-        System.out.println("加密后文字：\r\n" + new String(encodedData));
+        System.out.println("加密后文字：\r\n" + new String(encodedData,"UTF-8"));
         byte[] decodedData = RSAUtils.decryptByPrivateKey(encodedData, privateKey);
         String target = new String(decodedData);
         System.out.println("解密后文字: \r\n" + target);

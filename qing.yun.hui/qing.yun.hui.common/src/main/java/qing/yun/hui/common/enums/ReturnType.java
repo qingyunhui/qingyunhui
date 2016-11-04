@@ -1,4 +1,7 @@
 package qing.yun.hui.common.enums;
+
+import lombok.Getter;
+
 /***
  ** @Description: 返回类型
  ** @author: qing.yunhui
@@ -6,7 +9,8 @@ package qing.yun.hui.common.enums;
  ** @dateTime: 2016年4月12日 下午4:54:37
  ** @version: V1.0
  ***/
-public enum ReturnType {
+@Getter
+public enum ReturnType implements ICommonEnum{
 	
 
 	IS_EMPTY(0,"目标为空"),
@@ -20,12 +24,7 @@ public enum ReturnType {
 		this.name=name;
 	}
 
-	public int getValue() {
-		return value;
+	public String getCode() {
+		return String.valueOf(value);
 	}
-
-	public String getName() {
-		return name;
-	}
-
 }

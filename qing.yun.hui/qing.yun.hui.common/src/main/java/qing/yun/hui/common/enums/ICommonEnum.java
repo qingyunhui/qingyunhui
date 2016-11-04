@@ -8,14 +8,13 @@ package qing.yun.hui.common.enums;
  ***/
 public interface ICommonEnum {
 	
+	/**getName**/
 	public String getName();
+	
+	/**getValue()与getCode()匹配，会做类型转换**/
 	public int getValue();
 	
-	/**
-	 * 
-	 * 通过值查找到名称， 通常用在 列表或者详情页面获取值
-	 * 由于枚举不能继承， 接口不能声明静态方法
-	 * 
-	 */
-
+	/**getCode()与getValue匹配，会做类型转换*/
+	public String getCode();
+	
 }

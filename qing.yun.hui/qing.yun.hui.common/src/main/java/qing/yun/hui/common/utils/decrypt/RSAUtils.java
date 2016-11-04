@@ -216,8 +216,7 @@ public class RSAUtils {
      * @return
      * @throws Exception
      */
-    public static byte[] encryptByPublicKey(byte[] data, String publicKey)
-            throws Exception {
+    public static byte[] encryptByPublicKey(byte[] data, String publicKey) throws Exception {
         byte[] keyBytes = Base64Utils.decode(publicKey);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);

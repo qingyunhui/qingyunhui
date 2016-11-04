@@ -1,5 +1,7 @@
 package qing.yun.hui.common.enums;
 
+import lombok.Getter;
+
 /***
  ** @Description: 时间段
  ** @author: qing.yunhui
@@ -7,8 +9,8 @@ package qing.yun.hui.common.enums;
  ** @dateTime: Nov 20, 2015 10:23:24 AM
  ** @version: V1.0
  ***/
+@Getter
 public enum TimeSlot implements ICommonEnum{
-	
 	/**
 	 *  凌晨01:01到04:59
 		清晨05:00到05:59
@@ -42,20 +44,7 @@ public enum TimeSlot implements ICommonEnum{
         this.endHour=endHour;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-	public int getBeginHour() {
-		return beginHour;
+	public String getCode() {
+		return String.valueOf(value);
 	}
-
-	public int getEndHour() {
-		return endHour;
-	}
-
 }

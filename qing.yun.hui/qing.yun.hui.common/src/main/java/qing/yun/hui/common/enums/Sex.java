@@ -1,4 +1,7 @@
 package qing.yun.hui.common.enums;
+
+import lombok.Getter;
+
 /***
  ** @Description: 请用一句话来描述
  ** @author: qing.yunhui
@@ -6,6 +9,7 @@ package qing.yun.hui.common.enums;
  ** @dateTime: Nov 20, 2015 10:22:55 AM
  ** @version: V1.0
  ***/
+@Getter
 public enum Sex implements ICommonEnum{
 	
 	SECRET(0, "保密"),
@@ -20,27 +24,8 @@ public enum Sex implements ICommonEnum{
 	private final int value;
 	
 	private final String name;
-
-	public int getValue() {
-		return value;
-	}
-
-	public String getName() {
-		return name;
-	}
 	
-	/**
-	 * 根据给定的value查询对应的name。
-	 * @param value 待查询的value
-	 * @return String
-	 * **/
-	public static String getValueByName(int value){
-		for(Sex acsta:values()){
-			if(acsta.getValue()==value){
-				return acsta.getName();
-			}
-		}
-		return null;
+	public String getCode() {
+		return String.valueOf(value);
 	}
-	
 }

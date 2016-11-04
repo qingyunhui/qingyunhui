@@ -96,9 +96,10 @@ public class CipherUtil {
 	 }
 	 
 	 public static void main(String[] args){
-		 String filePath="F:/test/source/source2.txt";
+//		 String filePath="F:/test/source/source2.txt";
 		 try {
-			 decrypt(filePath);
+//			 decrypt(filePath);
+			 test1();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

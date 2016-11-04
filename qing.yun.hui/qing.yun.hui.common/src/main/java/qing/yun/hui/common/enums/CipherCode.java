@@ -1,4 +1,7 @@
 package qing.yun.hui.common.enums;
+
+import lombok.Getter;
+
 /***
  ** @Description: 自定义加密的key
  ** @author: qing.yunhui
@@ -6,7 +9,8 @@ package qing.yun.hui.common.enums;
  ** @dateTime: 2016年4月9日 下午9:51:27
  ** @version: V1.0
  ***/
-public enum CipherCode {
+@Getter
+public enum CipherCode implements ICommonEnum{
 	
 	QING_YUN_HUI("qing.yunhui",0,"卿云辉"),
 	QING_YUN_FEI("qing.yunfei",1,"卿云飞");
@@ -20,15 +24,7 @@ public enum CipherCode {
 		this.name=name;
 	}
 
-	public String getKey() {
-		return key;
-	}
-
-	public int getValue() {
-		return value;
-	}
-
-	public String getName() {
-		return name;
+	public String getCode() {
+		return String.valueOf(value);
 	}
 }
