@@ -11,12 +11,12 @@ import java.util.Date;
  ***/
 public class HandleTime {
 
-	private static final long second=1000;
-	private static final long minute=60 * second;
-	private static final long hour=60 * minute;
-	private static final long day=24 * hour;
-	private static final long month=30 * day;
-	private static final long year= 12 * month;
+	private static final long second=1000; 		//毫秒
+	private static final long minute=60 * second;//分(60秒)
+	private static final long hour=60 * minute;//时(60分)
+	private static final long day=24 * hour;//日(24小时)
+	private static final long month=30 * day;//月(30天)
+	private static final long year= 12 * month;//年(12个月)
 	
 	/**${yzsTld:getNameByDate(targetDate)}前台页面只须如此调用即可***/
 	
@@ -26,7 +26,7 @@ public class HandleTime {
 	 * @param targetDateStr 目标日期(字符串类型)
 	 * @return 计算后的结果
 	 * **/
-	public static String getNameByDate(String targetDateStr) {
+	private static String getNameByDate(String targetDateStr) {
 		Date targetDate=DateUtil.stringToDate(targetDateStr, DateUtil.YYYY_MM_DD_HH_MM_SS_SSS);
 		return getNameByDate(targetDate);
 	}
@@ -36,7 +36,7 @@ public class HandleTime {
 	 * @param times (long类型:时间戳)
 	 * @return 计算后的结果
 	 * **/
-	public static String getNameByDate(Long times){
+	private static String getNameByDate(Long times){
 		StringBuffer sb=new StringBuffer();
 		if(times/year>0){
 			sb.append(times/year+"年前");
@@ -61,12 +61,15 @@ public class HandleTime {
 	 * @param targetDate (时间类型:目标日期)
 	 * @return 计算后的结果
 	 * **/
-	public static String getNameByDate(Date targetDate) {
+	private static String getNameByDate(Date targetDate) {
 		long times= DateUtil.getTimes(new Date(), targetDate);
 		return getNameByDate(times);
 	}
 	
-	
+	/**
+	 * <p>对外提供计算日期，参数支持String、Date、Long类型..</p>
+	 * @param obj
+	 * */
 	public static String getNameByDate(Object obj){
 		if(null==obj){
 			return null;
