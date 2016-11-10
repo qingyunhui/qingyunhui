@@ -1,6 +1,6 @@
 package qing.yun.hui.common.utils;
 /***
- ** @category RSA加密、解密、非对称
+ ** @category RSA加密、解密、非对称(适应于加密的数据字节少于128字节的数据加密)
  ** @author qing.yunhui
  ** @date 2016年4月8日 下午2:33:19
  ***/
@@ -30,7 +30,7 @@ public class RSAUtil {
 	public static void main(String[] args) throws Exception {
 		// 生成公钥和私钥
 //		generatorKeyPair();
-		String source = "6379";
+		String source = "114.215.183.107";
         System.out.println("加密前的数据：\r\n" + source);
         System.out.println("--------------------------公钥加密，私钥解密------------------------------");
         // 公钥加密

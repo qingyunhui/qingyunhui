@@ -1,4 +1,4 @@
-package qing.yun.hui.common.utils.decrypt;
+package qing.yun.hui.common.utils;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,11 +11,12 @@ import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 
 /***
- ** @category 文件加解密
+ ** @category 适用于文件加解密(比如:文件、视频等等...)
  ** @author qing.yunhui
- ** @date 2016年4月8日 下午1:34:00
- ***/
-public class DESEncrypt {
+ ** @email: 280672161@qq.com
+ ** @createTime: 2016年11月10日下午11:33:54
+ **/
+public class EncryWithDecryUtil {
 	
 	/** 加密工具 */
 	private static Cipher encryptCipher = null;
@@ -23,6 +24,7 @@ public class DESEncrypt {
 	/** 解密工具 */
 	private static Cipher decryptCipher = null;
 	
+	/**加密前的明文key*/
 	private static String key="admin";
 
 	static{
@@ -34,13 +36,15 @@ public class DESEncrypt {
 		}
 	}
 	
+	/**初始化加密key*/
     private static void initialize_encryptKey(String keyValue) throws Exception{
         Key key = getKey(keyValue.getBytes());
 		encryptCipher = Cipher.getInstance("DES");//DES/CBC/PKCS5Padding
 		encryptCipher.init(Cipher.ENCRYPT_MODE, key);//ENCRYPT_MODE、DECRYPT_MODE、WRAP_MODE 或 UNWRAP_MODE
 	}
 
-	public static void initalize_dencryptkey(String keyValue) throws Exception {
+    /**初始化解密key*/
+    private static void initalize_dencryptkey(String keyValue) throws Exception {
         Key key = getKey(keyValue.getBytes());
 		decryptCipher = Cipher.getInstance("DES");
 		decryptCipher.init(Cipher.DECRYPT_MODE, key);
