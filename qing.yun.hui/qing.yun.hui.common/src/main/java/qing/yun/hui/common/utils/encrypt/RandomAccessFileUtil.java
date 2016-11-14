@@ -22,7 +22,7 @@ import qing.yun.hui.common.utils.StringUtil;
  ***/
 public class RandomAccessFileUtil {
 
-	static String filePath="F:/test/source/test.mp4";
+	static String filePath="F:/test/test.mp4";
 	public static void main(String[] args){
 		System.err.println(MD5Util.getMD5Encryption(CipherCode.QING_YUN_FEI.getKey()));
 		try{
