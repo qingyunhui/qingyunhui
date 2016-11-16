@@ -15,7 +15,7 @@
 	
 	
 	<!-- Mysql -->
-	<!-- 
+	
 	<entry key="jdbc.username">smiles</entry>
 	<entry key="jdbc.password">smiles</entry>
 	<entry key="jdbc.url">jdbc:mysql://localhost:3306/smiles?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</entry>
@@ -28,11 +28,11 @@
 	<entry key="java_typemapping.java.math.BigDecimal">BigDecimal</entry>
 	<entry key="java_typemapping.java.sql.Clob">String</entry>
 	<entry key="java_typemapping.java.sql.Blob">byte[]</entry> 
-	-->
+	
 
 
 	<!-- Oracle		jdbc:oracle:oci:@tnsname_devdb -->
-	<entry key="jdbc.url">jdbc:oracle:thin:@192.168.0.177:1521:[sid]</entry>
+	<!-- <entry key="jdbc.url">jdbc:oracle:thin:@192.168.0.177:1521:[sid]</entry>
 	<entry key="jdbc.driver">oracle.jdbc.driver.OracleDriver</entry>
 	<entry key="java_typemapping.java.sql.Timestamp">java.util.Date</entry>
 	<entry key="java_typemapping.java.sql.Date">java.util.Date</entry>
@@ -41,7 +41,7 @@
 	<entry key="java_typemapping.java.lang.Short">Integer</entry>
 	<entry key="java_typemapping.java.math.BigDecimal">BigDecimal</entry>
 	<entry key="java_typemapping.java.sql.Clob">String</entry>
-	<entry key="java_typemapping.java.sql.Blob">byte[]</entry> 
+	<entry key="java_typemapping.java.sql.Blob">byte[]</entry>  -->
 	
 	
 	<!-- SQLServer2000 

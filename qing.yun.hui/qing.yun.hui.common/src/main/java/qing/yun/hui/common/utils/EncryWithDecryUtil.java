@@ -110,10 +110,11 @@ public class EncryWithDecryUtil {
 	public static void main(String[] args){
 		//String sourceFileName="F:/test.mp4";
 		String diminationFileName="F:/encrypt.mp4";
-		String tmp="F:/test/jiemi.mp4";
+		String tmp="F:/test/jiemi222.mp4";
 		try {
 			//encrypt(sourceFileName, diminationFileName);
-			decrypt(diminationFileName, tmp);
+//			decrypt(diminationFileName, tmp);
+			decryptBySize(diminationFileName, tmp,102400);
 		} catch (Exception e) {
 		}
 	}
@@ -131,6 +132,30 @@ public class EncryWithDecryUtil {
 		int r;
 		while ((r = is.read(buffer)) >= 0) {
 			cos.write(buffer, 0, r);
+		}
+		cos.close();
+		out.close();
+		is.close();
+	}
+	/**
+	 * 文件采用DES算法解密文件
+	 * <p>解密文件，并指定解密文件的大小</p>
+	 * @param sourceFileName  已加密的文件 如c:/加密后文件.txt * 
+	 * @param diminationFileName 解密后存放的文件名 如c:/test/解密后文件.txt
+	 * @param maxSize 字节为单位
+	 */
+	public static void decryptBySize(String sourceFileName, String diminationFileName,int maxSize) throws Exception {
+		InputStream is = new FileInputStream(sourceFileName);
+		OutputStream out = new FileOutputStream(diminationFileName);
+		CipherOutputStream cos = new CipherOutputStream(out, decryptCipher);
+		byte[] buffer = new byte[maxSize];
+		int r;
+		while ((r = is.read(buffer)) >= 0) {
+			System.out.println("r:"+r);
+			cos.write(buffer, 0, r);
+			if(r>=maxSize){
+				break;
+			}
 		}
 		cos.close();
 		out.close();
