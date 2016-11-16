@@ -5,7 +5,7 @@ package ${basepackage}.biz.dao;
 
 import java.util.List;
 import java.util.Map;
-import ${basepackage}.biz.po.${className};
+import ${basepackage}.biz.entity.${className};
 
 <#include "/java_imports.include">
 <#assign classNameQuery = table.className+"Query">

@@ -1,4 +1,4 @@
-package ${basepackage}.biz.po;
+package ${basepackage}.biz.entity;
 
 import java.util.Date;
 <#include "/java_imports.include">

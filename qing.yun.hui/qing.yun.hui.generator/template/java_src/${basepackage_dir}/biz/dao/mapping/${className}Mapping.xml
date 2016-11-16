@@ -6,7 +6,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <#macro mapperEl value type>${r"#"}${value}:${type?upper_case}${r"#"}</#macro>
 <mapper namespace="${basepackage}.biz.dao.${className}Mapping">
-	<resultMap type="${basepackage}.biz.po.${className}" id="BaseResultMap">
+	<resultMap type="${basepackage}.biz.entity.${className}" id="BaseResultMap">
 		<#list table.columns as column>
         <result property="${column.columnNameFirstLower}" column="${column.sqlName}" javaType="${column.simpleJavaType}"/>
 		</#list>
@@ -18,7 +18,7 @@
         </#list>
 	</sql>
 
-	<insert id="insert" parameterType="${basepackage}.biz.po.${className}" >
+	<insert id="insert" parameterType="${basepackage}.biz.entity.${className}" >
 		<![CDATA[
 	        INSERT INTO ${table.sqlName} (
 	        <#list table.notPkColumns as column>
@@ -66,7 +66,7 @@
 		</foreach>
 	</update>
 	
-	<update id="update" parameterType="${basepackage}.biz.po.${className}">
+	<update id="update" parameterType="${basepackage}.biz.entity.${className}">
         UPDATE ${table.sqlName} 
         <set>
         <#list table.notPkColumns as column>
@@ -83,7 +83,7 @@
         </#list>
 	</update>
 	
-	<update id="updateSelective" parameterType="${basepackage}.biz.po.${className}">
+	<update id="updateSelective" parameterType="${basepackage}.biz.entity.${className}">
         UPDATE ${table.sqlName} 
         <set>
         <#list table.notPkColumns as column>

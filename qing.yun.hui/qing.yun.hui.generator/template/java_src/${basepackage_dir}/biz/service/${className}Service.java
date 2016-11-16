@@ -5,8 +5,8 @@ package ${basepackage}.biz.service;
 import java.util.List;
 import java.util.Map;
 
-import cn.com.yuzhushui.smiles8.common.bean.WebPager;
-import ${basepackage}.biz.po.${className};
+import cn.com.yuzhushui.movie.common.bean.WebPager;
+import ${basepackage}.biz.entity.${className};
 <#include "/java_imports.include">
 <#assign classNameQuery = table.className+"Query">
 <#include "/macro.include"/>

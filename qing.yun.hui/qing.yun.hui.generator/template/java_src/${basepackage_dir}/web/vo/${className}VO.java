@@ -2,12 +2,11 @@ package ${basepackage}.web.vo;
 
 import java.util.Date;
 
-import cn.com.yuzhushui.smiles8.common.bean.BaseQuery;
 <#include "/java_imports.include">
-<#assign classNameQuery = table.className+"Query">
+<#assign classNameQuery = table.className+"VO">
 <#include "/macro.include"/>
 <#include "/java_copyright.include"><#assign className = table.className><#assign classNameLower = className?uncap_first> 
-public class ${className}Query extends BaseQuery {
+public class ${className}VO {
 
 	//columns START
 	<#list table.columns as column>

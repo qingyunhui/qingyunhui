@@ -5,13 +5,13 @@ package ${basepackage}.biz.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.com.yuzhushui.smiles8.common.bean.WebPager;
+import cn.com.yuzhushui.movie.common.bean.WebPager;
 import ${basepackage}.biz.dao.${className}Mapping;
 
 import java.util.List;
 import java.util.Map;
 
-import ${basepackage}.biz.po.${className};
+import ${basepackage}.biz.entity.${className};
 import ${basepackage}.biz.service.${className}Service;
 
 <#include "/java_imports.include">

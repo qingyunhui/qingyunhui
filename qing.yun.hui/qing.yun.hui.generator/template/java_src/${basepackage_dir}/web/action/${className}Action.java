@@ -2,10 +2,9 @@
 <#assign classNameLower = className?uncap_first>
 package ${basepackage}.web.action;
 
-import ${basepackage}.biz.po.${className};
+import ${basepackage}.biz.entity.${className};
 import ${basepackage}.biz.service.${className}Service;
-import ${basepackage}.web.vo.${className}Query;
-import ${basepackage}.web.vo.${className}Form;
+import ${basepackage}.web.vo.${className}VO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,13 +23,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import cn.com.yuzhushui.smiles8.common.bean.Constant;
-import cn.com.yuzhushui.smiles8.common.bean.WebPager;
+import cn.com.yuzhushui.movie.common.bean.Constant;
+import cn.com.yuzhushui.movie.common.bean.WebPager;
 import qing.yun.hui.common.utils.BeanUtil;
-import cn.com.yuzhushui.smiles8.common.bean.vo.MySessionInfo;
+import cn.com.yuzhushui.movie.common.bean.vo.MySessionInfo;
 
 <#include "/java_imports.include">
-<#assign classNameQuery = table.className+"Query">
 <#include "/macro.include"/>
 <#include "/java_copyright.include"><#assign className = table.className><#assign classNameLower = className?uncap_first> 
 @Controller
@@ -50,15 +48,15 @@ public class ${className}Action {
 	 * @return
 	 */
 	@RequestMapping(value="list", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView list(${className}Query query){
+	public ModelAndView list(${className}VO vo){
 		ModelAndView modelAndView = new ModelAndView(ACTION_PATH+"/list");
 		
-		Map<String, Object> map = BeanUtil.pojoToMap(query);
+		Map<String, Object> map = BeanUtil.pojoToMap(vo);
 		
 		WebPager pager = ${classNameLower}Service.queryPage(map);
 		
 		modelAndView.addObject(WebPager.PAGE_NAME, pager);
-		modelAndView.addObject(Constant.QUERY, query);
+		modelAndView.addObject(Constant.QUERY, vo);
 		return modelAndView;
 	}
 	
@@ -67,9 +65,9 @@ public class ${className}Action {
 	 * @return
 	 */
 	@RequestMapping(value="doList", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView doList(${className}Query query,RedirectAttributes redirectAttributes){
+	public ModelAndView doList(${className}VO vo,RedirectAttributes redirectAttributes){
 		ModelAndView modelAndView = new ModelAndView("redirect:"+ACTION_PATH+"/list.htm");
-		redirectAttributes.addFlashAttribute(query);
+		redirectAttributes.addFlashAttribute(vo);
 		return modelAndView;
 	}
 	
@@ -94,10 +92,10 @@ public class ${className}Action {
 		ModelAndView modelAndView = new ModelAndView(ACTION_PATH+"/detail");
 		
 		${className} ${classNameLower} = ${classNameLower}Service.get${className}ById(${table.getPkColumn().columnNameFirstLower});
-		${className}Form ${classNameLower}Form = new ${className}Form();
+		${className}VO ${classNameLower}VO = new ${className}VO();
 		
-		BeanUtils.copyProperties( ${classNameLower},${classNameLower}Form);
-		modelAndView.addObject("${classNameLower}Form", ${classNameLower}Form);
+		BeanUtils.copyProperties( ${classNameLower},${classNameLower}VO);
+		modelAndView.addObject("${classNameLower}VO", ${classNameLower}VO);
 		return modelAndView;
 	}
 	
@@ -108,7 +106,7 @@ public class ${className}Action {
 	@RequestMapping("add")
 	public ModelAndView add(){
 		ModelAndView modelAndView = new ModelAndView(ACTION_PATH+"/add");
-		modelAndView.getModel().put("${classNameLower}Form", new ${className}Form());
+		modelAndView.getModel().put("${classNameLower}VO", new ${className}VO());
 		return modelAndView;
 	}
 	
@@ -117,10 +115,10 @@ public class ${className}Action {
 	 * @return
 	 */
 	@RequestMapping(value="doAdd", method = {RequestMethod.POST})
-	public ModelAndView doAdd(@Valid ${className}Form ${classNameLower}Form, BindingResult result,@ModelAttribute(Constant.MY_SESSION_INFO) MySessionInfo sessionInfo,
+	public ModelAndView doAdd(@Valid ${className}VO ${classNameLower}VO, BindingResult result,@ModelAttribute(Constant.MY_SESSION_INFO) MySessionInfo sessionInfo,
 			RedirectAttributes redirectAttributes){
 		${className} ${classNameLower} = new ${className}();
-		BeanUtils.copyProperties(${classNameLower}Form, ${classNameLower});
+		BeanUtils.copyProperties(${classNameLower}VO, ${classNameLower});
 		${classNameLower}Service.add${className}(${classNameLower});
 		redirectAttributes.addFlashAttribute("feedBackMsg","保存成功！");
 		return new ModelAndView("redirect:"+ACTION_PATH+"/list.htm");
@@ -134,10 +132,10 @@ public class ${className}Action {
 	public ModelAndView edit(${table.getPkColumn().javaType} ${table.getPkColumn().columnNameFirstLower}){
 		ModelAndView modelAndView = new ModelAndView(ACTION_PATH+"/edit");
 		${className} ${classNameLower} = ${classNameLower}Service.get${className}ById(${table.getPkColumn().columnNameFirstLower});
-		${className}Form ${classNameLower}Form = new ${className}Form();
+		${className}VO ${classNameLower}VO = new ${className}VO();
 		
-		BeanUtils.copyProperties( ${classNameLower},${classNameLower}Form);
-		modelAndView.addObject("${classNameLower}Form", ${classNameLower}Form);
+		BeanUtils.copyProperties( ${classNameLower},${classNameLower}VO);
+		modelAndView.addObject("${classNameLower}VO", ${classNameLower}VO);
 		return modelAndView;
 	}
 	/**
@@ -145,10 +143,10 @@ public class ${className}Action {
 	 * @return
 	 */
 	@RequestMapping(value="doEdit", method = {RequestMethod.POST})
-	public ModelAndView doEdit(@Valid ${className}Form ${classNameLower}Form, BindingResult result,@ModelAttribute(Constant.MY_SESSION_INFO) MySessionInfo sessionInfo,
+	public ModelAndView doEdit(@Valid ${className}VO ${classNameLower}VO, BindingResult result,@ModelAttribute(Constant.MY_SESSION_INFO) MySessionInfo sessionInfo,
 			RedirectAttributes redirectAttributes){
 		${className} ${classNameLower} = new ${className}();
-		BeanUtils.copyProperties(${classNameLower}Form, ${classNameLower});
+		BeanUtils.copyProperties(${classNameLower}VO, ${classNameLower});
 		${classNameLower}Service.update${className}Selective(${classNameLower});
 		redirectAttributes.addFlashAttribute("feedBackMsg","修改成功！");
 		return new ModelAndView("redirect:"+ACTION_PATH+"/list.htm");
