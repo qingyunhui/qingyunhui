@@ -5,7 +5,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <#macro mapperEl value type>${r"#"}${value}:${type?upper_case}${r"#"}</#macro>
-<mapper namespace="${basepackage}.biz.dao.${className}Mapping">
+<mapper namespace="${basepackage}.biz.dao.${className}Dao">
 	<resultMap type="${basepackage}.biz.entity.${className}" id="BaseResultMap">
 		<#list table.columns as column>
         <result property="${column.columnNameFirstLower}" column="${column.sqlName}" javaType="${column.simpleJavaType}"/>

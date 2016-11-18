@@ -1,11 +1,13 @@
 package ${basepackage}.biz.entity;
 
 import java.util.Date;
+
+import cn.com.yuzhushui.movie.common.base.BaseModel;
 <#include "/java_imports.include">
 
 <#include "/macro.include"/>
 <#include "/java_copyright.include"><#assign className = table.className><#assign classNameLower = className?uncap_first> 
-public class ${className} {
+public class ${className} extends BaseModel<Integer>{
 	
 	//alias
 	public static final String TABLE_ALIAS = "${table.tableAlias}";
