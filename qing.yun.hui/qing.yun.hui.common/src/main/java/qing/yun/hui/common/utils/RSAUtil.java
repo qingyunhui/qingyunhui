@@ -30,7 +30,7 @@ public class RSAUtil {
 	public static void main(String[] args) throws Exception {
 		// 生成公钥和私钥
 //		generatorKeyPair();
-		String source = "114.215.183.107";
+		String source = "500";
         System.out.println("加密前的数据：\r\n" + source);
         System.out.println("--------------------------公钥加密，私钥解密------------------------------");
         // 公钥加密

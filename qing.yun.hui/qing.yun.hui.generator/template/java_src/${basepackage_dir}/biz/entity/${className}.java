@@ -3,10 +3,14 @@ package ${basepackage}.biz.entity;
 import java.util.Date;
 
 import cn.com.yuzhushui.movie.common.base.BaseModel;
+import lombok.Getter;
+import lombok.Setter;
 <#include "/java_imports.include">
 
 <#include "/macro.include"/>
 <#include "/java_copyright.include"><#assign className = table.className><#assign classNameLower = className?uncap_first> 
+@Getter
+@Setter
 public class ${className} extends BaseModel<Integer>{
 	
 	//alias
@@ -21,8 +25,5 @@ public class ${className} extends BaseModel<Integer>{
 	
 	</#list>
 	//columns END
-
-<@generateConstructor className/>
-<@generateJavaColumns/>
 
 }

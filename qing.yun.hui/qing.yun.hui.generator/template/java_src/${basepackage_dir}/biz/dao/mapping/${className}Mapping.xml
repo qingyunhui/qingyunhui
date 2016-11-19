@@ -17,6 +17,17 @@
         t.${column.sqlName}<#if column_has_next>,</#if>
         </#list>
 	</sql>
+	
+	<!-- 查询条件 -->
+	<sql id="queryCriteria">
+	  <#list table.columns as column>
+         <#if column.sqlTypeName?upper_case != "BLOB" && column.sqlTypeName?upper_case != "CLOB">
+		 <if test="@OGNL@isNotEmpty(${column.columnNameFirstLower})">
+            AND t.${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}}
+         </if>
+         </#if>
+       </#list>
+	</sql>
 
 	<insert id="insert" parameterType="${basepackage}.biz.entity.${className}" >
 		<![CDATA[
@@ -70,23 +81,6 @@
         UPDATE ${table.sqlName} 
         <set>
         <#list table.notPkColumns as column>
-        	<#if column.sqlName =="edit_time" >
-        		now(),
-        	<#else>
-            	${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}},
-            </#if>
-        </#list>
-        </set>
-        WHERE deleted=0
-        <#list table.pkColumns as column>
-        	AND ${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}}
-        </#list>
-	</update>
-	
-	<update id="updateSelective" parameterType="${basepackage}.biz.entity.${className}">
-        UPDATE ${table.sqlName} 
-        <set>
-        <#list table.notPkColumns as column>
         	<if test="@OGNL@isNotEmpty(${column.columnNameFirstLower})">
 	            ${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}},
 	        </if>
@@ -109,15 +103,7 @@
 	<select id="queryAll" parameterType="map" resultMap="BaseResultMap">
 		SELECT <include refid="full-columns" />
 	    FROM ${table.sqlName} t
-		<where>
-        <#list table.columns as column>
-        <#if column.sqlTypeName?upper_case != "BLOB" && column.sqlTypeName?upper_case != "CLOB">
-			<if test="@OGNL@isNotEmpty(${column.columnNameFirstLower})">
-	            AND t.${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}}
-	        </if>
-        </#if>
-        </#list>
-		</where>
+		WHERE <include refid="queryCriteria"/>
 		<if test="@OGNL@isNotEmpty(orderColumn) ">
         ORDER BY t.${r'${'}orderColumn} <if test="@OGNL@isNotEmpty(orderDirection) ">${r'${'}orderDirection}</if>
         </if>
@@ -127,15 +113,7 @@
 		SELECT 
         <include refid="full-columns" />
             FROM ${table.sqlName} t
-		<where>
-        <#list table.columns as column>
-        <#if column.sqlTypeName?upper_case != "BLOB" && column.sqlTypeName?upper_case != "CLOB">
-	        <if test="@OGNL@isNotEmpty(${column.columnNameFirstLower})">
-	            AND t.${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}}
-	        </if>
-        </#if>
-        </#list>
-		</where>
+		<include refid="queryCriteria"/>
 		<if test="@OGNL@isNotEmpty(orderColumn) ">
         ORDER BY t.${r'${'}orderColumn} <if test="@OGNL@isNotEmpty(orderDirection) ">${r'${'}orderDirection}</if>
         </if>
@@ -144,14 +122,6 @@
 
 	<select id="queryCount" parameterType="map" resultType="java.lang.Integer">
 		select count(${table.getPkColumn().sqlName}) FROM ${table.sqlName} 
-        <where>
-        	<#list table.columns as column>
-           	<#if column.sqlTypeName?upper_case != "BLOB" && column.sqlTypeName?upper_case != "CLOB">
-	        	<if test="@OGNL@isNotEmpty(${column.columnNameFirstLower})">
-	            AND ${column.sqlName} = ${r'#{'}${column.columnNameFirstLower}}
-	        	</if>
-           	</#if>
-           	</#list>
-        </where>
+        WHERE <include refid="queryCriteria"/>
 	</select>
 </mapper>
