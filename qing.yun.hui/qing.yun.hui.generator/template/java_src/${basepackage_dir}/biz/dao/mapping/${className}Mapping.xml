@@ -100,10 +100,10 @@
 		]]>
     </select>
 	
-	<select id="queryAll" parameterType="map" resultMap="BaseResultMap">
+	<select id="query" parameterType="map" resultMap="BaseResultMap">
 		SELECT <include refid="full-columns" />
 	    FROM ${table.sqlName} t
-		WHERE <include refid="queryCriteria"/>
+		<where> <include refid="queryCriteria"/>  </where>
 		<if test="@OGNL@isNotEmpty(orderColumn) ">
         ORDER BY t.${r'${'}orderColumn} <if test="@OGNL@isNotEmpty(orderDirection) ">${r'${'}orderDirection}</if>
         </if>
@@ -113,7 +113,7 @@
 		SELECT 
         <include refid="full-columns" />
             FROM ${table.sqlName} t
-		<include refid="queryCriteria"/>
+		<where> <include refid="queryCriteria"/>  </where>
 		<if test="@OGNL@isNotEmpty(orderColumn) ">
         ORDER BY t.${r'${'}orderColumn} <if test="@OGNL@isNotEmpty(orderDirection) ">${r'${'}orderDirection}</if>
         </if>
@@ -122,6 +122,6 @@
 
 	<select id="queryCount" parameterType="map" resultType="java.lang.Integer">
 		select count(${table.getPkColumn().sqlName}) FROM ${table.sqlName} 
-        WHERE <include refid="queryCriteria"/>
+        <where> <include refid="queryCriteria"/>  </where>
 	</select>
 </mapper>
