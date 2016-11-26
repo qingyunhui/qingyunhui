@@ -16,7 +16,7 @@ public class GeneratorMain {
         // 通过数据库表生成文件,template为模板的根目录
         //g.generateByAllTable("template"); //自动搜索数据库中的所有表并生成文件,template为模板的根目录
         //g.generateByClass(Blog.class,"template_clazz");
-        String tables = "sys_account,sys_user";
+        String tables = "sys_account";
 
         //sys_account,sys_data,sys_account_role_rel,sys_attachment,sys_dict,sys_menu,sys_message,sys_opration_log,sys_resource,sys_role,sys_role_resource_rel,sys_user
         

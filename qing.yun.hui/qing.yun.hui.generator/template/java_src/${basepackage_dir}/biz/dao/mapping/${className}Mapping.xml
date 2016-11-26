@@ -37,7 +37,7 @@
 	        </#list>
 	        ) VALUES (
 	        <#list table.notPkColumns as column>
-	        	<#if column.sqlName =="deleted" >0<#elseif column.sqlName =="create_time">now()<#else>${r'#{'}${column.columnNameFirstLower}}</#if><#if column_has_next>,</#if>
+	        	<#if column.sqlName =="deleted" >0<#elseif column.sqlName =="ctime">now()<#else>${r'#{'}${column.columnNameFirstLower}}</#if><#if column_has_next>,</#if>
 	        </#list>
 	        )
 	    ]]>
@@ -56,7 +56,7 @@
 	        <foreach collection="list" item="item" index="index" separator=",">
 	        (
 	        <#list table.notPkColumns as column>
-	        	<#if column.sqlName =="deleted" >0<#elseif column.sqlName =="create_time">now()<#else>${r'#{'}${column.columnNameFirstLower}}</#if><#if column_has_next>,</#if>
+	        	<#if column.sqlName =="deleted" >0<#elseif column.sqlName =="ctime">now()<#else>${r'#{'}${column.columnNameFirstLower}}</#if><#if column_has_next>,</#if>
 	        </#list>
 	        )
 	        </foreach>
