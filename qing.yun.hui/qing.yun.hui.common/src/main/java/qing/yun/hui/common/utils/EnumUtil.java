@@ -1,5 +1,7 @@
 package qing.yun.hui.common.utils;
 
+import qing.yun.hui.common.enums.ICommonEnum;
+
 /***
  ** @Description: EnumUtil 枚举工具类
  ** @author: qing.yunhui
@@ -25,6 +27,75 @@ public class EnumUtil {
 			e.printStackTrace();
 		}
 		return obj;
+	}
+	
+	/**
+	 * 根据给定code获取name
+	 * @param clzs  枚举类(该枚举类必须实现ICommonEnum接口)
+	 * @param code 枚举code
+	 * @return String 枚举name
+	 * */
+	public static String getNameByCode(Class<?> clzs,String code){
+		ICommonEnum[] commonEnums=getICommonEnums(clzs);
+		if(null==commonEnums) return null;
+		for(ICommonEnum ienum:commonEnums){
+			if(ienum.getCode().equals(code)){
+				return ienum.getName();
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据给定value获取name
+	 * @param clzs  枚举类(该枚举类必须实现ICommonEnum接口)
+	 * @param code 枚举code
+	 * @return String 枚举name
+	 * */
+	public static String getNameByValue(Class<?> clzs,int value){
+		ICommonEnum[] commonEnums=getICommonEnums(clzs);
+		if(null==commonEnums) return null;
+		for(ICommonEnum ienum:commonEnums){
+			if(ienum.getValue()==value){
+				return ienum.getName();
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据给定name获取code
+	 * @param clzs  枚举类 (该枚举类必须实现ICommonEnum接口)
+	 * @param value 枚举value
+	 * @return String 枚举code
+	 * */
+	public static String getCodeByName(Class<?> clzs,String name){
+		ICommonEnum[] commonEnums=getICommonEnums(clzs);
+		if(null==commonEnums) return null;
+		for(ICommonEnum ienum:commonEnums){
+			if(ienum.getName().equals(name)){
+				return ienum.getCode();
+			}
+		}
+		return null;
+	}
+	
+	private static ICommonEnum[] getICommonEnums(Class<?> clzs){
+		ICommonEnum[] commonEnums=null;
+		try {
+			commonEnums=(ICommonEnum[]) getEnumConstants(clzs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return commonEnums;
+	}
+	
+	private static Object[] getEnumConstants(Class<?> clzs){
+		Object[] objs=null;
+		if(clzs.isEnum()){
+			objs=clzs.getEnumConstants();
+		}
+		return objs;
 	}
 	
 	public static void main(String[] args){
