@@ -56,6 +56,16 @@ public class StringUtil {
 		return false;
 	}
     
+	public static boolean isEmpty(Object...objects){
+		if(null==objects || objects.length<1){
+			return true;
+		}
+		for(Object obj:objects){
+			boolean isEmpty=isEmpty(obj);
+			if(isEmpty) return true;
+		}
+		return false;
+	}
     
 	/***
 	 * 把字符串按照符号分割成数组形式
@@ -415,9 +425,14 @@ public class StringUtil {
 			//String s=Object.class.getSimpleName();
 			//System.out.println("转换前:"+s+"\n转换后:"+getTableName(s));
 //			System.out.println(getTableName(BaseQuery.class));
-			System.out.println(replacePhoneOrEmailByAsterisk("280672161@qq.com",3,5,4,Symbol.ASTERISK));
+			/*System.out.println(replacePhoneOrEmailByAsterisk("280672161@qq.com",3,5,4,Symbol.ASTERISK));
 			System.out.println(replacePhoneOrEmailByAsterisk("18665300640",3,5,4,Symbol.ASTERISK));
-			System.out.println(replacePhoneOrEmailByAsterisk("280admin123qq",3,5,4,Symbol.ASTERISK));
+			System.out.println(replacePhoneOrEmailByAsterisk("280admin123qq",3,5,4,Symbol.ASTERISK));*/
+			
+			
+			boolean isEmpty=isEmpty(22,null);
+			System.out.println(isEmpty);
+			
 		}
 
 }

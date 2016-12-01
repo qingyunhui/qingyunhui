@@ -4,8 +4,6 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 
-import qing.yun.hui.common.utils.test.BillLianlian.CheckStatus;
-
 /**
  * Description: 枚举工具类
  * 
@@ -27,8 +25,8 @@ public class EnumUtil {
 		
 		Object[] objects=getEnumValues("qing.yun.hui.common.utils.test.BillLianlian$CheckStatus");
 		for(Object obj:objects){
-			BillLianlian.CheckStatus status=(CheckStatus) obj;
-			System.out.println(status.getCode()+","+status.getName());
+			/*BillLianlian.CheckStatus status=(CheckStatus) obj;
+			System.out.println(status.getCode()+","+status.getName());*/
 		}
 		String json=getEnumJSON("qing.yun.hui.common.utils.test.BillLianlian$PayStatus");
 		System.err.println("json:"+json);
