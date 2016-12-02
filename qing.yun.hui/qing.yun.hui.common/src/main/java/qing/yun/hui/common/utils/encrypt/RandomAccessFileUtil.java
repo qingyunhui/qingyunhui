@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 
-import qing.yun.hui.common.constants.Symbol;
+import qing.yun.hui.common.constants.SymbolConstant;
 import qing.yun.hui.common.enums.CipherCode;
 import qing.yun.hui.common.enums.CipherDigest;
 import qing.yun.hui.common.enums.ReturnType;
@@ -175,7 +175,7 @@ public class RandomAccessFileUtil {
 	  * */
 	 public static String getNewFilePath(String filePath,String tmpSuffix){
 		 StringBuffer sb=new StringBuffer();
-		 if(filePath.indexOf(Symbol.DOT)!=-1){
+		 if(filePath.indexOf(SymbolConstant.DOT)!=-1){
 			 String prefix=filePath.substring(0, filePath.lastIndexOf("."));//得到前缀
 			 String suffix=filePath.substring(filePath.lastIndexOf("."),filePath.length());//得到后缀
 			 if(filePath.indexOf(tmpSuffix)!=-1){//如果文件名已经存在待追加的后缀，则不进行处理..

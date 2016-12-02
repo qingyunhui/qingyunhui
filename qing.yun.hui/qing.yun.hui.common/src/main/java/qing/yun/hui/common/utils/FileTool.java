@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import qing.yun.hui.common.constants.Symbol;
+import qing.yun.hui.common.constants.SymbolConstant;
 
 /***
  ** @Description: 请用一句话来描述
@@ -88,8 +88,8 @@ public class FileTool {
 				String parentPath=file.getParent();
 				String fileName=file.getName();
 				String newFileName=null;
-				if(fileName.lastIndexOf(Symbol.DOT)!=-1){
-					newFileName=fileName.substring(0, fileName.lastIndexOf(Symbol.DOT));
+				if(fileName.lastIndexOf(SymbolConstant.DOT)!=-1){
+					newFileName=fileName.substring(0, fileName.lastIndexOf(SymbolConstant.DOT));
 					newFileName+=getRandomSuffix(suffixs);
 					file.renameTo(new File(parentPath+File.separator+newFileName));
 				}else{

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import qing.yun.hui.common.constants.Symbol;
+import qing.yun.hui.common.constants.SymbolConstant;
 
 /***
  ** @Description: FileUtil 文件处理工具类
@@ -243,9 +243,9 @@ public class FileUtil {
 			return;
 		}
 		for(File file:listFiles){
-			int countDot=file.getPath().lastIndexOf(Symbol.DOT);
+			int countDot=file.getPath().lastIndexOf(SymbolConstant.DOT);
 			if(countDot!=-1){
-				file.renameTo(new File(file.getPath().substring(0,file.getPath().lastIndexOf(Symbol.DOT))+getRandomSuffix(suffixs)));
+				file.renameTo(new File(file.getPath().substring(0,file.getPath().lastIndexOf(SymbolConstant.DOT))+getRandomSuffix(suffixs)));
 				count++;
 			}else{
 				file.renameTo(new File(file.getPath()+getRandomSuffix(suffixs)));

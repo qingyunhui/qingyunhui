@@ -7,7 +7,7 @@ package qing.yun.hui.common.constants;
  ** @dateTime: Nov 20, 2015 10:29:17 AM
  ** @version: V1.0
  ***/
-public class Symbol {
+public class SymbolConstant {
 	
 	/**减号*/
 	public static final String MINUS="-";

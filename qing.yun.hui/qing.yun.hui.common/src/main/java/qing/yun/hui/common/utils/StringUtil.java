@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 import qing.yun.hui.common.constants.Constant;
-import qing.yun.hui.common.constants.Symbol;
+import qing.yun.hui.common.constants.SymbolConstant;
 import qing.yun.hui.common.enums.TimeSlot;
 
 /***
@@ -365,13 +365,13 @@ public class StringUtil {
 			StringBuffer sb=new StringBuffer(phoneOrEmail);
 			StringBuffer sbSymbol=new StringBuffer();
 			for(int i=0;i<numberSymbol;i++){
-				sbSymbol.append(Symbol.ASTERISK);
+				sbSymbol.append(SymbolConstant.ASTERISK);
 			}
 			if(ValidateUtil.isMobile(phoneOrEmail)){
 				sb.replace(sindex, eindex, sbSymbol.toString());
 			}
 			if(ValidateUtil.isEmail(phoneOrEmail)){
-				sb.replace(sindex, phoneOrEmail.lastIndexOf(Symbol.AT), sbSymbol.toString());
+				sb.replace(sindex, phoneOrEmail.lastIndexOf(SymbolConstant.AT), sbSymbol.toString());
 			}
 			else{
 				sb.replace(sindex, eindex, sbSymbol.toString());
