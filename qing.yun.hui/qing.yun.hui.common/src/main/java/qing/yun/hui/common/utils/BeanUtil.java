@@ -6,11 +6,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import qing.yun.hui.common.enums.ICommonEnum;
-import qing.yun.hui.common.test.Collections.sort.po.SysUsers;
 
 /***
  ** @Description: 请用一句话来描述
@@ -22,7 +20,7 @@ import qing.yun.hui.common.test.Collections.sort.po.SysUsers;
 public class BeanUtil {
 	
 	public static void main(String[] args){
-		SysUsers user=new SysUsers();
+		/*SysUsers user=new SysUsers();
 		user.setAccount("张三");
 		user.setCreater("");
 		user.setAge(22);
@@ -37,7 +35,7 @@ public class BeanUtil {
 			String key=entry.getKey();
 			Object value=entry.getValue();
 			System.out.println("key:"+key+",value:"+value);
-		}
+		}*/
 	}
 
 	/**

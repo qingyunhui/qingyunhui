@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import qing.yun.hui.common.test.Collections.sort.po.SysUsers;
 import qing.yun.hui.common.utils.StringUtil;
 
 /***
@@ -26,12 +25,12 @@ import qing.yun.hui.common.utils.StringUtil;
 public class HandlePersistent {
 	
 	public static void main(String[] args){
-		SysUsers object=new SysUsers();
+		/*SysUsers object=new SysUsers();
 		List<String> list=initList(4);
 		List<SysUsers> users=getDatas(object, list);
 		for(SysUsers user:users){
 			System.out.println(user.getUserId()+"\tname:"+user.getUserName()+"\ttelephone:"+user.getTelephone()+"\tage:"+user.getAge()+"\tsex:"+user.getSex());
-		}
+		}*/
 	}
 	
 	/**

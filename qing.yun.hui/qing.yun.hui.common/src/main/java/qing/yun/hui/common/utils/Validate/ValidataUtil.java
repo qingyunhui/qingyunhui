@@ -17,7 +17,6 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
-import qing.yun.hui.common.test.Collections.sort.po.SysDictForm;
 import qing.yun.hui.common.utils.Validate.bean.Validata;
 import qing.yun.hui.common.utils.Validate.parse.DigitsParse;
 import qing.yun.hui.common.utils.Validate.parse.EmailParse;
@@ -78,6 +77,6 @@ public class ValidataUtil {
 	    }
 	 
 	 public static void main(String[] args) {
-	     System.out.println(ValidataUtil.getValidate(SysDictForm.class));
+//	     System.out.println(ValidataUtil.getValidate(SysDictForm.class));
 	 }
 }
