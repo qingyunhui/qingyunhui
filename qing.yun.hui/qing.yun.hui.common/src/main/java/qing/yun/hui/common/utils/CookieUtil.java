@@ -81,7 +81,7 @@ public class CookieUtil {
 		}
 		Cookie cookie = new Cookie(name, value == null ? "" : cookieValue.replaceAll("\r\n", ""));
 		cookie.setMaxAge(maxAge);
-		cookie.setDomain(domain);
+//		cookie.setDomain(domain);	TODO 后期待域名备案后，可以放开
 		// 如果Cookie的Path为空,则设置路径为当前项目的contextPath
 		if (StringUtil.isEmpty(path)) {
 			cookie.setPath(getPath(request));
@@ -114,7 +114,7 @@ public class CookieUtil {
 	 */
 	public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, Cookie cookie,String domain, String path) {
 		if (cookie != null) {
-			cookie.setDomain(domain);
+//			cookie.setDomain(domain);  TODO 后期待域名备案后，可以放开
 			if (StringUtil.isEmpty(path)) {
 				cookie.setPath(getPath(request));
 			} else {
