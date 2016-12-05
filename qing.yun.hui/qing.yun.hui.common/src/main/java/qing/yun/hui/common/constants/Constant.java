@@ -20,5 +20,7 @@ public class Constant {
 	
 	public static final String GBK="GBK";
 	
+	//===========>token标识=============>
+	public static final String TOKEN="token";
 	
 }
