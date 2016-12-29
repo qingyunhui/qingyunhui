@@ -430,9 +430,15 @@ public class StringUtil {
 			System.out.println(replacePhoneOrEmailByAsterisk("280admin123qq",3,5,4,Symbol.ASTERISK));*/
 			
 			
-			boolean isEmpty=isEmpty(22,null);
-			System.out.println(isEmpty);
+//			boolean isEmpty=isEmpty(22,null);
+//			System.out.println(isEmpty);
 			
+			String tableName=getTableName("SysUser");
+			System.out.println("tableName:"+tableName);
+			
+			String tbname=getTableName(SortUtil.class);
+			
+			System.out.println("tbname:"+tbname);
 		}
 
 }

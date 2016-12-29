@@ -10,12 +10,12 @@ import java.util.Date;
  ** @version: V1.0
  ***/
 public class HandleTime {
-
-	private static final long second=1000; 		//毫秒
-	private static final long minute=60 * second;//分(60秒)
-	private static final long hour=60 * minute;//时(60分)
-	private static final long day=24 * hour;//日(24小时)
-	private static final long month=30 * day;//月(30天)
+	
+	private static final long second=1*1000; 		//毫秒
+	private static final long minute=1*60 * second;//分(60秒)
+	private static final long hour=1*60 * minute;//时(60分)
+	private static final long day= 1*24 * hour;//日(24小时)
+	private static final long month=1*30 * day;//月(30天)
 	private static final long year= 12 * month;//年(12个月)
 	
 	/**${yzsTld:getNameByDate(targetDate)}前台页面只须如此调用即可***/
