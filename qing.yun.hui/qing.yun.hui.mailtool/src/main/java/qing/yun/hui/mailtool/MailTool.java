@@ -17,12 +17,16 @@ public class MailTool {
 	private static String ADDRESSES_KEY="addresses";
     
 	/**
-	 * @param prop
+	 * @param prop  可以为null，如果为null，则会new 一个Properties.
 	 * @param subject 主题
 	 * @param content 内容
 	 * @param sendEmails 接收的邮箱列表 >>如果为null则默认发送系统默认的。
 	 * **/
     public static void sendTextMail(Properties prop, String subject, String content,String[] sendEmails) throws Exception {
+    	if(null==prop){
+    		prop = new Properties();
+    		prop.load(Main.class.getResourceAsStream("/mail.properties"));
+    	}
         //1、创建session
         Session session = Session.getInstance(prop);
         //开启Session的debug模式，这样就可以查看到程序发送Email的运行状态
