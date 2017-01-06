@@ -13,10 +13,19 @@ public class MyTest {
 	
 	public static void main(String[]args){
 		
-		List<Teach> teachs=initTeachs(5);
+		int count=50;//总记录数;
+		
+		int hanld=100;//1分钟处理100条;
+		
+		int result=count/hanld;
+		
+		System.out.println(result>0);
+		
+		
+		/*List<Teach> teachs=initTeachs(5);
 		List<Student> students=initStudents(5);
 		test(teachs, Teach.class);
-		
+		*/
 	}
 	
 	public static List<Teach> initTeachs(int count){

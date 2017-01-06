@@ -46,7 +46,7 @@ import org.apache.http.message.BasicNameValuePair;
  * 
  * @author dpslife
  */
-public abstract class HttpClientUtils {
+public abstract class HttpClientUtil {
 	
 //	private static final Logger log = LoggerFactory.getLogger(HttpClientUtils.class);
 
@@ -128,7 +128,7 @@ public abstract class HttpClientUtils {
 				res = client.execute(post);
 			} else {
 				// 执行 Http 请求.
-				client = HttpClientUtils.client;
+				client = HttpClientUtil.client;
 				res = client.execute(post);
 			}
 			result = IOUtils.toString(res.getEntity().getContent(), charset);
@@ -219,7 +219,7 @@ public abstract class HttpClientUtils {
 				res = client.execute(post);
 			} else {
 				// 执行 Http 请求.
-				client = HttpClientUtils.client;
+				client = HttpClientUtil.client;
 				res = client.execute(post);
 			}
 			HttpEntity resEntity = res.getEntity();
@@ -297,7 +297,7 @@ public abstract class HttpClientUtils {
 				res = client.execute(get);
 			} else {
 				// 执行 Http 请求.
-				client = HttpClientUtils.client;
+				client = HttpClientUtil.client;
 				res = client.execute(get);
 			}
 			result = IOUtils.toString(res.getEntity().getContent(), charset);
