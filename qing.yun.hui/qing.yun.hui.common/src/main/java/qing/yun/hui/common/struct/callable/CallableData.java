@@ -1,4 +1,4 @@
-package qing.yun.hui.common.struct;
+package qing.yun.hui.common.struct.callable;
 
 import lombok.Getter;
 import lombok.Setter;
