@@ -1,22 +1,25 @@
 package qing.yun.hui.common.struct.weather;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 
 /***
- ** @category 请用一句话来描述其用途...
+ ** @category 封装了天气预报的所有数据...
  ** @author qing.yunhui
  ** @email: 280672161@qq.com
  ** @createTime: 2017年1月9日下午6:24:15
  **/
 @Getter
 @Setter
-public class ResponseData {
+public class ResponseData implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private String error;//:0,
-	private String status;//"success",
-	private String date;//"date":"2017-01-09"
-	private City city;
+	private String status;//返回结果状态信息 "success",
+	private String date;//当前时间 "date":"2017-01-09"
+	private City city;//天气预报信息
 	
 }
 

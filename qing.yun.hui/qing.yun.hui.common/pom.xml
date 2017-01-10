@@ -13,8 +13,15 @@
 	  <org-json.version>20140107</org-json.version>
 	  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	  <lombok.version>1.16.8</lombok.version>
+	  <dom4j.version>1.6</dom4j.version>
     </properties>
   <dependencies>
+  	  <!-- dom4j -->
+	  <dependency>
+	    <groupId>dom4j</groupId>
+	    <artifactId>dom4j</artifactId>
+	    <version>${dom4j.version}</version>
+	  </dependency>
       <dependency>
 		<groupId>commons-fileupload</groupId>
 		<artifactId>commons-fileupload</artifactId>
