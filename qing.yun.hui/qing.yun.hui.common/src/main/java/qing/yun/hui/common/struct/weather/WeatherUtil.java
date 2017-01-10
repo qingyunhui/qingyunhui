@@ -281,29 +281,29 @@ public class WeatherUtil {
     	List<Index> indexs=city.getIndexs();//指数
     	List<WeatherData> weatherDates=city.getWealtherDates();//天气情况;
     	StringBuffer sb=new StringBuffer();
-    	sb.append("<h2>").append(_city).append("，污染指数：").append(_pm25).append("</h2>").append("</br>");
+    	sb.append("<h2>").append(_city).append("，指数：").append(_pm25).append("</h2>");
     	List<String> styleList=initStyle();
     	for(int i=0;i<weatherDates.size();i++){
     		WeatherData weatherData=weatherDates.get(i);
     		Index index=indexs.get(i);
     		sb.append("<div  ").append(styleList.get(i)).append(">");
-    		sb.append(weatherData.getDate()+"，").append(weatherData.getWeather()+"，").append(weatherData.getWind()).append("</br>");
-    		sb.append(index.getTitle()+"：").append(index.getZs()).append("</br>").append(index.getTipt()+"：").append(index.getDes());
+    		sb.append("<p>").append(weatherData.getDate()+"，").append(weatherData.getWeather()+"，").append(weatherData.getWind()).append("</p>");
+    		sb.append("<p>").append(index.getTitle()+"：").append(index.getZs()).append("</p>").append(index.getTipt()+"：").append(index.getDes());
     		sb.append("</div>");
-    		sb.append("</br>");
+    		sb.append("<p></p>");
     	}
-    	sb.append("</br>");
+    	sb.append("<p></p>");
     	return sb.toString();
     }
     
     private static LinkedList<String> initStyle(){
     	LinkedList<String> classList=new LinkedList<String>();
     	StringBuffer sb=new StringBuffer();
-    	sb.append("style=").append("'font-size:20px;font-weight: bold;color: #ff0000;'");
+    	sb.append("style=").append("'font-size:18px;font-weight: bold;color: #ff0000;'");
     	classList.add(sb.toString());
     	
     	sb.setLength(0);
-    	sb.append("style=").append("'font-size:18px;color: #00BCD4;'");
+    	sb.append("style=").append("'font-size:17px;color: #00BCD4;'");
     	classList.add(sb.toString());
     	
     	sb.setLength(0);
@@ -311,7 +311,7 @@ public class WeatherUtil {
     	classList.add(sb.toString());
     	
     	sb.setLength(0);
-    	sb.append("style=").append("'font-size:14px;color: #FFC107;'");
+    	sb.append("style=").append("'font-size:15px;color: #FFC107;'");
     	classList.add(sb.toString());
     	return classList;
     }
