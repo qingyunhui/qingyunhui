@@ -1,8 +1,10 @@
 package qing.yun.hui.common.utils;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.InetAddress;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,6 +16,11 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.alibaba.fastjson.JSONObject;
 
 import qing.yun.hui.common.constants.Constant;
 import qing.yun.hui.common.constants.SymbolConstant;
@@ -27,6 +34,8 @@ import qing.yun.hui.common.enums.TimeSlot;
  ** @version: V1.0
  ***/
 public class StringUtil {
+	
+	private static Logger logger=LoggerFactory.getLogger(StringUtil.class);
 	
 	@SuppressWarnings("rawtypes")
 	public static boolean isEmpty(Object obj){
@@ -418,6 +427,27 @@ public class StringUtil {
 			}
 			return new String(bytes);
 		}
+		
+		/**
+		 * <p>将map型转为请求参数型，并对其进行utf-8编码</p>
+		 * @param data 待转换的map
+		 * @return String
+		 * **/
+	    public static String urlencode(Map<String,Object> data) {
+	    	if(StringUtil.isEmpty(data)) return null;
+	        StringBuilder sb = new StringBuilder();
+	        for (Map.Entry<String,Object> map : data.entrySet()) {
+	            try {
+	                sb.append(map.getKey()).append("=").append(URLEncoder.encode(map.getValue()+"",Constant.UTF_8)).append("&");
+	            } catch (UnsupportedEncodingException e) {
+	                logger.error("转换异常，异常原因：{}",new Object[]{JSONObject.toJSONString(e)});
+	            }
+	        }
+	        if(sb.toString().length()>0&&sb.toString().lastIndexOf(SymbolConstant.AND)!=-1){
+	        	return sb.substring(0, sb.length()-1);
+	        }
+	        return sb.toString();
+	    }
 		
 		public static void main(String[] args){
 			//String s=qing.yun.hui.common.bean.BaseQuery.class.getSimpleName();

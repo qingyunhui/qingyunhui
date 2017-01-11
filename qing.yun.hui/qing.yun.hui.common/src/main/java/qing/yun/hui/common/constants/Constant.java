@@ -23,4 +23,10 @@ public class Constant {
 	//===========>token标识=============>
 	public static final String TOKEN="token";
 	
+	//===========>get方式请求==============>
+	public static final String GET="GET";
+	
+	//===========>post方式请求==============>
+	public static final String POST="POST";
+	
 }
