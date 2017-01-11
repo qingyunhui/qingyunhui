@@ -1,4 +1,4 @@
-package qing.yun.hui.common.struct.weather;
+package qing.yun.hui.common.struct.baidu.weather;
 
 import java.io.Serializable;
 
@@ -13,7 +13,7 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
-public class ResponseData implements Serializable{
+public class WeatherResponseData implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private String error;//:0,
@@ -22,7 +22,6 @@ public class ResponseData implements Serializable{
 	private City city;//天气预报信息
 	
 }
-
 
 /*{"error":0,"status":"success","date":"2017-01-09",
 "results":[

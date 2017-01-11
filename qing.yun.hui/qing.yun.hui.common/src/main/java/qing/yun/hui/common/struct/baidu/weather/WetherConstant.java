@@ -1,4 +1,4 @@
-package qing.yun.hui.common.struct.weather;
+package qing.yun.hui.common.struct.baidu.weather;
 /***
  ** @category 请用一句话来描述其用途...
  ** @author qing.yunhui
@@ -16,11 +16,6 @@ public class WetherConstant {
 	 *  默认坐标位置（城市 or 经纬度逗号分隔）
 	 * */
 	public static final String defaultCity="杭州";
-	
-	/**
-	 * 默认输出格式
-	 * */
-	public static final String defaultOutput="xml";//json or xml
 	
 	/**
 	 * 百度申请的key

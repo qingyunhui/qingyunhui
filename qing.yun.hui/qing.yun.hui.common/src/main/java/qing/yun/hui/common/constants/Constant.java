@@ -11,13 +11,13 @@ public class Constant {
 	public static final String HEX_STR="0123456789ABCDEF";//十六进制标识符
 	public static final String DECIMAL_STR="0123456789";//十进制
 	
-	
-	//===========>编码格式=============>
-	
+	//===========>UTF-8编码=============>
 	public static final String UTF_8="UTF-8";
 	
+	//===========>ISO-8859-1编码=============>
 	public static final String ISO_8859_1="ISO-8859-1";
 	
+	//===========>GBK编码=============>
 	public static final String GBK="GBK";
 	
 	//===========>token标识=============>
@@ -28,5 +28,11 @@ public class Constant {
 	
 	//===========>post方式请求==============>
 	public static final String POST="POST";
+	
+	//===========>xml格式==============>
+	public static final String XML="xml";
+	
+	//===========>json格式==============>
+	public static final String JSON="json";
 	
 }

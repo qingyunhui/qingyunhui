@@ -1,4 +1,4 @@
-package qing.yun.hui.common.struct.weather;
+package qing.yun.hui.common.utils.api;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +16,10 @@ import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import qing.yun.hui.common.struct.baidu.weather.City;
+import qing.yun.hui.common.struct.baidu.weather.Index;
+import qing.yun.hui.common.struct.baidu.weather.WeatherData;
+import qing.yun.hui.common.struct.baidu.weather.WeatherResponseData;
 import qing.yun.hui.common.utils.StringUtil;
 
 import com.alibaba.fastjson.JSONObject;
@@ -94,8 +98,8 @@ public class WeatherUtil {
      * @param ak 开发者密钥(必填项)
      * @return  ResponseData
      */  
-    public static ResponseData callBaiduWeatherByResponseData(String httpUrl,String location,String output,String ak) {  
-    	ResponseData rd=null;
+    public static WeatherResponseData callBaiduWeatherByResponseData(String httpUrl,String location,String output,String ak) {  
+    	WeatherResponseData rd=null;
     	if(StringUtil.isEmpty(httpUrl,location,ak)){
     		logger.error("=================>缺少要必要参数.");
     		return rd;
@@ -124,8 +128,8 @@ public class WeatherUtil {
      * @param json 待转换的json串
      * @return ResponseData 
      * */
-    private static ResponseData parseJson(String json){
-    	ResponseData responseData=new ResponseData();
+    private static WeatherResponseData parseJson(String json){
+    	WeatherResponseData responseData=new WeatherResponseData();
     	if(StringUtil.isEmpty(json)){
     		logger.error("待解释的josn串不能为空.");
     		return responseData;
@@ -138,8 +142,8 @@ public class WeatherUtil {
      * @param xml 待转换的xml 文档树
      * @return ResponseData 
      * */
-    private static ResponseData parseXml(String xml) {
-		ResponseData reponseData=new ResponseData();
+    private static WeatherResponseData parseXml(String xml) {
+		WeatherResponseData reponseData=new WeatherResponseData();
 		if(StringUtil.isEmpty(xml)){
 			logger.error("=============>待转换的xml文档树不能为null.");
 			return reponseData;
@@ -271,7 +275,7 @@ public class WeatherUtil {
     * @return  String
     */  
     public static String callBaiduWeatherByResponse(String httpUrl,String location,String output,String ak){
-    	ResponseData resData=callBaiduWeatherByResponseData(httpUrl, location, output, ak);
+    	WeatherResponseData resData=callBaiduWeatherByResponseData(httpUrl, location, output, ak);
     	if(null==resData){
     		return "暂无数据.";
     	}

@@ -1,4 +1,4 @@
-package qing.yun.hui.common.struct.weather;
+package qing.yun.hui.common.struct.baidu.weather;
 
 import java.io.Serializable;
 import java.util.List;
