@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /***
- ** @category 封装了天气预报的所有数据...
+ ** @category 封装了天气预报的所有响应数据...
  ** @author qing.yunhui
  ** @email: 280672161@qq.com
  ** @createTime: 2017年1月9日下午6:24:15

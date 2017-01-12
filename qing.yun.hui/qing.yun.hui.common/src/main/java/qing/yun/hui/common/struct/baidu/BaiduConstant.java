@@ -1,11 +1,11 @@
-package qing.yun.hui.common.struct.baidu.weather;
+package qing.yun.hui.common.struct.baidu;
 /***
- ** @category 请用一句话来描述其用途...
+ ** @category 百度api相关常量配置...
  ** @author qing.yunhui
  ** @email: 280672161@qq.com
- ** @createTime: 2017年1月10日下午2:54:56
+ ** @createTime: 2017年1月12日下午2:01:24
  **/
-public class WetherConstant {
+public class BaiduConstant {
 
 	/**
 	 * 百度天气预报url

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /***
- ** @category 请用一句话来描述其用途...
+ ** @category 天气预报详情...
  ** @author qing.yunhui
  ** @email: 280672161@qq.com
  ** @createTime: 2017年1月9日下午6:19:21
