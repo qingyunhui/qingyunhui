@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
 
 import qing.yun.hui.common.struct.baidu.weather.City;
 import qing.yun.hui.common.struct.baidu.weather.Index;
-import qing.yun.hui.common.struct.baidu.weather.WeatherData;
-import qing.yun.hui.common.struct.baidu.weather.WeatherResponseData;
+import qing.yun.hui.common.struct.baidu.weather.Weather;
+import qing.yun.hui.common.struct.baidu.weather.WeatherResponse;
 import qing.yun.hui.common.utils.StringUtil;
 
 import com.alibaba.fastjson.JSONObject;
@@ -98,8 +98,8 @@ public class WeatherUtil {
      * @param ak 开发者密钥(必填项)
      * @return  ResponseData
      */  
-    public static WeatherResponseData callBaiduWeatherByResponseData(String httpUrl,String location,String output,String ak) {  
-    	WeatherResponseData rd=null;
+    public static WeatherResponse callBaiduWeatherByResponseData(String httpUrl,String location,String output,String ak) {  
+    	WeatherResponse rd=null;
     	if(StringUtil.isEmpty(httpUrl,location,ak)){
     		logger.error("=================>缺少要必要参数.");
     		return rd;
@@ -128,8 +128,8 @@ public class WeatherUtil {
      * @param json 待转换的json串
      * @return ResponseData 
      * */
-    private static WeatherResponseData parseJson(String json){
-    	WeatherResponseData responseData=new WeatherResponseData();
+    private static WeatherResponse parseJson(String json){
+    	WeatherResponse responseData=new WeatherResponse();
     	if(StringUtil.isEmpty(json)){
     		logger.error("待解释的josn串不能为空.");
     		return responseData;
@@ -142,8 +142,8 @@ public class WeatherUtil {
      * @param xml 待转换的xml 文档树
      * @return ResponseData 
      * */
-    private static WeatherResponseData parseXml(String xml) {
-		WeatherResponseData reponseData=new WeatherResponseData();
+    private static WeatherResponse parseXml(String xml) {
+		WeatherResponse reponseData=new WeatherResponse();
 		if(StringUtil.isEmpty(xml)){
 			logger.error("=============>待转换的xml文档树不能为null.");
 			return reponseData;
@@ -164,7 +164,7 @@ public class WeatherUtil {
 			reponseData.setError(error);
 			City city=new City();
 			LinkedList<Index> indexs=new LinkedList<Index>();
-			LinkedList<WeatherData> weatherDatas=new LinkedList<WeatherData>();
+			LinkedList<Weather> weatherDatas=new LinkedList<Weather>();
 			//天气
 			List<?> dateList = null; // 用来存放日期
 			List<?> dayPictureUrlList = null; // 用来存放白天图片路径信息
@@ -195,7 +195,7 @@ public class WeatherUtil {
 					temperatureList = itemEle.elements("temperature");
 				}
 				for (int i = 0; i < dateList.size(); i++) { 
-					WeatherData weatherData=new WeatherData();
+					Weather weatherData=new Weather();
 					Element dateElement = (Element) dateList.get(i); 
 					Element dayPictureUrElement = (Element) dayPictureUrlList.get(i);
 					Element weatherElement = (Element) weatherList.get(i);
@@ -275,7 +275,7 @@ public class WeatherUtil {
     * @return  String
     */  
     public static String callBaiduWeatherByResponse(String httpUrl,String location,String output,String ak){
-    	WeatherResponseData resData=callBaiduWeatherByResponseData(httpUrl, location, output, ak);
+    	WeatherResponse resData=callBaiduWeatherByResponseData(httpUrl, location, output, ak);
     	if(null==resData){
     		return "暂无数据.";
     	}
@@ -283,12 +283,12 @@ public class WeatherUtil {
     	String _city=city.getCurrentCity();//当前城市
     	String _pm25=city.getPm25();
     	List<Index> indexs=city.getIndexs();//指数
-    	List<WeatherData> weatherDates=city.getWealtherDates();//天气情况;
+    	List<Weather> weatherDates=city.getWealtherDates();//天气情况;
     	StringBuffer sb=new StringBuffer();
     	sb.append("<h2>").append(_city).append("，指数：").append(_pm25).append("</h2>");
     	List<String> styleList=initStyle();
     	for(int i=0;i<weatherDates.size();i++){
-    		WeatherData weatherData=weatherDates.get(i);
+    		Weather weatherData=weatherDates.get(i);
     		Index index=indexs.get(i);
     		sb.append("<div  ").append(styleList.get(i)).append(">");
     		sb.append("<p>").append(weatherData.getDate()+"，").append(weatherData.getWeather()+"，").append(weatherData.getWind()).append("</p>");

@@ -13,7 +13,7 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
-public class WeatherData implements Serializable{
+public class Weather implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 

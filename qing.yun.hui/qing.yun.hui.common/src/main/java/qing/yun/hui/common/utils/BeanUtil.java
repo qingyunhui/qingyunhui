@@ -37,7 +37,7 @@ public class BeanUtil {
 			System.out.println("key:"+key+",value:"+value);
 		}*/
 	}
-
+	
 	/**
 	 * 遍历对象的属性，将非空属性的名称和值加入map中
 	 * @param object

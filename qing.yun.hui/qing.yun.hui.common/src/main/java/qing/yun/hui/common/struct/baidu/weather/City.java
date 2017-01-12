@@ -24,7 +24,7 @@ public class City implements Serializable{
 	
 	private List<Index> indexs;
 	
-	private List<WeatherData> wealtherDates;
+	private List<Weather> wealtherDates;
 	
 	
 	/*{"weather_data":[
