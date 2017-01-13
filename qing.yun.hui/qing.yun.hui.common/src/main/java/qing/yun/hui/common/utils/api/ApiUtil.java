@@ -19,7 +19,6 @@ import qing.yun.hui.common.struct.juhe.JuheEnum;
 import qing.yun.hui.common.struct.juhe.JuheResponse;
 import qing.yun.hui.common.struct.juhe.bus.busline.BuslineData;
 import qing.yun.hui.common.struct.juhe.bus.busline.BuslineResponse;
-import qing.yun.hui.common.struct.juhe.bus.busline.Stationdes;
 import qing.yun.hui.common.struct.juhe.bus.buslong.BusLongData;
 import qing.yun.hui.common.struct.juhe.bus.buslong.BusLongResponse;
 import qing.yun.hui.common.struct.juhe.film.ticket.H5FilmTicketResponse;
@@ -32,7 +31,6 @@ import qing.yun.hui.common.struct.juhe.phone.mobile.MobileResponse;
 import qing.yun.hui.common.struct.juhe.phone.telephone.CallerIDTelephoneResponse;
 import qing.yun.hui.common.struct.juhe.phone.telephone.TelephoneData;
 import qing.yun.hui.common.struct.juhe.robot.RobotResponse;
-import qing.yun.hui.common.struct.juhe.stock.StockResponse;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.PageData;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.WechatChoicenessData;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.WechatChoicenessResponse;
@@ -59,14 +57,13 @@ public class ApiUtil {
 //		System.out.println(JSONObject.toJSONString(callIdCardResponse("640202199411288672", Constant.JSON, Constant.GET)));
 //		System.out.println(JSONObject.toJSONString(callNewsTopResponse(JuheEnum.NewsTopType.TOP.getName(), Constant.JSON, Constant.GET)));
 //		System.out.println(JSONObject.toJSONString(callBusLongResponse("温州", Constant.JSON, Constant.GET)));
-//		System.out.println(JSONObject.toJSONString(callRobotResponse("妹妹好", Constant.JSON, Constant.GET)));
+//		System.out.println(JSONObject.toJSONString(callRobotResponse("妹妹好222", Constant.JSON, Constant.GET)));
 //		System.out.println(JSONObject.toJSONString(callH5FilmTicketResponse(Constant.JSON, Constant.GET)));
 //		System.out.println(JSONObject.toJSONString(callCallerIDTelephoneResponse("010-10010", Constant.JSON, Constant.GET)));
 //		System.out.println(JSONObject.toJSONString(callJokeDaquanResponse("desc", "1418745237", 1, 2,Constant.JSON, Constant.GET)));
 //		System.out.println(JSONObject.toJSONString(callWechatChoicenessResponse(1, 5, "json", "get")));
-		 
-		 String json=getStock("http://web.juhe.cn:8080/finance/stock/hs", "620ce93056969a5d44191f1a3d1fc951", "00001", 1, Constant.JSON, Constant.GET);
-		 System.out.println(json);
+		/* String json=getStock("http://web.juhe.cn:8080/finance/stock/hs", "620ce93056969a5d44191f1a3d1fc951", "00001", 1, Constant.JSON, Constant.GET);
+		 System.out.println(json);*/
 		/*BuslineResponse buslineResponse=callBuslineResponse("杭州", "156", Constant.JSON, Constant.GET);
 		 List<BuslineData> buslineDatas= buslineResponse.getBuslineDatas();
 		 for(BuslineData buslineData:buslineDatas){
@@ -75,6 +72,14 @@ public class ApiUtil {
 				 System.out.println(station.getCode()+","+station.getName());
 			 }
 		 }*/
+		String json= getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), JuheEnum.StockShort.HS, "sh601009", null, Constant.JSON, Constant.GET);
+		System.out.println(json);
+		
+		String hkJson= getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), JuheEnum.StockShort.HK, "00001", null, Constant.JSON, Constant.GET);
+		System.out.println(hkJson);
+		
+		String usaJson= getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), JuheEnum.StockShort.USA, "aapl", null, Constant.JSON, Constant.GET);
+		System.out.println(usaJson);
 	 }
 	 
 	 /**
@@ -317,42 +322,43 @@ public class ApiUtil {
 		 PageData pageData=JSONObject.parseObject(result, PageData.class);
 		 response.setPageData(pageData);
 		 return response;
-		 
 	 }
 	 
 	 /**
-	  * <p>股票数据</p>
+	  * <p>股票数据（包含了沪深股市，香港股市，美国股市数据每个股市对应的接口中不一样，但key是一样的）</p>
 	  * @param httpUrl 待请求的url 【y】
 	  * @param key  申请的key 【y】
-	  * @param gid 	股票编号，上海股市以sh开头，深圳股市以sz开头如：sh601009（type为0或者1时gid不是必须）【y】
+	  * @param stockShort 枚举类型{股市类型，如:沪深股市，香港股市，美国股市.}【y】
+	  * @param code 	股票编号，上海股市以sh开头，深圳股市以sz开头如：sh601009（type为0或者1时gid不是必须）【y】
 	  * @param type 0代表上证指数，1代表深证指数 【N】
 	  * @param dtype  返回的数据的格式，json或xml，默认为json 【N】
 	  * @param method 请求方式(get或post) ,默认为get【N】
 	  * @return 股票数据
 	  * */
-	 public static String getStock(String httpUrl,String key,String gid,Integer type,String dtype,String method){
-		 if(StringUtil.isEmpty(httpUrl,key,gid)){
-			 logger.error("=============>缺少必要参数，httpUrl，key，gid必填项。");
+	 public static String getStock(String httpUrl,String key,JuheEnum.StockShort stockShort,String code,Integer type,String dtype,String method){
+		 if(StringUtil.isEmpty(httpUrl,key,code) || null==stockShort){
+			 logger.error("=============>缺少必要参数，httpUrl，key，code必填项。");
 	    	 return null;
 		 }
 		 Map<String,Object> params=initMap(key, dtype);
-    	 params.put("gid", gid);
-    	 params.put("type", type);
+		 if(JuheEnum.StockShort.HK.getCode().equals(stockShort.getCode())){
+			 params.put(JuheEnum.StockShort.HK.getParameter(), code);
+			 httpUrl=httpUrl+JuheEnum.StockShort.HK.getCode();//香港 =HK
+		 }else if(JuheEnum.StockShort.HS.getCode().equals(stockShort.getCode())){
+			 params.put(JuheEnum.StockShort.HS.getParameter(), code);
+			 httpUrl=httpUrl+JuheEnum.StockShort.HS.getCode();//上海，深圳=HZ
+		 }else if(JuheEnum.StockShort.USA.getCode().equals(stockShort.getCode())){
+			 params.put(JuheEnum.StockShort.USA.getParameter(), code); 
+			 httpUrl=httpUrl+JuheEnum.StockShort.USA.getCode();//美国=USA
+		 }else{
+			 return null;
+		 }
+		 if(null!=type)params.put("type", type);
     	 try {
     		return HttpUtil.sendRequest(httpUrl, params,method);
 		 } catch (Exception e) {
 			logger.error("处理异常，异常原因：{}",new Object[]{JSONObject.toJSONString(e)});
 		 }
-		 return null;
-	 }
-	 
-	 //http://web.juhe.cn:8080/finance/stock/hs?gid=sh601009&key=您申请的APPKEY //沪深股市
-	 //http://web.juhe.cn:8080/finance/stock/hk?num=00001&key=您申请的APPKEY   //香港股市
-	 //http://web.juhe.cn:8080/finance/stock/usa?gid=aapl&key=您申请的APPKEY   //美国股市
-	 
-	 
-	 public static StockResponse callStockResponse(String gid,Integer type,String dtype,String method){
-		 
 		 return null;
 	 }
 	 

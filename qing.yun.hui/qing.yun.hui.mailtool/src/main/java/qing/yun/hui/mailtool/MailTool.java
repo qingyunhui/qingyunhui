@@ -124,4 +124,13 @@ public class MailTool {
 		}
 		return success;
     }
+    
+    public static void main(String[] args){
+    	try {
+			sendMail("what?", "没收到？", new String[]{"274788664@qq.com","280672161@qq.com"});
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }

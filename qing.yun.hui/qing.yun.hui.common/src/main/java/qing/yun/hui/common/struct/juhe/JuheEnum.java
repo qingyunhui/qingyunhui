@@ -214,16 +214,16 @@ public class JuheEnum {
 	
 	@Getter
 	public enum Stock implements ICommonEnum{
-		HTTP_URL_HS(0,"http://web.juhe.cn:8080/finance/stock/hs","hs","沪深股市【深圳，上海】"),
-		HTTP_URL_HK(0,"http://web.juhe.cn:8080/finance/stock/hk","hk","香港股市【香港】"),
-		HTTP_URL_USA(0,"http://web.juhe.cn:8080/finance/stock/usa","usa","美国股市【美国】"),
-		  //http://web.juhe.cn:8080/finance/stock/hs?gid=sh601009&key=您申请的APPKEY //沪深股市
-		 //http://web.juhe.cn:8080/finance/stock/hk?num=00001&key=您申请的APPKEY   //香港股市
+		//HTTP_URL_HS(0,"http://web.juhe.cn:8080/finance/stock/hs","hs","沪深股市【深圳，上海】"),
+		//HTTP_URL_HK(1,"http://web.juhe.cn:8080/finance/stock/hk","hk","香港股市【香港】"),
+		//HTTP_URL_USA(2,"http://web.juhe.cn:8080/finance/stock/usa","usa","美国股市【美国】"),
+		//http://web.juhe.cn:8080/finance/stock/hs?gid=sh601009&key=您申请的APPKEY //沪深股市
+		//http://web.juhe.cn:8080/finance/stock/hk?num=00001&key=您申请的APPKEY   //香港股市
 		//http://web.juhe.cn:8080/finance/stock/usa?gid=aapl&key=您申请的APPKEY   //美国股市
-		APP_KEY(1,"620ce93056969a5d44191f1a3d1fc951","应用APPKEY");//应用APPKEY
+		HTTP_URL(0,"http://web.juhe.cn:8080/finance/stock/","接口url"),//这里须要注意，根据不同类型，请自己手动拼接
+		APP_KEY(3,"620ce93056969a5d44191f1a3d1fc951","应用APPKEY");//应用APPKEY
 		private final int value;
 		private final String code;
-		private String shortName;//简称-用于查询，各股票
 	    private final String name;
 	    
 	    private Stock(int value, String code,String name) {
@@ -231,11 +231,22 @@ public class JuheEnum {
 	        this.code=code;
 	        this.name = name;
 	    }
+	}
+	
+	@Getter
+	public enum StockShort{
+		//股市简称
+		HS("hs","gid","沪深股市【深圳，上海】"),
+		HK("hk","num","香港股市【香港】"),
+		USA("usa","gid","美国股市【美国】");
+		
+		private final String code;//请求编码（接口地址url的后缀，须要手动拼接）
+		private final String parameter;//参数（接口址址url须要携带的参数，须要手动拼接）
+	    private final String name;//说明
 	    
-	    private Stock(int value, String code,String shortName,String name) {
-	        this.value = value;
+	    private StockShort(String code,String parameter,String name) {
 	        this.code=code;
-	        this.shortName=shortName;
+	        this.parameter=parameter;
 	        this.name = name;
 	    }
 	}

@@ -258,6 +258,7 @@ public class WeatherUtil {
      * @param args
      */
     public static void main(String[] args) {  
+    	
     	String httpUrl="http://api.map.baidu.com/telematics/v3/weather";
     	String location="杭州";
     	String output="xml";//json or xml
