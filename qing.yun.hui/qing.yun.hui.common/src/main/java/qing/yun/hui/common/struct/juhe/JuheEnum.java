@@ -14,173 +14,230 @@ public class JuheEnum {
 	@Getter
 	public enum Moble implements ICommonEnum{
 		
-		HTTP_URL(0,"http://apis.juhe.cn/mobile/get"),//接口请求地址
-		APP_KEY(1,"386497698e93fa097d9391f5d0153f9d");//应用APPKEY
+		HTTP_URL(0,"http://apis.juhe.cn/mobile/get","接口请求地址"),//接口请求地址
+		APP_KEY(1,"386497698e93fa097d9391f5d0153f9d","应用APPKEY");//应用APPKEY
 		
 		private final int value;
+		private final String code;
 	    private final String name;
 	    
-	    private Moble(int value, String name) {
+	    private Moble(int value, String code,String name) {
 	        this.value = value;
+	        this.code=code;
 	        this.name = name;
 	    }
-
-		public String getCode() {
-			return String.valueOf(value);
-		}
 	}
 	
 	@Getter
 	public enum Idcard implements ICommonEnum{
-		HTTP_URL(0,"http://apis.juhe.cn/idcard/index"),//接口请求地址
-		APP_KEY(1,"99838ed63ac14404b2c90b6435ef7b50");//应用APPKEY
+		HTTP_URL(0,"http://apis.juhe.cn/idcard/index","接口请求地址"),//接口请求地址
+		APP_KEY(1,"99838ed63ac14404b2c90b6435ef7b50","应用APPKEY");//应用APPKEY
 		
 		private final int value;
+		private final String code;
 	    private final String name;
 	    
-	    private Idcard(int value, String name) {
+	    private Idcard(int value, String code,String name) {
 	        this.value = value;
+	        this.code=code;
 	        this.name = name;
 	    }
-		public String getCode() {
-			return String.valueOf(value);
-		}
 	}
 	
 	@Getter
 	public enum NewsTop implements ICommonEnum{
-		HTTP_URL(0,"http://v.juhe.cn/toutiao/index"),//接口请求地址
-		APP_KEY(1,"d729a205c1b25536c3af3629d37adb8a");//应用APPKEY
+		HTTP_URL(0,"http://v.juhe.cn/toutiao/index","接口请求地址"),//接口请求地址
+		APP_KEY(1,"d729a205c1b25536c3af3629d37adb8a","应用APPKEY");//应用APPKEY
 		
 		private final int value;
+		private final String code;
 	    private final String name;
 	    
-	    private NewsTop(int value, String name) {
+	    private NewsTop(int value, String code,String name) {
 	        this.value = value;
+	        this.code=code;
 	        this.name = name;
 	    }
-		public String getCode() {
-			return String.valueOf(value);
-		}
+	}
+	@Getter
+	public enum NewsTopType implements ICommonEnum{
+		//新闻头条类型，
+		TOP(0,"top","头条"),
+		SHEHUI(1,"shehui","社会"),
+		GUONEI(2,"guonei","国内"),
+		GUOJI(3,"guoji","国际"),
+		YULE(4,"yule","娱乐"),
+		TIYU(5,"tiyu","体育"),
+		KEJI(6,"keji","科技"),
+		JUNSHI(7,"junshi","军事"),
+		CAIJING(8,"caijing","财经"),
+		SHISHANG(9,"shishang","时尚");
+		
+		private final int value;
+		private final String code;
+	    private final String name;
+	    
+	    private NewsTopType(int value, String code,String name) {
+	        this.value = value;
+	        this.code=code;
+	        this.name = name;
+	    }
 	}
 	
 	@Getter
 	public enum BusLong implements ICommonEnum{
-		HTTP_URL(0,"http://op.juhe.cn/onebox/bus/query"),//接口请求地址
-		APP_KEY(1,"7b38b91e69a83706de90ed154c01e0cd");//应用APPKEY
+		HTTP_URL(0,"http://op.juhe.cn/onebox/bus/query","接口请求地址"),//接口请求地址
+		APP_KEY(1,"7b38b91e69a83706de90ed154c01e0cd","应用APPKEY");//应用APPKEY
 		
 		private final int value;
+		private final String code;
 	    private final String name;
 	    
-	    private BusLong(int value, String name) {
+	    private BusLong(int value, String code,String name) {
 	        this.value = value;
+	        this.code=code;
 	        this.name = name;
 	    }
-		public String getCode() {
-			return String.valueOf(value);
-		}
+	}
+	
+	@Getter
+	public enum Busline implements ICommonEnum{
+		HTTP_URL(0,"http://op.juhe.cn/189/bus/busline","接口请求地址"),//接口请求地址
+		APP_KEY(1,"b895aabaa0f19ff0244602d1d2f371d8","应用APPKEY");//应用APPKEY
+		
+		private final int value;
+		private final String code;
+	    private final String name;
+	    
+	    private Busline(int value, String code,String name) {
+	        this.value = value;
+	        this.code=code;
+	        this.name = name;
+	    }
 	}
 	
 	@Getter
 	public enum Robot implements ICommonEnum{
-		HTTP_URL(0,"http://op.juhe.cn/robot/index"),//接口请求地址
-		APP_KEY(1,"cb026fcfc5ab6a53bd6d539bafb50601");//应用APPKEY
+		HTTP_URL(0,"http://op.juhe.cn/robot/index","接口请求地址"),//接口请求地址
+		APP_KEY(1,"cb026fcfc5ab6a53bd6d539bafb50601","应用APPKEY");//应用APPKEY
 		
 		private final int value;
+		private final String code;
 	    private final String name;
 	    
-	    private Robot(int value, String name) {
+	    private Robot(int value, String code,String name) {
 	        this.value = value;
+	        this.code=code;
 	        this.name = name;
 	    }
-		public String getCode() {
-			return String.valueOf(value);
-		}
 	}
 	
 	@Getter
 	public enum H5FileTicket implements ICommonEnum{
-		HTTP_URL(0,"http://v.juhe.cn/wepiao/query"),//接口请求地址
-		APP_KEY(1,"8e695f0e8a57e2c13e66639854cd4024");//应用APPKEY
+		HTTP_URL(0,"http://v.juhe.cn/wepiao/query","接口请求地址"),//接口请求地址
+		APP_KEY(1,"8e695f0e8a57e2c13e66639854cd4024","应用APPKEY");//应用APPKEY
 		
 		private final int value;
+		private final String code;
 	    private final String name;
 	    
-	    private H5FileTicket(int value, String name) {
+	    private H5FileTicket(int value, String code,String name) {
 	        this.value = value;
+	        this.code=code;
 	        this.name = name;
 	    }
-		public String getCode() {
-			return String.valueOf(value);
-		}
 	}
 	
 	@Getter
 	public enum CallerIDTelephone implements ICommonEnum{
-		HTTP_URL(0,"http://op.juhe.cn/onebox/phone/query"),//接口请求地址
-		APP_KEY(1,"2e492b8a7e753cf4c20d0c1eaaa0cc42");//应用APPKEY
+		HTTP_URL(0,"http://op.juhe.cn/onebox/phone/query","接口请求地址"),//接口请求地址
+		APP_KEY(1,"2e492b8a7e753cf4c20d0c1eaaa0cc42","应用APPKEY");//应用APPKEY
 		
 		private final int value;
+		private final String code;
 	    private final String name;
 	    
-	    private CallerIDTelephone(int value, String name) {
+	    private CallerIDTelephone(int value, String code,String name) {
 	        this.value = value;
+	        this.code=code;
 	        this.name = name;
 	    }
-		public String getCode() {
-			return String.valueOf(value);
-		}
 	}
 	
 	@Getter
 	public enum FootballLeague implements ICommonEnum{
-		HTTP_URL(0,"http://op.juhe.cn/onebox/football/league"),//接口请求地址
-		APP_KEY(1,"24e73160ab2784393659fd164667e22d");//应用APPKEY
+		HTTP_URL(0,"http://op.juhe.cn/onebox/football/league","接口请求地址"),//接口请求地址
+		APP_KEY(1,"24e73160ab2784393659fd164667e22d","应用APPKEY");//应用APPKEY
 		
 		private final int value;
+		private final String code;
 	    private final String name;
 	    
-	    private FootballLeague(int value, String name) {
+	    private FootballLeague(int value, String code,String name) {
 	        this.value = value;
+	        this.code=code;
 	        this.name = name;
 	    }
-		public String getCode() {
-			return String.valueOf(value);
-		}
 	}
 	
 	@Getter
 	public enum JokeDaquan implements ICommonEnum{
-		HTTP_URL(0,"http://japi.juhe.cn/joke/content/list.from"),//接口请求地址
-		APP_KEY(1,"22c487d591261f7841dc3d115a206ac1");//应用APPKEY
+		HTTP_URL(0,"http://japi.juhe.cn/joke/content/list.from","接口请求地址"),//接口请求地址
+		APP_KEY(1,"22c487d591261f7841dc3d115a206ac1","应用APPKEY");//应用APPKEY
 		
 		private final int value;
+		private final String code;
 	    private final String name;
 	    
-	    private JokeDaquan(int value, String name) {
+	    private JokeDaquan(int value, String code,String name) {
 	        this.value = value;
+	        this.code=code;
 	        this.name = name;
 	    }
-		public String getCode() {
-			return String.valueOf(value);
-		}
 	}
 	
 	@Getter
 	public enum WechatChoiceness implements ICommonEnum{
-		HTTP_URL(0,"http://v.juhe.cn/weixin/query"),//接口请求地址
-		APP_KEY(1,"0fbc40e9e6b62c0728e27bcde2aa752c");//应用APPKEY
+		HTTP_URL(0,"http://v.juhe.cn/weixin/query","接口请求地址"),//接口请求地址
+		APP_KEY(1,"0fbc40e9e6b62c0728e27bcde2aa752c","应用APPKEY");//应用APPKEY
 		
 		private final int value;
+		private final String code;
 	    private final String name;
 	    
-	    private WechatChoiceness(int value, String name) {
+	    private WechatChoiceness(int value, String code,String name) {
 	        this.value = value;
+	        this.code=code;
 	        this.name = name;
 	    }
-		public String getCode() {
-			return String.valueOf(value);
-		}
+	}
+	
+	@Getter
+	public enum Stock implements ICommonEnum{
+		HTTP_URL_HS(0,"http://web.juhe.cn:8080/finance/stock/hs","hs","沪深股市【深圳，上海】"),
+		HTTP_URL_HK(0,"http://web.juhe.cn:8080/finance/stock/hk","hk","香港股市【香港】"),
+		HTTP_URL_USA(0,"http://web.juhe.cn:8080/finance/stock/usa","usa","美国股市【美国】"),
+		  //http://web.juhe.cn:8080/finance/stock/hs?gid=sh601009&key=您申请的APPKEY //沪深股市
+		 //http://web.juhe.cn:8080/finance/stock/hk?num=00001&key=您申请的APPKEY   //香港股市
+		//http://web.juhe.cn:8080/finance/stock/usa?gid=aapl&key=您申请的APPKEY   //美国股市
+		APP_KEY(1,"620ce93056969a5d44191f1a3d1fc951","应用APPKEY");//应用APPKEY
+		private final int value;
+		private final String code;
+		private String shortName;//简称-用于查询，各股票
+	    private final String name;
+	    
+	    private Stock(int value, String code,String name) {
+	        this.value = value;
+	        this.code=code;
+	        this.name = name;
+	    }
+	    
+	    private Stock(int value, String code,String shortName,String name) {
+	        this.value = value;
+	        this.code=code;
+	        this.shortName=shortName;
+	        this.name = name;
+	    }
 	}
 	
 }
