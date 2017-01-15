@@ -55,6 +55,9 @@ public class StringUtil {
 			if(((String)obj).trim().length()==0){
 				return true;
 			}
+			if("[]".equals(obj)){
+				return true;
+			}
 		}else if(obj.getClass().isArray()){
 			if(Array.getLength(obj)==0){
 				return true;

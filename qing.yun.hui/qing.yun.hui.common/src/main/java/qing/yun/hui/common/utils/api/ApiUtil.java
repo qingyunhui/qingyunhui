@@ -31,12 +31,17 @@ import qing.yun.hui.common.struct.juhe.phone.mobile.MobileResponse;
 import qing.yun.hui.common.struct.juhe.phone.telephone.CallerIDTelephoneResponse;
 import qing.yun.hui.common.struct.juhe.phone.telephone.TelephoneData;
 import qing.yun.hui.common.struct.juhe.robot.RobotResponse;
+import qing.yun.hui.common.struct.juhe.stock.DapanData;
+import qing.yun.hui.common.struct.juhe.stock.GoPicture;
+import qing.yun.hui.common.struct.juhe.stock.StockData;
+import qing.yun.hui.common.struct.juhe.stock.StockResponse;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.PageData;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.WechatChoicenessData;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.WechatChoicenessResponse;
 import qing.yun.hui.common.utils.HttpUtil;
 import qing.yun.hui.common.utils.StringUtil;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 /***
@@ -72,14 +77,18 @@ public class ApiUtil {
 				 System.out.println(station.getCode()+","+station.getName());
 			 }
 		 }*/
-		String json= getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), JuheEnum.StockShort.HS, "sh601009", null, Constant.JSON, Constant.GET);
+		 
+		StockResponse response=callStockResponse(JuheEnum.StockShort.HK,"00001", null,  Constant.JSON, Constant.GET);
+		System.out.println(JSONObject.toJSONString(response));
+		String json= getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), JuheEnum.StockShort.HK, "00001", null, Constant.JSON, Constant.GET);
 		System.out.println(json);
+//		
+//		String hkJson= getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), JuheEnum.StockShort.HK, "00001", null, Constant.JSON, Constant.GET);
+//		System.out.println(hkJson);
+//		
+//		String usaJson= getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), JuheEnum.StockShort.USA, "aapl", null, Constant.JSON, Constant.GET);
+//		System.out.println(usaJson);
 		
-		String hkJson= getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), JuheEnum.StockShort.HK, "00001", null, Constant.JSON, Constant.GET);
-		System.out.println(hkJson);
-		
-		String usaJson= getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), JuheEnum.StockShort.USA, "aapl", null, Constant.JSON, Constant.GET);
-		System.out.println(usaJson);
 	 }
 	 
 	 /**
@@ -360,6 +369,53 @@ public class ApiUtil {
 			logger.error("处理异常，异常原因：{}",new Object[]{JSONObject.toJSONString(e)});
 		 }
 		 return null;
+	 }
+	 
+	 /**
+	  * <p>股票数据（包含了沪深股市，香港股市，美国股市数据每个股市对应的接口中不一样，但key是一样的）</p>
+	  * @deprecated <p>每个股市返回的json类型属性不一样，没有办法做到json到javaBean的映射，请通过调用getStock(...)方法由前台处理</p>
+	  * @param stockShort 枚举类型{股市类型，如:沪深股市，香港股市，美国股市.}【y】
+	  * @param code 	股票编号，上海股市以sh开头，深圳股市以sz开头如：sh601009（type为0或者1时gid不是必须）【y】
+	  * @param type 0代表上证指数，1代表深证指数 【N】
+	  * @param dtype  返回的数据的格式，json或xml，默认为json 【N】
+	  * @param method 请求方式(get或post) ,默认为get【N】
+	  * @return 股票数据
+	  * */
+	 public static StockResponse callStockResponse(JuheEnum.StockShort stockShort,String code,Integer type,String dtype,String method){
+		 StockResponse response=new StockResponse();
+		 String json=getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), stockShort, code, type, dtype, method);
+		 if(StringUtil.isEmpty(json)) return response;
+    	 if(Constant.XML.equalsIgnoreCase(dtype)){
+    		//TODO 
+    		return response;
+    	 }
+    	 JuheResponse juheResponse=JSONObject.parseObject(json, JuheResponse.class);
+    	 String result=juheResponse.getResult();
+    	 if(StringUtil.isEmpty(result)) return response;
+    	 if(!JuheConstant.resultcode.equals(juheResponse.getResultcode()))return response;
+    	 BeanUtils.copyProperties(juheResponse,response);
+    	 JSONArray array=JSONObject.parseArray(result);
+    	 for(int i=0;i<array.size();i++){
+    		 String dataStr=array.getString(i);
+    		 JSONObject object=JSONObject.parseObject(dataStr);
+    		 if(null==object) continue;
+    		 String data=object.getString("data");
+    		 String dapandata=object.getString("dapandata");
+    		 String gopicture=object.getString("gopicture");
+    		 if(!StringUtil.isEmpty(data)){
+    			 StockData stockData=JSONObject.parseObject(data, StockData.class);
+    			 response.setStockData(stockData);
+    		 }
+    		 if(!StringUtil.isEmpty(dapandata)){
+    			 DapanData dapanData=JSONObject.parseObject(dapandata, DapanData.class);
+    			 response.setDapanData(dapanData);
+    		 }
+    		 if(!StringUtil.isEmpty(gopicture)){
+    			 GoPicture goPicture=JSONObject.parseObject(gopicture,GoPicture.class);
+    			 response.setGoPicture(goPicture);
+    		 }
+    	 }
+    	 return response;
 	 }
 	 
 	 /**
