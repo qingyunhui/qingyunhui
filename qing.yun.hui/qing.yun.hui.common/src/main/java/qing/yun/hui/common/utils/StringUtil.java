@@ -466,12 +466,8 @@ public class StringUtil {
 //			boolean isEmpty=isEmpty(22,null);
 //			System.out.println(isEmpty);
 			
-			String tableName=getTableName("SysUser");
-			System.out.println("tableName:"+tableName);
-			
-			String tbname=getTableName(SortUtil.class);
-			
-			System.out.println("tbname:"+tbname);
+			String[] objects=new String[]{"22"};
+			System.out.println(isEmpty(objects));
 		}
 
 }

@@ -31,17 +31,14 @@ import qing.yun.hui.common.struct.juhe.phone.mobile.MobileResponse;
 import qing.yun.hui.common.struct.juhe.phone.telephone.CallerIDTelephoneResponse;
 import qing.yun.hui.common.struct.juhe.phone.telephone.TelephoneData;
 import qing.yun.hui.common.struct.juhe.robot.RobotResponse;
-import qing.yun.hui.common.struct.juhe.stock.DapanData;
-import qing.yun.hui.common.struct.juhe.stock.GoPicture;
-import qing.yun.hui.common.struct.juhe.stock.StockData;
-import qing.yun.hui.common.struct.juhe.stock.StockResponse;
+import qing.yun.hui.common.struct.juhe.video.searching.SearchingData;
+import qing.yun.hui.common.struct.juhe.video.searching.VideoSearchingResponse;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.PageData;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.WechatChoicenessData;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.WechatChoicenessResponse;
 import qing.yun.hui.common.utils.HttpUtil;
 import qing.yun.hui.common.utils.StringUtil;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 /***
@@ -54,41 +51,69 @@ public class ApiUtil {
 	
 	 private static Logger logger=LoggerFactory.getLogger(ApiUtil.class);
 	 
-	 //TODO 股票数据，NBA赛事， 影视影讯检索，足球联赛
+	 //TODO 股票数据，NBA赛事，足球联赛 ，这三个因为返回的json串有点杂乱无章，就没有做映射了...
 	
 	 public static void main(String[]args){
-		/**投资去，提现，386.66RMB*/
-//		System.out.println(JSONObject.toJSONString(callMobileResponse("18665300640", Constant.JSON, Constant.GET)));
-//		System.out.println(JSONObject.toJSONString(callIdCardResponse("640202199411288672", Constant.JSON, Constant.GET)));
-//		System.out.println(JSONObject.toJSONString(callNewsTopResponse(JuheEnum.NewsTopType.TOP.getName(), Constant.JSON, Constant.GET)));
-//		System.out.println(JSONObject.toJSONString(callBusLongResponse("温州", Constant.JSON, Constant.GET)));
-//		System.out.println(JSONObject.toJSONString(callRobotResponse("妹妹好222", Constant.JSON, Constant.GET)));
-//		System.out.println(JSONObject.toJSONString(callH5FilmTicketResponse(Constant.JSON, Constant.GET)));
-//		System.out.println(JSONObject.toJSONString(callCallerIDTelephoneResponse("010-10010", Constant.JSON, Constant.GET)));
-//		System.out.println(JSONObject.toJSONString(callJokeDaquanResponse("desc", "1418745237", 1, 2,Constant.JSON, Constant.GET)));
-//		System.out.println(JSONObject.toJSONString(callWechatChoicenessResponse(1, 5, "json", "get")));
-		/* String json=getStock("http://web.juhe.cn:8080/finance/stock/hs", "620ce93056969a5d44191f1a3d1fc951", "00001", 1, Constant.JSON, Constant.GET);
-		 System.out.println(json);*/
-		/*BuslineResponse buslineResponse=callBuslineResponse("杭州", "156", Constant.JSON, Constant.GET);
-		 List<BuslineData> buslineDatas= buslineResponse.getBuslineDatas();
-		 for(BuslineData buslineData:buslineDatas){
-			 List<Stationdes> stationdes= buslineData.getStationdesList();
-			 for(Stationdes station:stationdes){
-				 System.out.println(station.getCode()+","+station.getName());
-			 }
-		 }*/
-		 
-		StockResponse response=callStockResponse(JuheEnum.StockShort.HK,"00001", null,  Constant.JSON, Constant.GET);
-		System.out.println(JSONObject.toJSONString(response));
-		String json= getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), JuheEnum.StockShort.HK, "00001", null, Constant.JSON, Constant.GET);
-		System.out.println(json);
-//		
-//		String hkJson= getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), JuheEnum.StockShort.HK, "00001", null, Constant.JSON, Constant.GET);
-//		System.out.println(hkJson);
-//		
-//		String usaJson= getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), JuheEnum.StockShort.USA, "aapl", null, Constant.JSON, Constant.GET);
-//		System.out.println(usaJson);
 		
+	 }
+	 
+	 /**
+	  * <p>足球联赛</p>
+	  * @param httpUrl  待请求的url  【y】
+	  * @param key  	申请的key    【y】
+	  * @param league	联赛名称(提供英超，西甲，德甲，意甲，法甲，中超 等赛程)【y】
+	  * @param dtype  返回的数据的格式，json或xml，默认为json 【N】
+	  * @param method 请求方式(get或post) ,默认为get【N】
+	  * @return 足球联赛
+	  * */
+	 public static String getFootballLeague(String httpUrl,String key,String league,String dtype,String method){
+		 if(StringUtil.isEmpty(httpUrl,key,league)){
+			 logger.error("=============>缺少必要参数，httpUrl，key，league必填项。");
+	    	 return null;
+		 }
+		 Map<String,Object> params=initMap(key, dtype);
+    	 params.put("league", league);
+    	 try {
+    		return HttpUtil.sendRequest(httpUrl, params,method);
+		 } catch (Exception e) {
+			logger.error("处理异常，异常原因：{}",new Object[]{JSONObject.toJSONString(e)});
+		 }
+		 return null;
+	 }
+	 
+	 /**
+	  * <p>股票数据（包含了沪深股市，香港股市，美国股市数据每个股市对应的接口中不一样，但key是一样的）</p>
+	  * @param stockShort 枚举类型{股市类型，如:沪深股市，香港股市，美国股市.}【y】
+	  * @param code 	股票编号，上海股市以sh开头，深圳股市以sz开头如：sh601009（type为0或者1时gid不是必须）【y】
+	  * @param type 0代表上证指数，1代表深证指数 【N】
+	  * @param dtype  返回的数据的格式，json或xml，默认为json 【N】
+	  * @param method 请求方式(get或post) ,默认为get【N】
+	  * @return 股票数据
+	  * */
+	 public static String getStock(JuheEnum.StockShort stockShort,String code,Integer type,String dtype,String method){
+		return intStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), stockShort, code, type, dtype, method);
+	 }
+	 
+	 /**
+	  * <p>NBA赛事</p>
+	  * @param httpUrl 待请求的url 【y】
+	  * @param key  	申请的key 【y】
+	  * @param dtype  返回的数据的格式，json或xml，默认为json 【N】
+	  * @param method 请求方式(get或post) ,默认为get【N】
+	  * @return NBA赛事
+	  * */
+	 public static String getNBACompetition(String httpUrl,String key,String dtype,String method){
+		 if(StringUtil.isEmpty(httpUrl,key)){
+			 logger.error("=============>缺少必要参数，httpUrl，key必填项。");
+	    	 return null;
+		 }
+		 Map<String,Object> params=initMap(key, dtype);
+    	 try {
+    		return HttpUtil.sendRequest(httpUrl, params,method);
+		 } catch (Exception e) {
+			logger.error("处理异常，异常原因：{}",new Object[]{JSONObject.toJSONString(e)});
+		 }
+		 return null;
 	 }
 	 
 	 /**
@@ -190,48 +215,6 @@ public class ApiUtil {
 	 }
 	 
 	 /**
-	  * <p>足球联赛</p>
-	  * @param httpUrl  待请求的url  【y】
-	  * @param key  	申请的key    【y】
-	  * @param league	联赛名称(提供英超，西甲，德甲，意甲，法甲，中超 等赛程)【y】
-	  * @param dtype  返回的数据的格式，json或xml，默认为json 【N】
-	  * @param method 请求方式(get或post) ,默认为get【N】
-	  * @return 足球联赛
-	  * */
-	 private static String getFootballLeague(String httpUrl,String key,String league,String dtype,String method){
-		 if(StringUtil.isEmpty(httpUrl,key,league)){
-			 logger.error("=============>缺少必要参数，httpUrl，key，league必填项。");
-	    	 return null;
-		 }
-		 Map<String,Object> params=initMap(key, dtype);
-    	 params.put("league", league);
-    	 try {
-    		return HttpUtil.sendRequest(httpUrl, params,method);
-		 } catch (Exception e) {
-			logger.error("处理异常，异常原因：{}",new Object[]{JSONObject.toJSONString(e)});
-		 }
-		 return null;
-	 }
-	 
-	 /*public static String callFootballLeagueResponse(String league,String dtype,String method){
-		 RobotResponse robotResponse=null;
-    	 String json=getFootballLeague(JuheEnum.FootballLeague.HTTP_URL.getName(), JuheEnum.FootballLeague.APP_KEY.getName(), league, dtype, method);
-    	 if(StringUtil.isEmpty(json)) return robotResponse;
-    	 if(Constant.XML.equalsIgnoreCase(dtype)){
-    		//TODO 
-    		return robotResponse;
-    	 }
-    	 JuheResponse juheResponse=JSONObject.parseObject(json, JuheResponse.class);
-    	 JSONObject jsonObj= JSONObject.parseObject(json);
-    	 String result=jsonObj.getString("result");
-    	 if(StringUtil.isEmpty(result)) return robotResponse;
-    	 robotResponse=JSONObject.parseObject(result, RobotResponse.class);
-    	 robotResponse.setResult(result);
-    	 BeanUtils.copyProperties(juheResponse,robotResponse);
-    	 return robotResponse;
-	 }*/
-	 
-	 /**
 	  * <p>影视影讯检索</p>
 	  * @param httpUrl  待请求的url  【y】
 	  * @param key  	申请的key    【y】
@@ -255,26 +238,23 @@ public class ApiUtil {
 		 return null;
 	 }
 	 
-	 /**
-	  * <p>NBA赛事</p>
-	  * @param httpUrl 待请求的url 【y】
-	  * @param key  	申请的key 【y】
-	  * @param dtype  返回的数据的格式，json或xml，默认为json 【N】
-	  * @param method 请求方式(get或post) ,默认为get【N】
-	  * @return NBA赛事
-	  * */
-	 public static String getNBACompetition(String httpUrl,String key,String dtype,String method){
-		 if(StringUtil.isEmpty(httpUrl,key)){
-			 logger.error("=============>缺少必要参数，httpUrl，key必填项。");
-	    	 return null;
+	 public static VideoSearchingResponse callVideoSearchingResponse(String q,String dtype,String method){
+		 VideoSearchingResponse response=null;
+		 String json=getVideoSearching(JuheEnum.VideoSearching.HTTP_URL.getCode(), JuheEnum.VideoSearching.APP_KEY.getCode(),q,dtype,method);
+		 if(StringUtil.isEmpty(json)) return response;
+		 if(Constant.XML.equalsIgnoreCase(dtype)){
+			//TODO 
+			return response;
 		 }
-		 Map<String,Object> params=initMap(key, dtype);
-    	 try {
-    		return HttpUtil.sendRequest(httpUrl, params,method);
-		 } catch (Exception e) {
-			logger.error("处理异常，异常原因：{}",new Object[]{JSONObject.toJSONString(e)});
-		 }
-		 return null;
+		 JuheResponse juheResponse=JSONObject.parseObject(json, JuheResponse.class);
+		 String result=juheResponse.getResult();
+		 if(StringUtil.isEmpty(result)) return response;
+		 SearchingData searchingData=JSONObject.parseObject(result, SearchingData.class);
+		 if(null==searchingData) return response;
+		 if(null==response)response=new VideoSearchingResponse();
+		 BeanUtils.copyProperties(juheResponse,response);
+		 response.setSearchingData(searchingData);
+		 return response;
 	 }
 	 
 	 /**
@@ -331,91 +311,6 @@ public class ApiUtil {
 		 PageData pageData=JSONObject.parseObject(result, PageData.class);
 		 response.setPageData(pageData);
 		 return response;
-	 }
-	 
-	 /**
-	  * <p>股票数据（包含了沪深股市，香港股市，美国股市数据每个股市对应的接口中不一样，但key是一样的）</p>
-	  * @param httpUrl 待请求的url 【y】
-	  * @param key  申请的key 【y】
-	  * @param stockShort 枚举类型{股市类型，如:沪深股市，香港股市，美国股市.}【y】
-	  * @param code 	股票编号，上海股市以sh开头，深圳股市以sz开头如：sh601009（type为0或者1时gid不是必须）【y】
-	  * @param type 0代表上证指数，1代表深证指数 【N】
-	  * @param dtype  返回的数据的格式，json或xml，默认为json 【N】
-	  * @param method 请求方式(get或post) ,默认为get【N】
-	  * @return 股票数据
-	  * */
-	 public static String getStock(String httpUrl,String key,JuheEnum.StockShort stockShort,String code,Integer type,String dtype,String method){
-		 if(StringUtil.isEmpty(httpUrl,key,code) || null==stockShort){
-			 logger.error("=============>缺少必要参数，httpUrl，key，code必填项。");
-	    	 return null;
-		 }
-		 Map<String,Object> params=initMap(key, dtype);
-		 if(JuheEnum.StockShort.HK.getCode().equals(stockShort.getCode())){
-			 params.put(JuheEnum.StockShort.HK.getParameter(), code);
-			 httpUrl=httpUrl+JuheEnum.StockShort.HK.getCode();//香港 =HK
-		 }else if(JuheEnum.StockShort.HS.getCode().equals(stockShort.getCode())){
-			 params.put(JuheEnum.StockShort.HS.getParameter(), code);
-			 httpUrl=httpUrl+JuheEnum.StockShort.HS.getCode();//上海，深圳=HZ
-		 }else if(JuheEnum.StockShort.USA.getCode().equals(stockShort.getCode())){
-			 params.put(JuheEnum.StockShort.USA.getParameter(), code); 
-			 httpUrl=httpUrl+JuheEnum.StockShort.USA.getCode();//美国=USA
-		 }else{
-			 return null;
-		 }
-		 if(null!=type)params.put("type", type);
-    	 try {
-    		return HttpUtil.sendRequest(httpUrl, params,method);
-		 } catch (Exception e) {
-			logger.error("处理异常，异常原因：{}",new Object[]{JSONObject.toJSONString(e)});
-		 }
-		 return null;
-	 }
-	 
-	 /**
-	  * <p>股票数据（包含了沪深股市，香港股市，美国股市数据每个股市对应的接口中不一样，但key是一样的）</p>
-	  * @deprecated <p>每个股市返回的json类型属性不一样，没有办法做到json到javaBean的映射，请通过调用getStock(...)方法由前台处理</p>
-	  * @param stockShort 枚举类型{股市类型，如:沪深股市，香港股市，美国股市.}【y】
-	  * @param code 	股票编号，上海股市以sh开头，深圳股市以sz开头如：sh601009（type为0或者1时gid不是必须）【y】
-	  * @param type 0代表上证指数，1代表深证指数 【N】
-	  * @param dtype  返回的数据的格式，json或xml，默认为json 【N】
-	  * @param method 请求方式(get或post) ,默认为get【N】
-	  * @return 股票数据
-	  * */
-	 public static StockResponse callStockResponse(JuheEnum.StockShort stockShort,String code,Integer type,String dtype,String method){
-		 StockResponse response=new StockResponse();
-		 String json=getStock(JuheEnum.Stock.HTTP_URL.getCode(), JuheEnum.Stock.APP_KEY.getCode(), stockShort, code, type, dtype, method);
-		 if(StringUtil.isEmpty(json)) return response;
-    	 if(Constant.XML.equalsIgnoreCase(dtype)){
-    		//TODO 
-    		return response;
-    	 }
-    	 JuheResponse juheResponse=JSONObject.parseObject(json, JuheResponse.class);
-    	 String result=juheResponse.getResult();
-    	 if(StringUtil.isEmpty(result)) return response;
-    	 if(!JuheConstant.resultcode.equals(juheResponse.getResultcode()))return response;
-    	 BeanUtils.copyProperties(juheResponse,response);
-    	 JSONArray array=JSONObject.parseArray(result);
-    	 for(int i=0;i<array.size();i++){
-    		 String dataStr=array.getString(i);
-    		 JSONObject object=JSONObject.parseObject(dataStr);
-    		 if(null==object) continue;
-    		 String data=object.getString("data");
-    		 String dapandata=object.getString("dapandata");
-    		 String gopicture=object.getString("gopicture");
-    		 if(!StringUtil.isEmpty(data)){
-    			 StockData stockData=JSONObject.parseObject(data, StockData.class);
-    			 response.setStockData(stockData);
-    		 }
-    		 if(!StringUtil.isEmpty(dapandata)){
-    			 DapanData dapanData=JSONObject.parseObject(dapandata, DapanData.class);
-    			 response.setDapanData(dapanData);
-    		 }
-    		 if(!StringUtil.isEmpty(gopicture)){
-    			 GoPicture goPicture=JSONObject.parseObject(gopicture,GoPicture.class);
-    			 response.setGoPicture(goPicture);
-    		 }
-    	 }
-    	 return response;
 	 }
 	 
 	 /**
@@ -805,6 +700,46 @@ public class ApiUtil {
         }
         return new Date();
     }
+    
+    //============================================>以下为私有方法，不能外提供====================================================>
+    
+    /**
+	  * <p>股票数据（包含了沪深股市，香港股市，美国股市数据每个股市对应的接口中不一样，但key是一样的）</p>
+	  * @param httpUrl 待请求的url 【y】
+	  * @param key  申请的key 【y】
+	  * @param stockShort 枚举类型{股市类型，如:沪深股市，香港股市，美国股市.}【y】
+	  * @param code 	股票编号，上海股市以sh开头，深圳股市以sz开头如：sh601009（type为0或者1时gid不是必须）【y】
+	  * @param type 0代表上证指数，1代表深证指数 【N】
+	  * @param dtype  返回的数据的格式，json或xml，默认为json 【N】
+	  * @param method 请求方式(get或post) ,默认为get【N】
+	  * @return 股票数据
+	  * */
+	 private static String intStock(String httpUrl,String key,JuheEnum.StockShort stockShort,String code,Integer type,String dtype,String method){
+		 if(StringUtil.isEmpty(httpUrl,key,code) || null==stockShort){
+			 logger.error("=============>缺少必要参数，httpUrl，key，code必填项。");
+	    	 return null;
+		 }
+		 Map<String,Object> params=initMap(key, dtype);
+		 if(JuheEnum.StockShort.HK.getCode().equals(stockShort.getCode())){
+			 params.put(JuheEnum.StockShort.HK.getParameter(), code);
+			 httpUrl=httpUrl+JuheEnum.StockShort.HK.getCode();//香港 =HK
+		 }else if(JuheEnum.StockShort.HS.getCode().equals(stockShort.getCode())){
+			 params.put(JuheEnum.StockShort.HS.getParameter(), code);
+			 httpUrl=httpUrl+JuheEnum.StockShort.HS.getCode();//上海，深圳=HZ
+		 }else if(JuheEnum.StockShort.USA.getCode().equals(stockShort.getCode())){
+			 params.put(JuheEnum.StockShort.USA.getParameter(), code); 
+			 httpUrl=httpUrl+JuheEnum.StockShort.USA.getCode();//美国=USA
+		 }else{
+			 return null;
+		 }
+		 if(null!=type)params.put("type", type);
+   	 try {
+   		return HttpUtil.sendRequest(httpUrl, params,method);
+		 } catch (Exception e) {
+			logger.error("处理异常，异常原因：{}",new Object[]{JSONObject.toJSONString(e)});
+		 }
+		 return null;
+	 }
     
     private static Map<String,Object> initMap(String key,String dtype){
     	Map<String,Object> map=new HashMap<String, Object>();

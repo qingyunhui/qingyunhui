@@ -221,7 +221,7 @@ public class JuheEnum {
 		//http://web.juhe.cn:8080/finance/stock/hk?num=00001&key=您申请的APPKEY   //香港股市
 		//http://web.juhe.cn:8080/finance/stock/usa?gid=aapl&key=您申请的APPKEY   //美国股市
 		HTTP_URL(0,"http://web.juhe.cn:8080/finance/stock/","接口url"),//这里须要注意，根据不同类型，请自己手动拼接
-		APP_KEY(3,"620ce93056969a5d44191f1a3d1fc951","应用APPKEY");//应用APPKEY
+		APP_KEY(1,"620ce93056969a5d44191f1a3d1fc951","应用APPKEY");//应用APPKEY
 		private final int value;
 		private final String code;
 	    private final String name;
@@ -251,4 +251,33 @@ public class JuheEnum {
 	    }
 	}
 	
+	@Getter
+	public enum NBAMatch{
+		HTTP_URL(0,"http://op.juhe.cn/onebox/basketball/nba","接口url"),
+		APP_KEY(1,"cd4d7693fd337f9c657026825d522a8f","应用APPKEY");
+		private final int value;
+		private final String code;
+	    private final String name;
+	    
+	    private NBAMatch(int value, String code,String name) {
+	        this.value = value;
+	        this.code=code;
+	        this.name = name;
+	    }
+	}
+	
+	@Getter
+	public enum VideoSearching{
+		HTTP_URL(0,"http://op.juhe.cn/onebox/movie/video","接口url"),
+		APP_KEY(1,"f2474e126ceba753ce9dd2a924bc8daf","应用APPKEY");
+		private final int value;
+		private final String code;
+	    private final String name;
+	    
+	    private VideoSearching(int value, String code,String name) {
+	        this.value = value;
+	        this.code=code;
+	        this.name = name;
+	    }
+	}
 }

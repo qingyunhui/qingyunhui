@@ -1,13 +1,9 @@
 package qing.yun.hui.common.utils.api;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -16,10 +12,12 @@ import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import qing.yun.hui.common.constants.Constant;
 import qing.yun.hui.common.struct.baidu.weather.City;
 import qing.yun.hui.common.struct.baidu.weather.Index;
 import qing.yun.hui.common.struct.baidu.weather.Weather;
 import qing.yun.hui.common.struct.baidu.weather.WeatherResponse;
+import qing.yun.hui.common.utils.HttpUtil;
 import qing.yun.hui.common.utils.StringUtil;
 
 import com.alibaba.fastjson.JSONObject;
@@ -30,65 +28,6 @@ import com.alibaba.fastjson.JSONObject;
 public class WeatherUtil {
 	
 	public static Logger logger =LoggerFactory.getLogger(WeatherUtil.class);
-    
-     /** 
-     * 发起http get请求获取网页源代码 
-     * @param requestUrl 请求地址
-     * @return             
-     */  
-    private static String httpRequest(String requestUrl) {  
-        StringBuffer buffer = null;  
-        BufferedReader bufferedReader = null;
-        InputStreamReader inputStreamReader = null;
-        InputStream inputStream = null;
-        HttpURLConnection httpUrlConn = null;
-        try {  
-            // 建立get请求
-            URL url = new URL(requestUrl);  
-            httpUrlConn = (HttpURLConnection) url.openConnection();  
-            httpUrlConn.setDoInput(true);  
-            httpUrlConn.setRequestMethod("GET");  
-            // 获取输入流  
-            inputStream = httpUrlConn.getInputStream();  
-            inputStreamReader = new InputStreamReader(inputStream, "utf-8");  
-            bufferedReader = new BufferedReader(inputStreamReader);  
-            // 从输入流读取结果
-            buffer = new StringBuffer();  
-            String str = null;  
-            while ((str = bufferedReader.readLine()) != null) {  
-                buffer.append(str);  
-            }  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        }  finally {
-            // 释放资源
-            if(bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if(inputStreamReader != null){
-                try {
-                    inputStreamReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if(inputStream != null){
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if(httpUrlConn != null){
-                httpUrlConn.disconnect();  
-            }
-        }
-        return buffer.toString();  
-    }  
     
     /** 
      * <p>封装调用远程接口后的data</p>
@@ -104,14 +43,16 @@ public class WeatherUtil {
     		logger.error("=================>缺少要必要参数.");
     		return rd;
     	}
-    	StringBuffer sb=new StringBuffer();
-    	sb.append(httpUrl).append("?").append("location=").append(location).append("&output=").append(output).append("&ak=").append(ak);
-    	String html=httpRequest(sb.toString());
+    	Map<String,Object> param=new HashMap<String,Object>();
+    	param.put("location", location);
+		param.put("output", output);
+		param.put("ak", ak);
     	try {
+    		String response=HttpUtil.sendRequest(httpUrl, param, Constant.GET);
     		if("xml".equals(output)){
-    			rd=parseXml(html);
+    			rd=parseXml(response);
     		}else if("json".equals(output)){
-    			rd=parseJson(html);
+    			rd=parseJson(response);
     		}else{
     			logger.error("==================>指定输出格式有误.");
     			return rd;
