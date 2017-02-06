@@ -10,11 +10,11 @@ import java.math.RoundingMode;
 public class Test {
 	
 	public static void main(String[] args) throws InterruptedException{
-		int investDay=90;//投资天数
-		int investMoney=50000;// 投资金额
-		BigDecimal rate =new BigDecimal(0.10);//投资年华率
+		int investDay=120;//投资天数
+		int investMoney=60000;// 投资金额
+		BigDecimal rate =new BigDecimal(0.08);//投资年华率
 		System.out.println("================>活期<====================");
-		System.out.println("投资金额："+investMoney+"元RMB，年化率："+rate.multiply(new BigDecimal(100)).setScale(0,RoundingMode.DOWN)+"%，投资天数为："+investDay+"。");
+		System.out.println("投资金额："+investMoney+"元RMB，年化率："+rate.multiply(new BigDecimal(100)).setScale(0,RoundingMode.DOWN)+"%，投资天数为："+investDay+"天。");
 		BigDecimal revenue=getRevenue(investDay, investMoney, rate);
 		BigDecimal totalRevenue=new BigDecimal(investMoney).add(revenue);
 		System.out.println("活期投资"+investDay+"天收益为："+revenue.toString()+"元RMB，总收益为（本金+收益）："+totalRevenue.toString()+"元RMB。");
@@ -31,23 +31,10 @@ public class Test {
 	 * @param rate	投资年华率
 	 * @return 每年的收益（利息）
 	 * */
-	public static BigDecimal getInvestYear(int investMoney,BigDecimal rate){
-		BigDecimal _investMoney=new BigDecimal(investMoney);
-		BigDecimal investYear=_investMoney.multiply(rate).setScale(2,RoundingMode.DOWN);
-		return investYear;
-	}
-	
-	/**
-	 * <p>计算每年的收益</p>
-	 * @param investMoney 投资金额
-	 * @param rate	投资年华率
-	 * @return 每年的收益（利息）
-	 * */
 	public static BigDecimal getInvestYear(BigDecimal investMoney,BigDecimal rate){
 		BigDecimal investYear=investMoney.multiply(rate).setScale(2,RoundingMode.DOWN);
 		return investYear;
 	}
-	
 	
 	/**
 	 * <p>计算每天的收益</p>
@@ -67,16 +54,14 @@ public class Test {
 	 * @return 收益+本金
 	 * */
 	public static BigDecimal getRevenue(int investDay,int investMoney,BigDecimal rate){
-		//3.计算复投
 		BigDecimal money=new BigDecimal(investMoney);//当前投资金额
 		BigDecimal totalRevenue=new BigDecimal("0");//总收益
-		
 		BigDecimal yearInvest=new BigDecimal(0);//年收益(利息)
 		BigDecimal investday=new BigDecimal(0);//每天的收益
 		for(int i=0;i<investDay;i++){
 			yearInvest=getInvestYear(money, rate);//年收益
 			investday=getInvestDays(yearInvest);//每天的收益
-			totalRevenue=totalRevenue.add(investday);
+			totalRevenue=totalRevenue.add(investday);//计算复投(本金+前一天的收益)
 			money=money.add(totalRevenue);
 			System.out.println("第"+(i+1)+"天收益:"+investday+"元。");
 		}
