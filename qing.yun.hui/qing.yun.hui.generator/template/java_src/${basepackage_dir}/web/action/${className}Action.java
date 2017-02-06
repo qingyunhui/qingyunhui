@@ -12,7 +12,7 @@ import ${basepackage}.web.vo.${className}Form;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.com.yuzhushui.movie.common.base.BaseAction;
+import cn.com.yuzhushui.wesocket.common.base.BaseAction;
 
 <#include "/java_imports.include">
 <#include "/macro.include"/>

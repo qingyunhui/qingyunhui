@@ -3,7 +3,7 @@
 
 package ${basepackage}.biz.dao;
 
-import cn.com.yuzhushui.movie.common.base.BaseDao;
+import cn.com.yuzhushui.wesocket.common.base.BaseDao;
 import ${basepackage}.biz.entity.${className};
 
 <#include "/java_imports.include">

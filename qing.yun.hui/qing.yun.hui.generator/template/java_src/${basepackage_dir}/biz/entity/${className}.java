@@ -2,7 +2,7 @@ package ${basepackage}.biz.entity;
 
 import java.util.Date;
 
-import cn.com.yuzhushui.movie.common.base.BaseModel;
+import cn.com.yuzhushui.wesocket.common.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 <#include "/java_imports.include">

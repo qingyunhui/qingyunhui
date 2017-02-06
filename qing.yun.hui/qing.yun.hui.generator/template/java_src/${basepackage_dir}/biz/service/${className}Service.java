@@ -2,7 +2,7 @@
 <#assign classNameLower = className?uncap_first>
 package ${basepackage}.biz.service;
 
-import cn.com.yuzhushui.movie.common.base.BaseService;
+import cn.com.yuzhushui.wesocket.common.base.BaseService;
 
 import ${basepackage}.biz.entity.${className};
 <#include "/java_imports.include">

@@ -4,7 +4,7 @@ package ${basepackage}.biz.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import cn.com.yuzhushui.movie.common.base.BaseServiceImpl;
+import cn.com.yuzhushui.wesocket.common.base.BaseServiceImpl;
 
 import ${basepackage}.biz.entity.${className};
 import ${basepackage}.biz.service.${className}Service;

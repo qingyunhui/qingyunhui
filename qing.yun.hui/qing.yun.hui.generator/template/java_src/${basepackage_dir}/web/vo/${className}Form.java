@@ -2,7 +2,7 @@ package ${basepackage}.web.vo;
 
 import java.util.Date;
 
-import cn.com.yuzhushui.movie.common.base.BaseForm;
+import cn.com.yuzhushui.wesocket.common.base.BaseForm;
 import lombok.Getter;
 import lombok.Setter;
 
