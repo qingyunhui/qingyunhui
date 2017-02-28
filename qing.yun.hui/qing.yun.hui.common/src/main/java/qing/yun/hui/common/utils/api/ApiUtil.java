@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 
+import qing.yun.hui.common.constants.APIConstant;
 import qing.yun.hui.common.constants.Constant;
 import qing.yun.hui.common.struct.juhe.JuheConstant;
 import qing.yun.hui.common.struct.juhe.JuheEnum;
@@ -36,12 +37,14 @@ import qing.yun.hui.common.struct.juhe.video.searching.VideoSearchingResponse;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.PageData;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.WechatChoicenessData;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.WechatChoicenessResponse;
+import qing.yun.hui.common.utils.DateUtil;
 import qing.yun.hui.common.utils.HttpUtil;
 import qing.yun.hui.common.utils.StringUtil;
 
 import com.alibaba.fastjson.JSONObject;
 
 /***
+ *  <p>使用方式:直接通过ApiUtil.callXX即可.</p>
  ** @category 该API是用来获取一些公共的接口信息，比如获取北京时间，天气预报，等等信息...
  ** @author qing.yunhui
  ** @email: 280672161@qq.com
@@ -54,7 +57,9 @@ public class ApiUtil {
 	 //TODO 股票数据，NBA赛事，足球联赛 ，这三个因为返回的json串有点杂乱无章，就没有做映射了...
 	
 	 public static void main(String[]args){
-		
+		String datestr=DateUtil.dateToString(getChinaDate(APIConstant.BAIDU_URL),DateUtil.YYYY_MM_DD_HH_MM_SS);
+		BusLongResponse blr= callBusLongResponse("永州", "json", "get");
+		System.out.println(JSONObject.toJSONString(blr));
 	 }
 	 
 	 /**
@@ -223,7 +228,7 @@ public class ApiUtil {
 	  * @param method 请求方式(get或post) ,默认为get【N】
 	  * @return 影视影讯检索
 	  * */
-	 public static String getVideoSearching(String httpUrl,String key,String q,String dtype,String method){
+	 private static String getVideoSearching(String httpUrl,String key,String q,String dtype,String method){
 		 if(StringUtil.isEmpty(httpUrl,key,q)){
 			 logger.error("=============>缺少必要参数，httpUrl，key必填项。");
 	    	 return null;
@@ -238,6 +243,13 @@ public class ApiUtil {
 		 return null;
 	 }
 	 
+	 /**
+	  * <p>影视影讯检索</p>
+	  * @param q		影视搜索名称       【y】
+	  * @param dtype  返回的数据的格式，json或xml，默认为json 【N】
+	  * @param method 请求方式(get或post) ,默认为get【N】
+	  * @return 影视影讯检索
+	  * */
 	 public static VideoSearchingResponse callVideoSearchingResponse(String q,String dtype,String method){
 		 VideoSearchingResponse response=null;
 		 String json=getVideoSearching(JuheEnum.VideoSearching.HTTP_URL.getCode(), JuheEnum.VideoSearching.APP_KEY.getCode(),q,dtype,method);
@@ -701,7 +713,7 @@ public class ApiUtil {
         return new Date();
     }
     
-    //============================================>以下为私有方法，不能外提供====================================================>
+    //============================================>以下为私有方法，不能对外提供====================================================>
     
     /**
 	  * <p>股票数据（包含了沪深股市，香港股市，美国股市数据每个股市对应的接口中不一样，但key是一样的）</p>
