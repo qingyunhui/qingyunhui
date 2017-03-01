@@ -35,13 +35,30 @@ public class EnumUtil {
 	 * @param code 枚举code
 	 * @return String 枚举name
 	 * */
-	public static String getNameByCode(Class<?> clzs,String code){
+	public static String getNameByCode(Class<?> clzs,Object code){
 		ICommonEnum[] commonEnums=getICommonEnums(clzs);
 		if(null==commonEnums) return null;
 		for(ICommonEnum ienum:commonEnums){
-			if(ienum.getCode().equals(code)){
+			if(ienum.getCode().equals(String.valueOf(code))){
 				return ienum.getName();
 			}
+		}
+		return null;
+	}
+	
+	public static String getNameByCode(String clzs,Object code){
+		Class<?> clz;
+		try {
+			clz = Class.forName(clzs);
+			ICommonEnum[] commonEnums=getICommonEnums(clz);
+			if(null==commonEnums) return null;
+			for(ICommonEnum ienum:commonEnums){
+				if(ienum.getCode().equals(String.valueOf(code))){
+					return ienum.getName();
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
