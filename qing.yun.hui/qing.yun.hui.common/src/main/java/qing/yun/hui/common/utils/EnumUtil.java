@@ -1,5 +1,7 @@
 package qing.yun.hui.common.utils;
 
+import com.alibaba.fastjson.JSONObject;
+
 import qing.yun.hui.common.enums.ICommonEnum;
 
 /***
@@ -27,6 +29,17 @@ public class EnumUtil {
 			e.printStackTrace();
 		}
 		return obj;
+	}
+	
+	/***
+	 * <p>根据传的枚举类(必须是包名+类包)，得到该枚举所有属性值。 </p>
+	 * <p>如果是内部类、包名$类名的形式调用即可</p>
+	 * @param clzName　绝对路径的类名
+	 * ***/
+	public static String getEnumToJSON(String clzName){
+		Object[] obj=getEnumValues(clzName);
+		if(null==obj) return "";
+		return JSONObject.toJSONString(obj);
 	}
 	
 	/**
@@ -81,6 +94,22 @@ public class EnumUtil {
 	}
 	
 	/**
+	 * 根据给定value获取name
+	 * @param clzs  枚举类(该枚举类必须实现ICommonEnum接口)
+	 * @param code 枚举code
+	 * @return String 枚举name
+	 * */
+	public static String getNameByValue(String clzs,String value){
+		try {
+			Class<?> clz=Class.forName(clzs);
+			return getNameByValue(clz, Integer.parseInt(value));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
 	 * 根据给定name获取code
 	 * @param clzs  枚举类 (该枚举类必须实现ICommonEnum接口)
 	 * @param value 枚举value
@@ -93,6 +122,28 @@ public class EnumUtil {
 			if(ienum.getName().equals(name)){
 				return ienum.getCode();
 			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据给定name获取code
+	 * @param clzs  枚举类 (该枚举类必须实现ICommonEnum接口)
+	 * @param value 枚举value
+	 * @return String 枚举code
+	 * */
+	public static String getCodeByValue(String clzs,String value){
+		try {
+			Class<?> clz=Class.forName(clzs);
+			ICommonEnum[] commonEnums=getICommonEnums(clz);
+			if(null==commonEnums) return null;
+			for(ICommonEnum ienum:commonEnums){
+				if(String.valueOf(ienum.getValue()).equals(value)){
+					return ienum.getCode();
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -116,8 +167,9 @@ public class EnumUtil {
 	}
 	
 	public static void main(String[] args){
-		String clz="qing.yun.hui.common.enums.Test$Time";
+		String clz="cn.com.yuzhushui.movie.enums.SysBillsEnum$Keyword";
 		Object[] objs=getEnumValues(clz);
+		System.out.println(getEnumToJSON(clz));
 		for(Object obj:objs){
 			System.out.println(obj.toString());
 		}
