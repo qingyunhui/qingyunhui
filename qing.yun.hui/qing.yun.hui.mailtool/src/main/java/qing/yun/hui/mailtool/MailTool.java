@@ -57,6 +57,7 @@ public class MailTool {
             }
             message.setRecipients(Message.RecipientType.TO, internetAddress);//设置接收者
             message.setSubject(subject);//邮件的标题
+            message.setHeader("X-Mailer","Microsoft Outlook Express 6.00.2900.2869");
             message.setSentDate(new Date());//发送时间  
             message.setContent(content, "text/html;charset=UTF-8");//邮件的文本内容
             //5、发送邮件
