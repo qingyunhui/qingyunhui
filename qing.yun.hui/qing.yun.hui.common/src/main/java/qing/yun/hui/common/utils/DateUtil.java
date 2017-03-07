@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 /***
@@ -60,13 +62,6 @@ public class DateUtil {
 			return dateString;
 		}
 	
-		public static void main(String[] args){
-			System.err.println(dateToString(new Date(), YYYY__MM_DD2));
-			System.out.println(getCurrDateStr(YYYY__MM_DD2));
-			
-			System.err.println(dateToString(stringToDate("2016-06-22", YYYY_MM_DD),YYYY__MM_DD2));
-		}
-		
 		/**
 		 * 获取当前时间
 		 * 
@@ -802,5 +797,48 @@ public class DateUtil {
 			int hour = calendar.get(is24Hour ? Calendar.HOUR_OF_DAY : Calendar.HOUR);
 			return hour;
 		}
-
+		
+		/**
+		 * <p>根据起始时间，结束时间，查找二个时间段的间隔区间</p>
+		 * @param startDate 起始时间
+		 * @param endDate   结束时间
+		 * @return
+		 * */
+		public static List<Date> getDaysByStartDateWithEndDate(Date startDate,Date endDate){
+			List<Date> list=new ArrayList<Date>();
+			Calendar startCalend=Calendar.getInstance();
+			startCalend.setTime(startDate);
+			Calendar endCalend=Calendar.getInstance();
+			endCalend.setTime(endDate);
+			//二种方式实现，compareTo 与 before 可以实现相同功能，只是before() 目标只能是Calendar对象。
+			for(Calendar c=startCalend;c.compareTo(endCalend)<0;c.add(Calendar.DAY_OF_MONTH, 1)){
+				list.add(c.getTime());
+			}
+			return list;
+		}
+		
+		/**
+		 * <p>根据起始时间，结束时间，查找二个时间段的间隔区间</p>
+		 * @param startDate 起始时间
+		 * @param endDate   结束时间
+		 * @return
+		 * */
+		public static List<String> getDaysByStartDateWithEndDate(String startDate,String endDate){
+			List<String> list=new ArrayList<String>();
+			Calendar startCalend=Calendar.getInstance();
+			startCalend.setTime(stringToDate(startDate,YYYY_MM_DD));
+			Calendar endCalend=Calendar.getInstance();
+			endCalend.setTime(stringToDate(endDate,YYYY_MM_DD));
+			//二种方式实现，compareTo 与 before 可以实现相同功能，只是before() 目标只能是Calendar对象。
+			for(Calendar c=startCalend;c.before(endCalend);c.add(Calendar.DAY_OF_MONTH, 1)){
+				list.add(dateToString(c.getTime(), YYYY_MM_DD));
+			}
+			return list;
+		}
+		
+		public static void main(String[] args){
+			Date startDate=stringToDate("2017-02-01", YYYY_MM_DD);
+			Date endDate=stringToDate("2017-03-01", YYYY_MM_DD);
+			getDaysByStartDateWithEndDate(startDate, endDate);
+		}
 }
