@@ -43,6 +43,7 @@ import qing.yun.hui.common.utils.StringUtil;
 
 import com.alibaba.fastjson.JSONObject;
 
+
 /***
  *  <p>使用方式:直接通过ApiUtil.callXX即可.</p>
  ** @category 该API是用来获取一些公共的接口信息，比如获取北京时间，天气预报，等等信息...
@@ -57,9 +58,28 @@ public class ApiUtil {
 	 //TODO 股票数据，NBA赛事，足球联赛 ，这三个因为返回的json串有点杂乱无章，就没有做映射了...
 	
 	 public static void main(String[]args){
-		String datestr=DateUtil.dateToString(getChinaDate(APIConstant.BAIDU_URL),DateUtil.YYYY_MM_DD_HH_MM_SS);
-		BusLongResponse blr= callBusLongResponse("永州", "json", "get");
-		System.out.println(JSONObject.toJSONString(blr));
+		 //身份证信息查询
+		 IdCardResponse card= ApiUtil.callIdCardResponse("431102198811046375", "json", "get");
+		 System.out.println(JSONObject.toJSONString(card));
+		 //手机固话来电显示
+		 CallerIDTelephoneResponse telephone= ApiUtil.callCallerIDTelephoneResponse("07466551538", "json", "get");
+		 System.out.println(JSONObject.toJSONString(telephone));
+		 //手机号归属地
+		 MobileResponse mobile=ApiUtil.callMobileResponse("18665300640", "json", "get");
+		 System.out.println(JSONObject.toJSONString(mobile));
+		 //全国公交及路径规划查询
+		 BuslineResponse  bsline= ApiUtil.callBuslineResponse("杭州", "156",  "json", "get");
+		 System.out.println(JSONObject.toJSONString(bsline));
+		 //长途汽车信息
+		 BusLongResponse buslong= callBusLongResponse("永州",  "json", "get");
+		 System.out.println(JSONObject.toJSONString(buslong));
+		 //新闻头条
+		 NewsTopResponse newsTop= callNewsTopResponse("top", "json", "get");
+		 System.out.println(JSONObject.toJSONString(newsTop));
+		 //影视影讯检索
+		 VideoSearchingResponse videoSearching= callVideoSearchingResponse("十八罗汉", "json", "get");
+		 System.out.println(JSONObject.toJSONString(videoSearching));
+		 //
 	 }
 	 
 	 /**
