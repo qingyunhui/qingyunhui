@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 
-import qing.yun.hui.common.constants.APIConstant;
 import qing.yun.hui.common.constants.Constant;
 import qing.yun.hui.common.struct.juhe.JuheConstant;
 import qing.yun.hui.common.struct.juhe.JuheEnum;
@@ -37,7 +36,6 @@ import qing.yun.hui.common.struct.juhe.video.searching.VideoSearchingResponse;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.PageData;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.WechatChoicenessData;
 import qing.yun.hui.common.struct.juhe.wechat.choiceness.WechatChoicenessResponse;
-import qing.yun.hui.common.utils.DateUtil;
 import qing.yun.hui.common.utils.HttpUtil;
 import qing.yun.hui.common.utils.StringUtil;
 

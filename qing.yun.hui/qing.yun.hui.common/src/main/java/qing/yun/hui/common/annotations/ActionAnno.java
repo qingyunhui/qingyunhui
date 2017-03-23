@@ -18,6 +18,6 @@ import java.lang.annotation.Target;
 public @interface ActionAnno {
 	
 	/**执行动作名称:比如（增，删，改，查）*/
-	String name() default "";
+	String action() default "";
 
 }
