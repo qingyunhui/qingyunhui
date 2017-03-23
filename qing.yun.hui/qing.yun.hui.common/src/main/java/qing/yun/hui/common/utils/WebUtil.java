@@ -1,4 +1,12 @@
 package qing.yun.hui.common.utils;
+
+import java.util.Arrays;
+import java.util.Map;
+
+import qing.yun.hui.common.struct.baidu.BaiduConstant;
+
+import com.alibaba.fastjson.JSONObject;
+
 /***
  ** @category 请用一句话来描述其用途...
  ** @author qing.yunhui
@@ -23,5 +31,37 @@ public class WebUtil {
 			pageCount = (totalSize / defaultCount);
 		}
 		return pageCount;
+	}
+	
+	/**
+	 * <p>当args包含contain时,将其转换成JSON串</p>
+	 * @param args 参数
+	 * @param contains 包含的字符串
+	 * @return JSON串
+	 * */
+	public static String argsToJSON(Object[] args,String ...contains){
+		if(null!=args){
+			StringBuffer sb=new StringBuffer();
+			int count=0;
+			int x=0;
+			for(Object arg:args){
+				String name=arg.getClass().getName();
+				for(String contain:contains){
+					if(!name.startsWith(contain)) continue;
+					if(x>0 && count<args.length)sb.append(",");
+					sb.append("[").append(JSONObject.toJSONString(arg)).append("]");
+					x++;
+					break;
+				}
+				count++;
+			}
+			return sb.toString();
+		}
+		return null;
+	}
+	
+	public static void main(String[] args){
+		Object[] argss=new Object[]{Arrays.class,Map.class,String.class,BaiduConstant.class};
+		System.out.println(WebUtil.argsToJSON(argss, "cn.com.yuzhushui","qing.yun.hui","java.lang","java.util"));
 	}
 }

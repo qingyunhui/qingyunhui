@@ -20,11 +20,11 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSONObject;
-
 import qing.yun.hui.common.constants.Constant;
 import qing.yun.hui.common.constants.SymbolConstant;
 import qing.yun.hui.common.enums.TimeSlot;
+
+import com.alibaba.fastjson.JSONObject;
 
 /***
  ** @Description: 常用字符工具类
@@ -462,12 +462,8 @@ public class StringUtil {
 			System.out.println(replacePhoneOrEmailByAsterisk("18665300640",3,5,4,Symbol.ASTERISK));
 			System.out.println(replacePhoneOrEmailByAsterisk("280admin123qq",3,5,4,Symbol.ASTERISK));*/
 			
-			
 //			boolean isEmpty=isEmpty(22,null);
 //			System.out.println(isEmpty);
-			
-			String[] objects=new String[]{"22"};
-			System.out.println(isEmpty(objects));
 		}
 
 }
