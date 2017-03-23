@@ -18,9 +18,12 @@ import java.lang.annotation.Target;
 public @interface WarningAnno {
 	
 	/**主题（比如:账单申请）*/
-	String theme();
+	String action();
 
 	/**操作的表*/
 	String tbName() default "";
+	
+	/**返回类型*/
+	Class<?> returnType() default Object.class;
 	
 }

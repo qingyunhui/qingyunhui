@@ -50,6 +50,7 @@ public class CookieUtil {
 	 * */
 	public static Cookie getCookieByName(HttpServletRequest request, String name) {
 		if(StringUtil.isEmpty(name)) return null;
+		if(null==request)return null;
 		Cookie[] cookies = request.getCookies();
 		if (cookies == null)  return null;
 		for (Cookie cookie : cookies) {
