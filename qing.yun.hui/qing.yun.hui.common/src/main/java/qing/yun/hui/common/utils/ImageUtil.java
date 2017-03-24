@@ -62,6 +62,13 @@ public class ImageUtil {
                 }
                 log.debug("target image's size, width:{}, height:{}.",w,h);
                 Image img = ImageIO.read(imgFile);
+                
+                //如果img为null，则用户上传的不是一张真正的图片.
+                if(null==img) {
+                	log.error("Sorry, This is not a picture.");
+                	return;
+                }
+                
                 if(!force){
                     // 根据原图与要求的缩略图比例，找到最合适的缩略图比例
                     int width = img.getWidth(null);
@@ -138,6 +145,13 @@ public class ImageUtil {
             FileInputStream fis = null;
             ImageInputStream iis = null;
             try {
+            	Image img = ImageIO.read(srcImg);
+            	
+            	if(null==img){
+            		log.error("Sorry, This is not a picture.");
+                	return;
+            	}
+            	
                 fis = new FileInputStream(srcImg);
                 // ImageIO 支持的图片类型 : [BMP, bmp, jpg, JPG, wbmp, jpeg, png, PNG, JPEG, WBMP, GIF, gif]
                 String types = Arrays.toString(ImageIO.getReaderFormatNames()).replace("]", ",");
@@ -157,7 +171,7 @@ public class ImageUtil {
                 reader.setInput(iis,true);
                 ImageReadParam param = reader.getDefaultReadParam();
                 param.setSourceRegion(rect);
-                BufferedImage bi = reader.read(0, param);
+                BufferedImage bi = reader.read(0, param);	
                 ImageIO.write(bi, suffix, output);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -203,8 +217,8 @@ public class ImageUtil {
     }
     
     public static void main(String[] args) {
-        new ImageUtil().thumbnailImage("F:/test/test2.jpg", 100, 150,false);
-        new ImageUtil().cutImage("F:/test/test.jpg","F:/test", 250, 70, 300, 400);
+//        new ImageUtil().thumbnailImage("F:/test/object.jpeg", 200, 250,false);
+        new ImageUtil().cutImage("F:/test/object.jpeg","F:/test", 250, 70, 300, 400);
     }
 	
 }
