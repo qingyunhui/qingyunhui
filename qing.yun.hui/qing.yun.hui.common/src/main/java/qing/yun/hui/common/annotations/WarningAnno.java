@@ -24,6 +24,6 @@ public @interface WarningAnno {
 	String tbName() default "";
 	
 	/**返回类型*/
-	Class<?> returnType() default Object.class;
+	Class<?> returnType() default Void.class;
 	
 }
