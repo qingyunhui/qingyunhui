@@ -7,28 +7,28 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /***
- ** @Description: ImgUtil 图片处理工具类
+ ** @Description: VerifyCodeUtil 验证码工具类
  ** @author: qing.yunhui
  ** @email: 280672161@.qq.com
  ** @dateTime: Nov 20, 2015 10:18:17 AM
  ** @version: V1.0
  ***/
-public class ImgUtil {
+public class VerifyCodeUtil {
 	
-private String verifyCode;								   //  验证码。
+	private String verifyCode;								   //  验证码。
 	
 	private BufferedImage bufferedImage;	
 
 	//初始化属性
-	private ImgUtil() {
+	private VerifyCodeUtil() {
 		init();										
 	}
 	
 	/**
 	 * 取得RandomNumUtil实例
 	 */
-	public static ImgUtil Instance() {
-		return new ImgUtil();
+	public static VerifyCodeUtil Instance() {
+		return new VerifyCodeUtil();
 	}
 	
 	/**

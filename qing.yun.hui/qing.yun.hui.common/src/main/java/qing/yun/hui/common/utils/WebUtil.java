@@ -62,6 +62,6 @@ public class WebUtil {
 	
 	public static void main(String[] args){
 		Object[] argss=new Object[]{Arrays.class,Map.class,String.class,BaiduConstant.class};
-		System.out.println(WebUtil.argsToJSON(argss, "cn.com.yuzhushui","qing.yun.hui","java.lang","java.util"));
+		System.out.println(WebUtil.argsToJSON(argss, "qing.yun.hui","java.lang","java.util"));
 	}
 }
