@@ -3,6 +3,7 @@ package qing.yun.hui.common.utils;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
@@ -342,11 +343,13 @@ public class StringUtil {
 		 * @param byteFile 要转换的字节
 		 * @return 转换后的kb
 		 * */
-		public static long getFileKB(long byteFile){  
+		public static double getFileKB(long byteFile){  
 	        if(byteFile==0)  
 	           return 0;  
 	        long kb=1024;  
-	        return byteFile/kb;  
+	        BigDecimal result=new BigDecimal(byteFile).divide(new BigDecimal(kb)).setScale(2, BigDecimal.ROUND_HALF_UP);
+	        return result.doubleValue();
+//	        return byteFile/kb;  
 	    }
 		
 		/**
@@ -354,11 +357,13 @@ public class StringUtil {
 		 * @param byteFile 要转换的字节
 		 * @return 转换后的MB
 		 * **/
-		public static long getFileMb(long byteFile){
+		public static double getFileMb(long byteFile){
 			 if(byteFile==0)   return 0;
 			 long KB=1024;
 			 long MB=1024;
-			 return byteFile/KB/MB;  
+			 BigDecimal result=new BigDecimal(byteFile).divide(new BigDecimal(KB)).setScale(2,BigDecimal.ROUND_HALF_UP).divide(new BigDecimal(MB)).setScale(2,BigDecimal.ROUND_HALF_UP);
+			 //return byteFile/KB/MB;  
+			 return result.doubleValue();
 		}
 		
 		/**
@@ -453,6 +458,10 @@ public class StringUtil {
 	    }
 		
 		public static void main(String[] args){
+			
+			long byteFile=230100213;
+			System.out.println(getFileMb(byteFile));
+			
 			//String s=qing.yun.hui.common.bean.BaseQuery.class.getSimpleName();
 			//String s="qing.yun.hui.common.bean.BaseQuery";
 			//String s=Object.class.getSimpleName();

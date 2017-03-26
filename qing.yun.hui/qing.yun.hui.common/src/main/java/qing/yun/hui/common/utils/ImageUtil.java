@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  **/
 public class ImageUtil {
 
-    private Logger log = LoggerFactory.getLogger(getClass());
+    private static Logger log = LoggerFactory.getLogger(ImageUtil.class);
     
     /**缩略图的前缀*/
     private static String DEFAULT_PREVFIX = "thumb_";
@@ -46,7 +46,7 @@ public class ImageUtil {
      * @param prevfix    生成缩略图的前缀
      * @param force        是否强制按照宽高生成缩略图(如果为false，则生成最佳比例缩略图)
      */
-    private void thumbnailImage(File imgFile, int w, int h, String prevfix, boolean force){
+    private static void thumbnailImage(File imgFile,File targetFile, int w, int h, String prevfix, boolean force){
         if(imgFile.exists()){
             try {
                 // ImageIO 支持的图片类型 : [BMP, bmp, jpg, JPG, wbmp, jpeg, png, PNG, JPEG, WBMP, GIF, gif]
@@ -89,9 +89,10 @@ public class ImageUtil {
                 Graphics g = bi.getGraphics();
                 g.drawImage(img, 0, 0, w, h, Color.LIGHT_GRAY, null);
                 g.dispose();
-                String p = imgFile.getPath();
+                //String p = imgFile.getPath();
                 // 将图片保存在原目录并加上前缀
-                ImageIO.write(bi, suffix, new File(p.substring(0,p.lastIndexOf(File.separator)) + File.separator + prevfix +imgFile.getName()));
+                
+                ImageIO.write(bi, suffix, targetFile);//new File(p.substring(0,p.lastIndexOf(File.separator)) + File.separator + prevfix +imgFile.getName())
             } catch (IOException e) {
                log.error("generate thumbnail image failed.",e);
             }
@@ -103,25 +104,28 @@ public class ImageUtil {
     /**
      * <p>Description: 根据图片路径生成缩略图 </p>
      * @param imagePath    原图片路径
+     * @param targetPath   目标图片路径
      * @param w            缩略图宽
      * @param h            缩略图高
      * @param prevfix    生成缩略图的前缀
      * @param force        是否强制按照宽高生成缩略图(如果为false，则生成最佳比例缩略图)
      */
-    public void thumbnailImage(String imagePath, int w, int h, String prevfix, boolean force){
-        File imgFile = new File(imagePath);
-        thumbnailImage(imgFile, w, h, prevfix, force);
+    public static void thumbnailImage(String sourcePath,String targetPath, int w, int h, String prevfix, boolean force){
+        File sourceFile = new File(sourcePath);
+        File targetFile=new File(targetPath);
+        thumbnailImage(sourceFile,targetFile, w, h, prevfix, force);
     }
     
     /**
      * <p>Description: 根据图片路径生成缩略图 </p>
-     * @param imagePath    原图片路径
+     * @param sourcePath    原图片路径
+     * @param targetPath    目标图片路径
      * @param w            缩略图宽
      * @param h            缩略图高
      * @param force        是否强制按照宽高生成缩略图(如果为false，则生成最佳比例缩略图)
      */
-    public void thumbnailImage(String imagePath, int w, int h, boolean force){
-        thumbnailImage(imagePath, w, h, DEFAULT_PREVFIX, force);
+    public static void thumbnailImage(String sourcePath,String targetPath, int w, int h, boolean force){
+        thumbnailImage(sourcePath, targetPath,w, h, DEFAULT_PREVFIX, force);
     }
     
     /**
@@ -130,17 +134,22 @@ public class ImageUtil {
      * @param w            缩略图宽
      * @param h            缩略图高
      */
-    public void thumbnailImage(String imagePath, int w, int h){
-        thumbnailImage(imagePath, w, h, DEFAULT_FORCE);
+    public static void thumbnailImage(String imagePath,String targetPath, int w, int h){
+        thumbnailImage(imagePath, targetPath,w, h, DEFAULT_FORCE);
+    }
+    
+    public static void thumbnailImage(File sourceFile,String targetPath, int w, int h){
+        File targetFile=new File(targetPath);
+        thumbnailImage(sourceFile,targetFile, w, h, DEFAULT_PREVFIX, DEFAULT_FORCE);
     }
     
     /**
      * <p>Description:  根据原图与裁切size截取局部图片</p>
      * @param srcImg    源图片
      * @param output    图片输出流
-     * @param rect        需要截取部分的坐标和大小
+     * @param rect      需要截取部分的坐标和大小
      */
-    public void cutImage(File srcImg, OutputStream output, Rectangle rect){
+    private static void cutImage(File srcImg, OutputStream output, Rectangle rect){
         if(srcImg.exists()){
             FileInputStream fis = null;
             ImageInputStream iis = null;
@@ -190,11 +199,26 @@ public class ImageUtil {
         }
     }
     
-    public void cutImage(File srcImg, OutputStream output, int x, int y, int width, int height){
+    /**
+     * <p>Description:  根据原图与裁切size截取局部图片</p>
+     * @param srcImg    源图片
+     * @param output    图片输出流
+     * @param x         需要截取部分的x坐标
+     * @param y 		需要截取部分的y坐标
+     * @param width     需要截取图片的宽度
+     * @param height    需要截取图片的高度
+     */
+    public static void cutImage(File srcImg, OutputStream output, int x, int y, int width, int height){
         cutImage(srcImg, output, new java.awt.Rectangle(x, y, width, height));
     }
     
-    public void cutImage(File srcImg, String destImgPath, java.awt.Rectangle rect){
+    /**
+     * <p>Description:     根据原图与裁切size截取局部图片</p>
+     * @param srcImg       源图片
+     * @param destImgPath  截取后文件的路径
+     * @param rect         需要截取部分的坐标和大小
+     */
+    public static void cutImage(File srcImg, String destImgPath, java.awt.Rectangle rect){
         File destImg = new File(destImgPath);
         if(destImg.exists()){
             String p = destImg.getPath();
@@ -208,17 +232,35 @@ public class ImageUtil {
         }else log.warn("the dest image folder is not exist.");
     }
     
-    public void cutImage(File srcImg, String destImg, int x, int y, int width, int height){
-        cutImage(srcImg, destImg, new java.awt.Rectangle(x, y, width, height));
+    /**
+     * <p>Description:     根据原图与裁切size截取局部图片</p>
+     * @param srcImg       源图片
+     * @param destImgPath  截取后文件的路径
+     * @param x         需要截取部分的x坐标
+     * @param y 		需要截取部分的y坐标
+     * @param width     需要截取图片的宽度
+     * @param height    需要截取图片的高度
+     */
+    public static void cutImage(File srcImg, String destImg, int x, int y, int width, int height){
+        cutImage(srcImg, destImg, new Rectangle(x, y, width, height));
     }
     
-    public void cutImage(String srcImg, String destImg, int x, int y, int width, int height){
-        cutImage(new File(srcImg), destImg, new java.awt.Rectangle(x, y, width, height));
+    /**
+     * <p>Description:     根据原图与裁切size截取局部图片</p>
+     * @param srcImg       源图片
+     * @param destImgPath  截取后文件的路径
+     * @param x            需要截取部分的x坐标
+     * @param y 		      需要截取部分的y坐标
+     * @param width        需要截取图片的宽度
+     * @param height       需要截取图片的高度
+     */
+    public static void cutImage(String srcImg, String destImg, int x, int y, int width, int height){
+        cutImage(new File(srcImg), destImg, new Rectangle(x, y, width, height));
     }
     
     public static void main(String[] args) {
 //        new ImageUtil().thumbnailImage("F:/test/object.jpeg", 200, 250,false);
-        new ImageUtil().cutImage("F:/test/object.jpeg","F:/test", 250, 70, 300, 400);
+        //new ImageUtil().cutImage("F:/test/object.jpeg","F:/test", 250, 70, 300, 400);
     }
 	
 }

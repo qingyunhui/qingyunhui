@@ -148,7 +148,7 @@ public class EnumUtil {
 		return null;
 	}
 	
-	private static ICommonEnum[] getICommonEnums(Class<?> clzs){
+	public static ICommonEnum[] getICommonEnums(Class<?> clzs){
 		ICommonEnum[] commonEnums=null;
 		try {
 			commonEnums=(ICommonEnum[]) getEnumConstants(clzs);
