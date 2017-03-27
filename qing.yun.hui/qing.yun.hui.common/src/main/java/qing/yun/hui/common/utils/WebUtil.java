@@ -45,6 +45,7 @@ public class WebUtil {
 			int count=0;
 			int x=0;
 			for(Object arg:args){
+				if(StringUtil.isEmpty(arg)) continue;
 				String name=arg.getClass().getName();
 				for(String contain:contains){
 					if(!name.startsWith(contain)) continue;
