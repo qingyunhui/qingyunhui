@@ -9,7 +9,7 @@
   	<module>qing.yun.hui.mailtool</module>
   	<module>qing.yun.hui.poitool</module>
   	<module>qing.yun.hui.generator</module>
-  	<module>qing.yunhui.activemq</module>
+  	<module>qing.yun.hui.activemq</module>
   </modules>
   <properties>
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

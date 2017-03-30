@@ -1,4 +1,4 @@
-package qing.yunhui.activemq.message;
+package qing.yun.hui.activemq.message;
 
 import javax.jms.JMSException;
 import javax.jms.ObjectMessage;
@@ -6,9 +6,9 @@ import javax.jms.TextMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.alibaba.fastjson.JSONObject;
+import qing.yun.hui.activemq.producer.DefaultProducer;
 
-import qing.yunhui.activemq.producer.DefaultProducer;
+import com.alibaba.fastjson.JSONObject;
 
 /***
  ** @category 请用一句话来描述其用途...

@@ -1,4 +1,4 @@
-package qing.yunhui.activemq.producer;
+package qing.yun.hui.activemq.producer;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
