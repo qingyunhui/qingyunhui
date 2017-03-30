@@ -1,10 +1,13 @@
 package qing.yun.hui.activemq.producer;
 
+import java.io.Serializable;
+
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
+import javax.jms.ObjectMessage;
 import javax.jms.Session;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -44,6 +47,18 @@ public class DefaultProducer {
 		this.default_password=default_password;
 		this.default_broker_url=default_broker_url;
 		this.queue=queue;
+	}
+	
+	/**
+	 * <p>发送消息</p>
+	 * @param t 待发送的消息
+	 * @return void
+	 * */
+	public <T> void send(T t) throws JMSException{
+		ObjectMessage objMsg= session.createObjectMessage();
+		objMsg.setObject((Serializable) t);
+		messageProducer.send(objMsg);
+		session.commit();
 	}
 	
 	public void init(){

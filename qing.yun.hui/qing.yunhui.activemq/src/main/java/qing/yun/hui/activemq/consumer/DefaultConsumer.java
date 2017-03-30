@@ -56,7 +56,7 @@ public class DefaultConsumer {
 		logger.info("=====销毁MQ消费者实例完毕....");
 	}
 	
-	public void main(String[] args){
+	public void init(){
 		ConnectionFactory conFactory=null;
 		Connection conn=null;
 		Session session=null;

@@ -3,10 +3,7 @@ package qing.yun.hui.activemq.listener;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-
-import qing.yun.hui.activemq.message.DefaultMessage;
-
-import com.alibaba.fastjson.JSONObject;
+import javax.jms.ObjectMessage;
 
 /***
  ** @category 请用一句话来描述其用途...
@@ -19,9 +16,8 @@ public class DefaultMessageListener implements MessageListener{
 	@Override
 	public void onMessage(Message message) {
 		try {
-			DefaultMessage defaultMsg=(DefaultMessage)message;
-			System.out.println("json:"+JSONObject.toJSONString(message));
-			System.out.println("接收到消息:"+defaultMsg.getText());
+			ObjectMessage defaultMsg=(ObjectMessage)message;
+			System.out.println("接收到消息:"+defaultMsg.getObject());
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
