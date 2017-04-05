@@ -1,4 +1,4 @@
-package qing.yun.hui.activemq.consumer;
+/*package qing.yun.hui.activemq.consumer;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -6,18 +6,20 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/***
+import qing.yun.hui.activemq.listener.DefaultMessageListener;
+
+*//***
  ** @category 请用一句话来描述其用途...
  ** @author qing.yunhui
  ** @email: 280672161@qq.com
  ** @createTime: 2017年3月30日下午2:00:23
- **/
+ **//*
+
 public class DefaultConsumer {
 	
 	private Logger logger =LoggerFactory.getLogger(getClass());
@@ -64,20 +66,13 @@ public class DefaultConsumer {
         //实例化连接工厂
 		conFactory = new ActiveMQConnectionFactory(default_user, default_password, default_broker_url);
 		try {
-			conn=conFactory.createConnection();
-			conn.start();
-			session=conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			destionation=session.createQueue(queue);
-			//创建消息消费者
-            messageConsumer = session.createConsumer(destionation);
-            while (true) {
-                TextMessage textMessage = (TextMessage) messageConsumer.receive(timeout);
-                if(textMessage != null){
-                    System.out.println("收到的消息:" + textMessage.getText());
-                }else {
-                    break;
-                }
-            }
+				conn=conFactory.createConnection();
+				conn.start();
+				session=conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+				destionation=session.createQueue(queue);
+				//创建消息消费者
+	            messageConsumer = session.createConsumer(destionation);
+	            messageConsumer.setMessageListener(new DefaultMessageListener());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
@@ -91,6 +86,8 @@ public class DefaultConsumer {
 		}
 	}
 	
+	
+	
 	//-----------------------------------------get----------------------------------------------
 	
 	public Session getSession(){
@@ -102,3 +99,4 @@ public class DefaultConsumer {
 	}
 	
 }
+*/

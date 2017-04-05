@@ -1,4 +1,4 @@
-package qing.yun.hui.activemq.producer;
+/*package qing.yun.hui.activemq.producer;
 
 import java.io.Serializable;
 
@@ -14,12 +14,12 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/***
+*//***
  ** @category 请用一句话来描述其用途...
  ** @author qing.yunhui
  ** @email: 280672161@qq.com
  ** @createTime: 2017年3月30日下午2:00:37
- **/
+ **//*
 public class DefaultProducer {
 	
 	private Logger logger =LoggerFactory.getLogger(getClass());
@@ -49,11 +49,11 @@ public class DefaultProducer {
 		this.queue=queue;
 	}
 	
-	/**
+	*//**
 	 * <p>发送消息</p>
 	 * @param t 待发送的消息
 	 * @return void
-	 * */
+	 * *//*
 	public <T> void send(T t) throws JMSException{
 		ObjectMessage objMsg= session.createObjectMessage();
 		objMsg.setObject((Serializable) t);
@@ -101,3 +101,4 @@ public class DefaultProducer {
 		return messageProducer;
 	}
 }
+*/
