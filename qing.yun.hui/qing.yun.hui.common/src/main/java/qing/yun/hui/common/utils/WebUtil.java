@@ -40,6 +40,7 @@ public class WebUtil {
 	 * @return JSON串
 	 * */
 	public static String argsToJSON(Object[] args,String ...contains){
+		if(null==contains||contains.length<1) return JSONObject.toJSONString(args);
 		if(null!=args){
 			StringBuffer sb=new StringBuffer();
 			int count=0;
@@ -50,11 +51,15 @@ public class WebUtil {
 				for(String contain:contains){
 					if(!name.startsWith(contain)) continue;
 					if(x>0 && count<args.length)sb.append(",");
-					sb.append("[").append(JSONObject.toJSONString(arg)).append("]");
+					if(x==0)sb.append("[");
+					sb.append(JSONObject.toJSONString(arg));
 					x++;
 					break;
 				}
 				count++;
+				if(count==args.length){
+					sb.append("]");
+				}
 			}
 			return sb.toString();
 		}
@@ -63,6 +68,6 @@ public class WebUtil {
 	
 	public static void main(String[] args){
 		Object[] argss=new Object[]{Arrays.class,Map.class,String.class,BaiduConstant.class};
-		System.out.println(WebUtil.argsToJSON(argss, "qing.yun.hui","java.lang","java.util"));
+		System.out.println(WebUtil.argsToJSON(argss));
 	}
 }

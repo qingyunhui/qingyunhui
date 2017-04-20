@@ -14,11 +14,19 @@
 	<spring.version>4.1.2.RELEASE</spring.version>
   </properties>
   <dependencies>
+  	<!-- xbean 如<amq:connectionFactory /> -->
+    <dependency>
+        <groupId>org.apache.xbean</groupId>
+        <artifactId>xbean-spring</artifactId>
+        <version>3.16</version>
+    </dependency>
+    <!-- activemq core -->
 	<dependency>
 	    <groupId>org.apache.activemq</groupId>
 	    <artifactId>activemq-core</artifactId>
 	    <version>${activemq.version}</version>
 	</dependency>	
+	
 	<dependency>
 		<groupId>com.alibaba</groupId>
 		<artifactId>fastjson</artifactId>
@@ -35,6 +43,9 @@
 		<artifactId>spring-jms</artifactId>
 		<version>${spring.version}</version>
 	  </dependency>
+	  <!-- selvlet -->
+	  <!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+	  
   </dependencies>
 
   <build>
