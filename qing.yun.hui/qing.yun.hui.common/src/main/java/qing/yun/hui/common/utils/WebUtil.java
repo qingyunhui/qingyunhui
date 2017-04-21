@@ -57,7 +57,7 @@ public class WebUtil {
 					break;
 				}
 				count++;
-				if(count==args.length){
+				if(x>0 && count==args.length){
 					sb.append("]");
 				}
 			}
