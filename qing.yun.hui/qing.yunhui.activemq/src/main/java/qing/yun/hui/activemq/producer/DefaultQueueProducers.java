@@ -19,19 +19,19 @@ import org.springframework.stereotype.Component;
  ** @createTime: 2017年4月5日下午3:25:26
  **/
 @Component
-public class DefaultProducers {
+public class DefaultQueueProducers {
 
 	private Logger logger =LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	private JmsTemplate jmsTemplate;
+	private JmsTemplate jmsQueueTemplate;
 	
       /**
        * 向指定队列发送消息
        */
       public void sendMessage(Destination destination, final String msg) {
-    	  logger.info("向队列" + destination.toString() + "发送了消息------------" + msg);
-          jmsTemplate.send(destination, new MessageCreator() {
+    	  logger.info("向队列(queue)" + destination.toString() + "发送了消息------------" + msg);
+    	  jmsQueueTemplate.send(destination, new MessageCreator() {
 	          public Message createMessage(Session session) throws JMSException {
 	            return session.createTextMessage(msg);
 	          }
@@ -42,9 +42,9 @@ public class DefaultProducers {
      * 向默认队列发送消息
      */
       public void sendMessage(final String msg) {
-        String destination =  jmsTemplate.getDefaultDestination().toString();
-        logger.info("向队列" +destination+ "发送了消息------------" + msg);
-        jmsTemplate.send(new MessageCreator() {
+        String destination =  jmsQueueTemplate.getDefaultDestination().toString();
+        logger.info("向队列(queue)" +destination+ "发送了消息------------" + msg);
+        jmsQueueTemplate.send(new MessageCreator() {
 	          public Message createMessage(Session session) throws JMSException {
 	            return session.createTextMessage(msg);
 	          }
