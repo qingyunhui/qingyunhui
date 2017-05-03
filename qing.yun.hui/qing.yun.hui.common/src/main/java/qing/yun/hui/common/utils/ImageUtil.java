@@ -2,12 +2,14 @@ package qing.yun.hui.common.utils;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
@@ -15,6 +17,7 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
+import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageInputStream;
 
 import org.slf4j.Logger;
@@ -259,9 +262,46 @@ public class ImageUtil {
         cutImage(new File(srcImg), destImg, new Rectangle(x, y, width, height));
     }
     
-    public static void main(String[] args) {
-//        new ImageUtil().thumbnailImage("F:/test/object.jpeg", 200, 250,false);
-        //new ImageUtil().cutImage("F:/test/object.jpeg","F:/test", 250, 70, 300, 400);
+    
+    //====================================   给图片添加水印及文字       ====================================
+    
+    
+    
+    
+    public static void main(String[] args) throws IOException {
+    	
+    	String imagePath="F:/test/images/test.jpg";	//待处理的图片
+    	String waterImagePath="F:/test/images/water.jpg";//待添加的水印图片
+    	String text="水印测试";//待添加的文字
+    	String outputImagePath="F:/test/images/output3.jpg";//处理完成后的图片出路径
+    	
+    	File file=new File(imagePath);
+    	Image image=ImageIO.read(file);
+    	
+    	int width=image.getWidth(null);
+    	int height=image.getHeight(null);
+    	
+    	
+    	BufferedImage bufferImg=new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    	Graphics2D graphics2D= bufferImg.createGraphics();
+    	
+    	
+    	graphics2D.drawString(text, width/2, height/2);
+    	
+    	graphics2D.dispose();
+    	
+    	FileOutputStream fos=new FileOutputStream(outputImagePath);
+    	
+    	ImageIO.write(bufferImg, "jpg", fos);
+    	
+    	fos.close();
+    	
+    	System.out.println("over.");
+//        thumbnailImage("F:/test/xx.jpg","F:/test/x.jpg", 33, 33,true);
+//        cutImage("F:/test/object.jpeg","F:/test", 250, 70, 300, 400);
+    	
+    	
+    	
     }
 	
 }

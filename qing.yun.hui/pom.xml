@@ -10,6 +10,7 @@
   	<module>qing.yun.hui.poitool</module>
   	<module>qing.yun.hui.generator</module>
   	<module>qing.yun.hui.activemq</module>
+  	<module>qing.yun.hui.rocketmq</module>
   </modules>
   <properties>
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

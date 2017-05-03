@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>qing.yun.hui</groupId>
+    <artifactId>qing.yun.hui</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>qing.yun.hui.rocketmq</groupId>
+  <artifactId>qing.yun.hui.rocketmq</artifactId>
+  
+  <properties>
+  	<rocketmq.version>3.5.9</rocketmq.version>
+  	<qing.yh.common.version>0.0.1-SNAPSHOT</qing.yh.common.version>
+  </properties>
+  
+  <!-- dependencies -->
+  <dependencies>
+  	<dependency>
+		<groupId>com.alibaba.rocketmq</groupId>
+		<artifactId>rocketmq-client</artifactId>
+		<version>${rocketmq.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>qing.yun.hui.common</groupId>
+		<artifactId>qing.yun.hui.common</artifactId>
+		<version>${qing.yh.common.version}</version>
+	</dependency>
+  </dependencies>
+  
+</project>
