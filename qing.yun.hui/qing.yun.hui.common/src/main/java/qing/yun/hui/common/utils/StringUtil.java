@@ -490,6 +490,19 @@ public class StringUtil {
 	        }
 	        return sb.toString();
 	    }
+	    
+	    /**
+	     * <p>判断str是否是Long类型</p>
+	     * @param str
+	     * @return boolean
+	     * */
+		public static boolean isLong(String str){
+			try {
+				  return Long.parseLong(str)>=0;
+			} catch (Exception e) {
+				return false;
+			}
+		}
 		
 		public static void main(String[] args){
 			

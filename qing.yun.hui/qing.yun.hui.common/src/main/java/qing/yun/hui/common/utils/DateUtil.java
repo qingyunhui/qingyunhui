@@ -33,8 +33,24 @@ public class DateUtil {
 		public static final String YYYY__MM_DD2="yyyy.MM.dd";
 	
 		/**
+		 * <p>根据给定str转换成Date类型</p>
+		 * @param str
+		 * @return Date
+		 * */
+		public static Date getDateByStr(String str){
+			try {
+				if(StringUtil.isLong(str) && str.length()==13){
+					return new Date(Long.parseLong(str));
+				}else{
+					return stringToDate(str, YYYY_MM_DD_HH_MM_SS);
+				}
+			} catch (Exception e) {
+				return null;
+			}
+		}
+		
+		/**
 		 * 将长时间格式时间转换为字符串 yyyy-MM-dd HH:mm:ss
-		 * 
 		 * @param dateDate
 		 * @return
 		 */

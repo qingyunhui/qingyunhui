@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+
 /***
  ** @Description: ReflexUtil 反射工具类
  ** @author: qing.yunhui
@@ -16,6 +18,40 @@ import java.util.Map;
  ** @version: V1.0
  ***/
 public class ReflexUtil {
+	
+	/**
+	 * <p>从jsonObj的值copy到obj中，注意jsonObj中的key(属性)要与obj中字段保持一致</p>
+	 * @param obj 待处理的对象
+	 * @param jsonObject 待操作的对象
+	 * @return void
+	 * */
+	public static void setObjectValue(Object obj,JSONObject jsonObj){
+		if(null==obj||null==jsonObj) return;
+		Field[] fields=obj.getClass().getDeclaredFields();	//得到所有已声明的的属性字段。
+		for(Field field:fields){
+			try {
+				String name=field.getName();
+				String value=jsonObj.getString(name);
+				if(!StringUtil.isEmpty(value)){
+					field.setAccessible(true);
+					Class<?> clz=field.getType();
+					if(clz.equals(Date.class)){
+						field.set(obj, DateUtil.getDateByStr(value));
+					}else if(clz.equals(Integer.class) || clz.equals(int.class)){
+						field.set(obj, Integer.parseInt(value));
+					}else if(clz.equals(Long.class) || clz.equals(long.class)){
+						field.set(obj, Long.parseLong(value));
+					}else if(clz.equals(Double.class) || clz.equals(double.class)){
+						field.set(obj, Double.parseDouble(value));
+					}else{
+						field.set(obj, value);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+		}
+	}
 	
 	/**
 	 * 对象到map转换、只有当obj对象中的值不为null或空的时候才会被放到map中。

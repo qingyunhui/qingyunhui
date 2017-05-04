@@ -4,10 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import qing.yun.hui.common.utils.DateUtil;
+import qing.yun.hui.common.utils.ReflexUtil;
 import qing.yun.hui.rocketmq.bean.ConsumeContext;
 import qing.yun.hui.rocketmq.bean.MqMsgResult;
 import qing.yun.hui.rocketmq.listener.MessageListener;
+import cn.com.rocketmq.consumer.bean.InfoMessage;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.rocketmq.common.message.MessageExt;
 
 /***
@@ -33,6 +36,24 @@ public class InfoMessageListener implements MessageListener{
 	    logger.info(times+"{msgBody}:"+msgBody);
 	    
 	    logger.info(times+"{msgExt}:"+msgExt);
+	    
+	    JSONObject jsonObj= JSONObject.parseObject(msgBody);
+	    
+	    
+	    InfoMessage info=new InfoMessage();
+	    
+	    ReflexUtil.setObjectValue(info, jsonObj);
+	    
+	    logger.info("*************end**********");
+	    
+	    
+	    String age=jsonObj.getString("age");
+	    String name=jsonObj.getString("name");
+	    String note=jsonObj.getString("note");
+	    String comment=jsonObj.getString("comment");
+	    String curDate=jsonObj.getString("curDate");
+	    String ctime=jsonObj.getString("ctime");
+	    logger.info("age={},name={},note={},comment={},curDate={},ctime={}",new Object[]{age,name,note,comment,curDate,ctime});
 	    
 		return MqMsgResult.SUCCEED;
 	}

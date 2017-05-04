@@ -1,4 +1,4 @@
-package cn.com.rocketmq.producer.bean;
+package cn.com.rocketmq.consumer.bean;
 
 import java.util.Date;
 
@@ -14,9 +14,9 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
-public class Info {
+public class InfoMessage {
 	
-	private String name;
+private String name;
 	
 	private String note;
 	
@@ -31,6 +31,8 @@ public class Info {
 	private Date ctime;
 	
 	private Long id;
+	
+	private String address;
 
 	private Long prodId;
 	

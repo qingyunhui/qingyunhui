@@ -1,5 +1,7 @@
 package cn.com.rocketmq.producer.action;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -50,6 +52,9 @@ public class TestAction {
 		info.setAge(22);
 		info.setName("张三"+times);
 		info.setNote("测试"+times);
+		info.setCtime(new Date());
+		info.setId(22222223333L);
+		info.setStatus(33);
 		Message message= defaultMessage.getMessage(info);
 		SendResult result= defaultProducer.getDefaultMQProducer().send(message);
 		if(null==result){
@@ -58,6 +63,30 @@ public class TestAction {
 			logger.info("********"+JSONObject.toJSONString(result)+"*******");
 		}
 		ModelAndView modelView = new ModelAndView(ACTION_PATH + "/hello");
+		return modelView;
+	}
+	
+	@RequestMapping(value = "/hello2")
+	public ModelAndView hello2(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws MQClientException, RemotingException, MQBrokerException, InterruptedException {
+		logger.info("*********** producer.success ***********");
+		DefaultMessage<Info> defaultMessage= BeanUtil.getBeanOfType(SendInfoMessage.class);
+		DefaultProducer defaultProducer= BeanUtil.getBeanOfType(DefaultProducer.class);
+		String times=DateUtil.getTimeShort(DateUtil.YYYY_MM_DD_HH_MM_SS);
+		Info info=new Info();
+		info.setAge(22);
+		info.setName("张三Str"+times);
+		info.setNote("测试Str"+times);
+		
+		
+		
+		Message message= defaultMessage.getMessage(info);
+		SendResult result= defaultProducer.getDefaultMQProducer().send(message);
+		if(null==result){
+			logger.error("*****发送失败，啦啦!*******");
+		}else{
+			logger.info("********"+JSONObject.toJSONString(result)+"*******");
+		}
+		ModelAndView modelView = new ModelAndView(ACTION_PATH + "/hello2");
 		return modelView;
 	}
 	
