@@ -38,6 +38,11 @@ public class DefaultConsumer {
 	private final int consumeMessageBatchMaxSize;                                                       // 每次消费时拉取得消息条数
 	private final int consumeThreadMin;                                                                // 最小线程数
 	private final int consumeThreadMax;                                                                 // 最大线程数
+	private final static int DEFAULT_CONSUMEMESSAGEBATCHMAXSIZE = 1;
+	
+	public DefaultConsumer(Map<Subscribers,MessageListener> subscribersTable,String producerGroup,String namesrvAddr,String instanceName,int consumeThreadMin,int consumeThreadMax){
+		this(subscribersTable, producerGroup, namesrvAddr, instanceName,  DEFAULT_CONSUMEMESSAGEBATCHMAXSIZE, consumeThreadMin, consumeThreadMax);
+	}
 	
 	public DefaultConsumer(Map<Subscribers,MessageListener> subscribersTable,String producerGroup,String namesrvAddr,String instanceName,int consumeMessageBatchMaxSize,int consumeThreadMin,int consumeThreadMax){
 		this.subscribersTable=subscribersTable;

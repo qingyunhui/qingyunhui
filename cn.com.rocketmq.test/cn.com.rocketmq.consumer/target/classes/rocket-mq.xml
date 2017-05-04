@@ -1,0 +1,31 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
+       default-autowire="byName">
+
+    <!--消费端监听器配置-->
+    <bean id="infoMessageListener" class="cn.com.rocketmq.consumer.listener.InfoMessageListener"></bean>
+
+    <bean id="defaultConsumer" class="qing.yun.hui.rocketmq.consume.DefaultConsumer" init-method="init" destroy-method="destroy">
+        <constructor-arg name="namesrvAddr" value="${rocketmq.namesrvAddr}" />
+        <constructor-arg name="producerGroup" value="${rocketmq.producerGroup}" />
+        <constructor-arg name="instanceName" value="${rocketmq.instanceName}" />
+        <constructor-arg name="subscribersTable">
+            <map>
+                <!--短信-->
+                <entry value-ref="infoMessageListener">
+                    <key>
+                        <bean class="qing.yun.hui.rocketmq.bean.Subscribers">
+                            <constructor-arg name="topic" value="consumer"/>
+                            <constructor-arg name="subExpression" value="*"/>
+                        </bean>
+                    </key>
+                </entry>
+            </map>
+        </constructor-arg>
+        <constructor-arg name="consumeThreadMin" value="${rocketmq.consumeThreadMin}" />
+        <constructor-arg name="consumeThreadMax" value="${rocketmq.consumeThreadMax}" />
+    </bean>
+	
+</beans>
+
