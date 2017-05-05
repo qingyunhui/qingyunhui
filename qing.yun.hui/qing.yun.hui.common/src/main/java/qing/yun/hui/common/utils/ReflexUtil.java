@@ -48,7 +48,7 @@ public class ReflexUtil {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				continue;
 			} 
 		}
 	}
