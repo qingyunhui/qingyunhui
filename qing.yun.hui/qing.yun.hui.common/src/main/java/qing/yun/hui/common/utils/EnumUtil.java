@@ -1,5 +1,9 @@
 package qing.yun.hui.common.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import qing.yun.hui.common.enums.ICommonEnum;
@@ -12,6 +16,22 @@ import qing.yun.hui.common.enums.ICommonEnum;
  ** @version: V1.0
  ***/
 public class EnumUtil {
+	
+	/**
+	 * <p>将enum转换map并其转换成json</p>
+	 * <p>如果前端页面调用，只须EnumUtil.getEnumMapToJSON(clzName)[code]即可</p>
+	 * @param clzName 待处理的枚举类
+	 * @return String 转换后的json串
+	 * */
+	public static String getEnumMapToJSON(String clzName){
+		if(StringUtil.isEmpty(clzName)) return null;
+		ICommonEnum[] enums=(ICommonEnum[]) getEnumValues(clzName);
+		Map<String,Object> map=new HashMap<String, Object>();
+		for(ICommonEnum ice:enums){
+			map.put(ice.getCode(), ice.getName());
+		}
+		return JSON.toJSONString(map);
+	}
 	
 	/***
 	 * <p>根据传的枚举类(必须是包名+类包)，得到该枚举所有属性值。 </p>
