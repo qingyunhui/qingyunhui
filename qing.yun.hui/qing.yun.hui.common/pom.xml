@@ -16,8 +16,15 @@
 	  <dom4j.version>1.6</dom4j.version>
 	  <log4j.version>1.2.17</log4j.version>
 	  <slf4j.version>1.6.4</slf4j.version>
+	  <jsch.version>0.1.54</jsch.version>
     </properties>
   <dependencies>
+  	  <!-- sftp -->
+	  <dependency>
+	    <groupId>com.jcraft</groupId>
+	    <artifactId>jsch</artifactId>
+	    <version>${jsch.version}</version>
+	  </dependency>
   	  <!-- log4j -->
 	  <dependency>
 		<groupId>log4j</groupId>
