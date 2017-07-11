@@ -1,7 +1,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
-       default-autowire="byName">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
     <!--消费端监听器配置-->
     <bean id="infoMessageListener" class="cn.com.rocketmq.consumer.listener.InfoMessageListener"></bean>
@@ -16,7 +15,7 @@
                 <entry value-ref="infoMessageListener">
                     <key>
                         <bean class="qing.yun.hui.rocketmq.bean.Subscribers">
-                            <constructor-arg name="topic" value="consumer"/>
+                            <constructor-arg name="topic" value="skyeye"/>
                             <constructor-arg name="subExpression" value="*"/>
                         </bean>
                     </key>

@@ -26,14 +26,16 @@ public class DefaultProducerTest {
 	*/
 
 	public static void main(String[] args) throws MQClientException,InterruptedException {
-		/**
+		
+		/*
 		 * 一个应用创建一个Producer，由应用来维护此对象，可以设置为全局对象或者单例<br>
 		 * 注意：ProducerGroupName需要由应用来保证唯一<br>
 		 * ProducerGroup这个概念发送普通的消息时，作用不大，但是发送分布式事务消息时，比较关键，
 		 * 因为服务器会回查这个Group下的任意一个Producer
 		 */
+		
 		DefaultMQProducer producer = new DefaultMQProducer("ProducerGroupName");
-		producer.setNamesrvAddr("192.168.1.243:9876");
+		producer.setNamesrvAddr("112.124.117.151:9876");
 		producer.setInstanceName("DefaultProducer");
 		/**
 		 * Producer对象在使用之前必须要调用start初始化，初始化一次即可<br>
@@ -47,7 +49,7 @@ public class DefaultProducerTest {
 		 * 例如消息写入Master成功，但是Slave不成功，这种情况消息属于成功，但是对于个别应用如果对消息可靠性要求极高，<br>
 		 * 需要对这种情况做处理。另外，消息可能会存在发送失败的情况，失败重试由应用来处理。
 		 */
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 1; i++) {
 			try {
 				{
 					Message msg = new Message("TopicTest1","TagA",("Hello MetaQ").getBytes());

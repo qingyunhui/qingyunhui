@@ -69,7 +69,7 @@ public class DefaultConsumer {
 	     * 后续再启动接着上次消费的进度开始消费
 	     */
 		defaultMQPushConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
-		defaultMQPushConsumer.setMessageModel(MessageModel.CLUSTERING);
+		defaultMQPushConsumer.setMessageModel(MessageModel.BROADCASTING);//CLUSTERING：订阅模式，BROADCASTING：广播模式，TODO 这里为了做测试改成播放模式.. 
 		defaultMQPushConsumer.setVipChannelEnabled(false);  
 		
 		Iterator<Entry<Subscribers, MessageListener>> sbscribersIterator= subscribersTable.entrySet().iterator();

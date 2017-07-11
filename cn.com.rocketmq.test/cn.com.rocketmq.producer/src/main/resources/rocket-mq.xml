@@ -13,8 +13,8 @@
 	</bean>
 	
 	<bean id="sendInfoMessage" class="cn.com.rocketmq.producer.message.SendInfoMessage">
-		<constructor-arg index="0" value="consumer" />
-		<constructor-arg index="1" value="producer" />
+		<constructor-arg index="0" value="baiduTopic" />
+		<constructor-arg index="1" value="baiduTags" />
 	</bean>
 	
 </beans>
