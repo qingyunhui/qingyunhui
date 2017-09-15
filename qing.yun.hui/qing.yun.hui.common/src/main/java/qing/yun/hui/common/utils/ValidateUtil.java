@@ -76,6 +76,41 @@ public class ValidateUtil {
 		return b;
 	}
 	
+	/**
+	 * 身份证验证
+	 * @param idcard
+	 * @return boolean
+	 * */
+	public static boolean isIDCard(String idcard){
+		boolean flag = false; 
+        Pattern idNumPattern = Pattern.compile("(\\d{14}[0-9a-zA-Z])|(\\d{17}[0-9a-zA-Z])"); //要么是15位，要么是18位，最后一位可以为字母
+        //通过Pattern获得Matcher  
+        Matcher idNumMatcher = idNumPattern.matcher(idcard);  
+        //判断用户输入是否为身份证号  
+        if(idNumMatcher.matches()){  
+            System.out.println("您的出生年月日是：");  
+            //如果是，定义正则表达式提取出身份证中的出生日期  
+            Pattern birthDatePattern= Pattern.compile("\\d{6}(\\d{4})(\\d{2})(\\d{2}).*");//身份证上的前6位以及出生年月日  
+            //通过Pattern获得Matcher  
+            Matcher birthDateMather= birthDatePattern.matcher(idcard);  
+            //通过Matcher获得用户的出生年月日  
+            if(birthDateMather.find()){  
+                String year = birthDateMather.group(1);  
+                String month = birthDateMather.group(2);  
+                String date = birthDateMather.group(3);  
+                //输出用户的出生年月日  
+                System.out.println(year+"年"+month+"月"+date+"日");                  
+            }
+            flag=true;
+	     }
+        return flag;
+	}
+	
+	public static boolean isName(String name){
+		String regex = "^(([\u4e00-\u9fa5]{2,8})|([a-zA-Z]{2,16}))$";
+		return validate(name,regex);
+	}
+	
 	//TODO back......
 	public static void replace(String targetReplace,String facePath){
 		targetReplace=targetReplace.replaceAll("/</g", "&lt;");
@@ -90,9 +125,7 @@ public class ValidateUtil {
 	}
 	
 	public static void main(String[] args) {
-		String str="[em_13]近日，网友晒出自己在健身房遇到的美女健身者，火辣身材超高颜值，引得围观网友纷纷高呼：好想认识！健身房一时成为美女走红之地。[em_55]";
-		replace(str,"www.baidu.com/");
-		System.out.println("str:"+str);
+		System.out.println(isName("你某"));
 	}
 
 }
