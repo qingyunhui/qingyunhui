@@ -73,7 +73,7 @@ public class ThreeDes {
 				 0x2C, 0x02, 0x55, 0x66, 0x77, 0x29,
 				 0x3B, 0x30, 0x40, 0x36, 0x78, 0x74,
 		}; // 24字节的密钥
-		String szSrc = "This is a 3DES test. 测试  0123456";
+		String szSrc = "This is a 3DES test. 测试  0123456-其实在MSSQL中SCOPE_IDENTITY()和IDENT_CURRENT()的区别和这里是类似的。使用SCOPE_IDENTITY()可以获得插入某个IDENTITY字段的当前会话的值，而使用IDENT_CURRENT()会获得在某个IDENTITY字段上插入的最大值，而不区分不同的会话";
 		System.out.println("加密前的字符串:" + szSrc);
 		byte[] encoded = encryptMode(keyBytes, szSrc.getBytes());
 		System.out.println("加密后的字符串:" + new String(encoded));

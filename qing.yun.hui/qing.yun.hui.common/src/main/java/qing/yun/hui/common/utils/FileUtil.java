@@ -23,6 +23,9 @@ public class FileUtil {
 		int count=FileUtil.resetFilesName(listFiles, suffixs);
 		System.out.println("受影响的行数为:"+count+"条记录");
 		
+		
+		
+		
 		//The.Dream.Of.Red.Mansions.E06.720p.HDTV.x264-NGB.mkv
 		//天蝎.Scorpion.S01E03.中英字幕.HDTVrip.624X352.mp4
 		//[迅雷下载www.2tu.cc]华胥引之绝爱之城24.mp4

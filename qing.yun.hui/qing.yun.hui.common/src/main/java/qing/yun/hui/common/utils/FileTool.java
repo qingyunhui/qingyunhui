@@ -17,14 +17,14 @@ import qing.yun.hui.common.constants.SymbolConstant;
 public class FileTool {
 	
 	private static List<File> fileList=null;//文件列表集合
-	private static String path="G:/stop/pleasNoOpen/";//文件路径
-	protected static String[] suffixs=new String[]{".dll",".xml",".htm",".txt"};//文件后缀..
+	private static String path="F:/test/";
+	protected static String[] suffixs=new String[]{".mp4"};//文件后缀..
 	
 	//random.nextInt(26) + 65;  //生成ascll码在:65-90之间的小写字母...
 	//random.nextInt(26) + 97; //生成ascll码在:97-122之间的大写字母...
 	
 	public static void main(String[] args){
-		resetFileNames(fileList,suffixs,false);
+		resetFileNames(fileList,suffixs,true);
 	}
 	
 	static{

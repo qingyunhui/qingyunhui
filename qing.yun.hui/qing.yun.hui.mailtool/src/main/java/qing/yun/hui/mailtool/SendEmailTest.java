@@ -8,6 +8,7 @@ import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.Message.RecipientType;
+import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -65,9 +66,9 @@ public class SendEmailTest {
           message.setSubject(subject);  //主题
           message.setSentDate(new Date());//发送时间  
             
-          MimeBodyPart picBodyPart=getPicBodyPart(content,"F://My头像.jpg"); //附件 
-          MimeBodyPart attached1BodyPart=getAttachedBodyPart("F://nginx中文.txt");//注意附件名是中文的  
-          MimeBodyPart attached2BodyPart=getAttachedBodyPart("F://nginx英文.doc");  //附件
+          MimeBodyPart picBodyPart=getPicBodyPart(content,"F://images/img1.jpg"); //附件 
+          MimeBodyPart attached1BodyPart=getAttachedBodyPart("F://images/img2.jpg");//注意附件名是中文的  
+          MimeBodyPart attached2BodyPart=getAttachedBodyPart("F://images/img2.jpg");  //附件
             
           MimeMultipart mmp=new MimeMultipart("mixed");//MIME消息头组合类型是mixed(html+附件)  
           mmp.addBodyPart(picBodyPart);  

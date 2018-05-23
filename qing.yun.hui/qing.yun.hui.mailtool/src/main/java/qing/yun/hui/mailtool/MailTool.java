@@ -33,6 +33,17 @@ public class MailTool {
 	//私钥key
 	protected static final String _privateKey="MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJZtjDfvhbAMJ75GYwWsVdiaJbP1bQBUq8JpUA2wQrFdY9QMiAxA8wp5AH/QWWvK3REWUVx9pUKWNtWGDBEMQQB7xZgAHFceIR+GhGFZShVLHlW7nR86eTiZlQzZajaOcENH9lT/BmH1iltNgibLZw0aHmSo2T9lGbgQjTKrWWBTAgMBAAECgYBGfl/Pdre3oHqfeGy/I9u2/cXdZ44FMaisGp4hTBB0/cbigFzhIS7EIaBSRVkiYpbmgwbtyRPA+JQJzB+rfYqX7Qb42t4AaeKiZUMnqGh73gJ/746DqCl9iMg78Vt3fCVzRd41WJmb2nR+C/ftjZOIybL8TPzDh5BVgEZdYwH9AQJBAOcKJvyaQYQQWj8YmzwC4/xnZFg/yVZW5iwGe363Et3gp+gdMvH/OWDI2ekYclsSSSlnEE7MYcSBVXgeakWTdjECQQCmrewY20e/yIQhKi62QAWTR4fxjEEYxYRa+H1E5iVLF+n3m9LXFtvcThI54qgwknY1s+DsA0JIvXxlp2rDAKnDAkEAtC7nvuLyq3MxXrnq/v9mHIfp6yU7+TjmY3lewLE4Zo/5gv2aqL6aWg/qWm61aK83HbICNuIQcXdIV9iomsBpUQJAU095Q89OpIBf8oe4A2YqozvMqiIVY4FOL34mduql10vjqNyc3N9TE2F+YKp2sJh0N1Fqae0TE3KKm/C7Py60qwJABss3wYwjsMjWkl6CGP5h+Jm7pIjM0AhWu5Dm+779twjhGuxPmXqpkOmzagsAPqWShJAgINeuPDfNJgFfzsUZHg==";
 
+	
+	public static void main(String[] args) {
+		String subject="测试";
+		String content="预警";
+		String[] sendEmails=new String[]{"280672161@qq.com","qingyunhui@fentuan360.com"};
+		try {
+			sendMail(subject, content, sendEmails);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
     
 	/**
 	 * @param prop【N】  可以为null，如果为null，则会new 一个Properties.

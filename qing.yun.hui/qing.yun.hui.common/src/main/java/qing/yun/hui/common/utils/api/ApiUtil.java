@@ -57,9 +57,9 @@ public class ApiUtil {
 	
 	 public static void main(String[]args){
 		 //身份证信息查询
-		 IdCardResponse card= ApiUtil.callIdCardResponse("431102198811046375", "json", "get");
-		 System.out.println(JSONObject.toJSONString(card));
-		 //手机固话来电显示
+//		 IdCardResponse card= ApiUtil.callIdCardResponse("431102198011046379", "json", "get");
+//		 System.out.println(JSONObject.toJSONString(card));
+		/* //手机固话来电显示
 		 CallerIDTelephoneResponse telephone= ApiUtil.callCallerIDTelephoneResponse("07466551538", "json", "get");
 		 System.out.println(JSONObject.toJSONString(telephone));
 		 //手机号归属地
@@ -76,8 +76,11 @@ public class ApiUtil {
 		 System.out.println(JSONObject.toJSONString(newsTop));
 		 //影视影讯检索
 		 VideoSearchingResponse videoSearching= callVideoSearchingResponse("十八罗汉", "json", "get");
-		 System.out.println(JSONObject.toJSONString(videoSearching));
+		 System.out.println(JSONObject.toJSONString(videoSearching));*/
 		 //
+		 
+		 NewsTopResponse newsTop= callNewsTopResponse("top", "json", "get");
+		 System.out.println(JSONObject.toJSONString(newsTop));
 	 }
 	 
 	 /**

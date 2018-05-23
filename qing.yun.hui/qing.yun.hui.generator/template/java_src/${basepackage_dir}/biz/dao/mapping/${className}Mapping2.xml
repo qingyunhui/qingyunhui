@@ -47,20 +47,18 @@
 	</insert>
 	
 	<insert id="insertBatch" parameterType="java.util.List" >
-		<![CDATA[
-	        INSERT INTO ${table.sqlName} (
-	        <#list table.notPkColumns as column>
-	            ${column.sqlName} <#if column_has_next>,</#if>
-	        </#list>
-	        ) VALUES 
-	        <foreach collection="list" item="item" index="index" separator=",">
-	        (
-	        <#list table.notPkColumns as column>
-	        	<#if column.sqlName =="deleted" >1<#elseif column.sqlName =="ctime">now()<#elseif column.sqlName =="gmt_create">now()<#else>${r'#{'}${column.columnNameFirstLower}}</#if><#if column_has_next>,</#if>
-	        </#list>
-	        )
-	        </foreach>
-	    ]]>
+        INSERT INTO ${table.sqlName} (
+        <#list table.notPkColumns as column>
+            ${column.sqlName} <#if column_has_next>,</#if>
+        </#list>
+        ) VALUES 
+        <foreach collection="list" item="items" index="index" separator=",">
+        (
+        <#list table.notPkColumns as column>
+        	<#if column.sqlName =="deleted" >1<#elseif column.sqlName =="ctime">now()<#elseif column.sqlName =="gmt_create">now()<#else>${r'#{'}items.${column.columnNameFirstLower}}</#if><#if column_has_next>,</#if>
+        </#list>
+        )
+        </foreach>
 	</insert>
 	
 	<update id="delete" parameterType="${table.getPkColumn().javaType}">
@@ -109,19 +107,8 @@
         </if>
 	</select>
 	
-	<select id="queryPage" parameterType="map" resultMap="BaseResultMap">
-		SELECT 
-        <include refid="full-columns" />
-            FROM ${table.sqlName} t
-		<where> <include refid="queryCriteria"/>  </where>
-		<if test="@OGNL@isNotEmpty(orderColumn) ">
-        ORDER BY t.${r'${'}orderColumn} <if test="@OGNL@isNotEmpty(orderDirection) ">${r'${'}orderDirection}</if>
-        </if>
-        LIMIT ${r'#{'}start}, ${r'#{'}pageSize}
-	</select>
-
 	<select id="queryCount" parameterType="map" resultType="java.lang.Integer">
-		select count(${table.getPkColumn().sqlName}) FROM ${table.sqlName} 
-        <where> deleted=1  <include refid="queryCriteria"/>  </where>
+		select count(t.${table.getPkColumn().sqlName}) FROM ${table.sqlName} t
+        <where> t.deleted=1  <include refid="queryCriteria"/>  </where>
 	</select>
 </mapper>

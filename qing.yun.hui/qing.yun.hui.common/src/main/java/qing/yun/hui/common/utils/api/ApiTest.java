@@ -1,5 +1,12 @@
 package qing.yun.hui.common.utils.api;
 
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.alibaba.fastjson.JSONObject;
 
 import qing.yun.hui.common.struct.juhe.idcard.IdCardResponse;
@@ -38,6 +45,18 @@ public class ApiTest {
 		//微信精选
 		WechatChoicenessResponse wechatData= ApiUtil.callWechatChoicenessResponse(1, 10, dtype, method);
 		System.out.println("微信精选:"+JSONObject.toJSONString(wechatData));
+	}
+	
+	public void show(HttpServletResponse response){
+		
+		Map<String,Object> result=new HashMap<String, Object>();
+		
+		result.put("code",200);
+		result.put("msg", "hello");
+		
+		//   xxx.write(response,result);
+		
+		
 	}
 
 }
