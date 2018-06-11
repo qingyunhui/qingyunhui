@@ -3,12 +3,178 @@
 ### 一、什么是JAVE
   * JAVE(Java Audio Video Encoder),是一个包涵ffmpeg项目库。开发这可以运用它去实现音频（Audio）与视频（Video）文件的转码。
   * 例如你要把AVI格式文件转为MPEG文件、WAV格式文件转为MP3格式文件，同时你还能调整文件大小与比例。JAVE兼容和支持很多格式之间的转码……
-
 ### 二、典型案例分析
   *  近期在做微信开发时，需要获取用户发给公众服务号的语音留言。而从微信服务端下载来的语音格式却是amr的格式，
   *  同样的你手机录音、Android语音等也都是生成amr格式文件。但当你想在web页面去播放此文件时，就困难了。
   * 因为无论是当前HTML5的<audio>标签，还是众多的播放插件都不支持amr格式文件的播放。所以，你不得不先把它转码为常见的MP3等类型文件。
-
 ### 三、所需环境与配置
   * JAVE requires a J2SE environment 1.4 or later and a Windows or Linux OS on a i386 / 32 bit hardware architecture. 
   * JAVE can also be easily ported to other OS and hardware configurations, see the JAVE manual for details。
+### 调用说明
+* 1.JAVE中有个最重要的类Encoder,它暴露了很多的方法，总之你在使用JAVE时，你总是要创建Encoder的实例。
+  * Encoder encoder = new Encoder();
+  * 然后转码时调用 encode()方法：  
+  * public void encode(File source,File target,EncodingAttributes attributes)  
+	  * 第一个参数source：需要转码的源文件
+	  * 第二个参数target：需转型成的目标文件
+	  * 第三个参数attributes：是一个包含编码所需数据的参数
+/**
+ * <p>Encoding attributes 属性</p>
+ * <p>EncodingAttributes attrs = new EncodingAttributes();</p>
+ *  public void setAudioAttributes(AudioAttributes audioAttributes)//转码音频时-用到的方法，添加音频转码时所需音频属性.
+ *  public void setVideoAttributes(AudioAttributes videoAttributes)//转码视频时-用到的方法，添加视频转码时所需视频属性.
+ *  public void setFormat(String format)//设置转码格式的方法.
+ *  public void setOffset(java.lang.Float offset)//设置转码偏移位置的方法，例如你想在5秒后开始转码源文件则setOffset(5).
+ *  public void setDuration(java.lang.Float duration)//设置转码持续时间的方法，例如你想持续30秒的转码则setDuration(30).
+ * */
+/**
+ * <p>Audio encoding attributes 音频属性</p>
+ * <p>AudioAttributes audio = new AudioAttributes();</p>
+ *  public void setCodec(java.lang.String codec)//设置编码器  
+	public void setBitRate(java.lang.Integer bitRate)//设置比特率  
+	public void setSamplingRate(java.lang.Integer bitRate)//设置节录率  
+	public void setChannels(java.lang.Integer channels)//设置声音频道  
+	public void setVolume(java.lang.Integer volume)//设置音量  
+ * */
+/**
+ * <p>Video encoding attributes 视频属性</p>
+ * <p>VideoAttributes video = new VideoAttributes();</p>
+ *  public void setCodec(java.lang.String codec)//设置编码器  
+	public void setTag(java.lang.String tag)//设置标签（通常用多媒体播放器所选择的视频解码）  
+	public void setBitRate(java.lang.Integer bitRate)//设置比特率  
+	public void setFrameRate(java.lang.Integer bitRate)//设置帧率  
+	public void setSize(it.sauronsoftware.jave.VideoSize size)//设置大小  
+ * */
+ /**
+  * <p>Monitoring the transcoding operation</p>
+  * <p>你可以用listener监测转码操作。JAVE定义了一个EncoderProgressListener的接口</p>
+  * public void encode(File source,File target,EncodingAttributes attributes,EncoderProgressListener listener)
+  * 实现EncoderProgressListener接口，需定义的方法:
+  * public void sourceInfo(it.sauronsoftware.jave.MultimediaInfo info)//源文件信息  
+  *	public void progress(int permil)//增长千分率  
+  *	public void message(java.lang.String message)//转码信息提示  
+  * */
+ /**
+  * <p>Getting informations about a multimedia file
+  * <p>获取多媒体文件转码时的信息</p>
+  * public it.sauronsoftware.jave.MultimediaInfo getInfo(File source)  
+  * */
+  
+#### DEMO 示例
+ demo1.
+ <p>From a generic AVI to a youtube-like FLV movie, with an embedded MP3 audio stream:</p>
+ <p>从一般的AVI到类似YouTube的FLV电影，嵌入MP3音频流：</p>
+   <code>
+    File source = new File("source.avi");  
+    File target = new File("target.flv");  
+	AudioAttributes audio = new AudioAttributes();  
+	audio.setCodec("libmp3lame");  
+	audio.setBitRate(new Integer(64000));  
+	audio.setChannels(new Integer(1));  
+	audio.setSamplingRate(new Integer(22050));  
+	VideoAttributes video = new VideoAttributes();  
+	video.setCodec("flv");  
+	video.setBitRate(new Integer(160000));  
+	video.setFrameRate(new Integer(15));  
+	video.setSize(new VideoSize(400, 300));  
+	EncodingAttributes attrs = new EncodingAttributes();  
+	attrs.setFormat("flv");  
+	attrs.setAudioAttributes(audio);  
+	attrs.setVideoAttributes(video);  
+	Encoder encoder = new Encoder();  
+	encoder.encode(source, target, attrs);  
+   </code>
+ demo2.
+ <p>Next lines extracts audio informations from an AVI and store them in a plain WAV file:</p>
+ <p>下一行从AVI中提取音频信息并将它们存储在纯WAV文件中：</p>
+   <code>
+    File source = new File("source.avi");  
+	File target = new File("target.wav");  
+	AudioAttributes audio = new AudioAttributes();  
+	audio.setCodec("pcm_s16le");  
+	EncodingAttributes attrs = new EncodingAttributes();  
+	attrs.setFormat("wav");  
+	attrs.setAudioAttributes(audio);  
+	Encoder encoder = new Encoder();  
+	encoder.encode(source, target, attrs);
+   </code>
+ demo3.
+ <p>Next example takes an audio WAV file and generates a 128 kbit/s, stereo, 44100 Hz MP3 file:</p>
+ <p>下一个示例需要一个音频WAV文件并生成一个128 kbit / s，立体声，44100 Hz MP3文件：</p>
+   <code>
+    File source = new File("source.wav");  
+	File target = new File("target.mp3");  
+	AudioAttributes audio = new AudioAttributes();  
+	audio.setCodec("libmp3lame");  
+	audio.setBitRate(new Integer(128000));  
+	audio.setChannels(new Integer(2));  
+	audio.setSamplingRate(new Integer(44100));  
+	EncodingAttributes attrs = new EncodingAttributes();  
+	attrs.setFormat("mp3");  
+	attrs.setAudioAttributes(audio);  
+	Encoder encoder = new Encoder();  
+	encoder.encode(source, target, attrs); 
+   </code>
+ demo4.
+ <p>Next one decodes a generic AVI file and creates another one with the same video stream of the source and a re-encoded low quality MP3 audio stream:</p>
+ <p>下一个解码通用AVI文件，并创建另一个与源相同的视频流和重新编码的低质量MP3音频流：</p>
+   <code>
+   	File source = new File("source.avi");  
+	File target = new File("target.avi");  
+	AudioAttributes audio = new AudioAttributes();  
+	audio.setCodec("libmp3lame");  
+	audio.setBitRate(new Integer(56000));  
+	audio.setChannels(new Integer(1));  
+	audio.setSamplingRate(new Integer(22050));  
+	VideoAttributes video = new VideoAttributes();  
+	video.setCodec(VideoAttributes.DIRECT_STREAM_COPY);  
+	EncodingAttributes attrs = new EncodingAttributes();  
+	attrs.setFormat("avi");  
+	attrs.setAudioAttributes(audio);  
+	attrs.setVideoAttributes(video);  
+	Encoder encoder = new Encoder();  
+	encoder.encode(source, target, attrs);  
+   </code>
+ demo5.
+ <p>Next one generates an AVI with MPEG 4/DivX video and OGG Vorbis audio:</p>
+ <p>接下来，我们将生成带有MPEG 4 / DivX视频和OGG Vorbis音频的AVI</p>
+   <code>
+   	File source = new File("source.avi");  
+	File target = new File("target.avi");  
+	AudioAttributes audio = new AudioAttributes();  
+	audio.setCodec("libvorbis");  
+	VideoAttributes video = new VideoAttributes();  
+	video.setCodec("mpeg4");  
+	video.setTag("DIVX");  
+	video.setBitRate(new Integer(160000));  
+	video.setFrameRate(new Integer(30));  
+	EncodingAttributes attrs = new EncodingAttributes();  
+	attrs.setFormat("mpegvideo");  
+	attrs.setAudioAttributes(audio);  
+	attrs.setVideoAttributes(video);  
+	Encoder encoder = new Encoder();  
+	encoder.encode(source, target, attrs); 
+   </code>
+ demo6.
+ <p>A smartphone suitable video:</p>
+ <p>一个适合智能手机的视频示例</p>
+ 	<code>
+ 	File source = new File("source.avi");  
+	File target = new File("target.3gp");  
+	AudioAttributes audio = new AudioAttributes();  
+	audio.setCodec("libfaac");  
+	audio.setBitRate(new Integer(128000));  
+	audio.setSamplingRate(new Integer(44100));  
+	audio.setChannels(new Integer(2));  
+	VideoAttributes video = new VideoAttributes();  
+	video.setCodec("mpeg4");  
+	video.setBitRate(new Integer(160000));  
+	video.setFrameRate(new Integer(15));  
+	video.setSize(new VideoSize(176, 144));  
+	EncodingAttributes attrs = new EncodingAttributes();  
+	attrs.setFormat("3gp");  
+	attrs.setAudioAttributes(audio);  
+	attrs.setVideoAttributes(video);  
+	Encoder encoder = new Encoder();  
+	encoder.encode(source, target, attrs);  
+ 	</code>
