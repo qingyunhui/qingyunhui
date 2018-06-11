@@ -59,10 +59,15 @@ public class MD5Util {
 		return byteToStr(str.getBytes());
 	}
 	
-	public static void main(String[] args){
-		String str="111111";
-		String diget=getMD5Encryption(str);
-		System.out.println("diget:"+diget);
+	/**
+	 * <p>双重MD5加密</p>
+	 * @param str 待加密的字符串
+	 * @param unique 待加密的键
+	 * */
+	public static String getMD5DoubleEncryption(String str,String unique){
+		String strDiget=getMD5Encryption(str);
+		String uniqueDiget=getMD5Encryption(str);
+		return getMD5Encryption(strDiget+uniqueDiget);
 	}
 	
 }

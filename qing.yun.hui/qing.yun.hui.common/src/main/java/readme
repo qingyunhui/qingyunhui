@@ -1,0 +1,14 @@
+### 添加了 jave.api 
+
+### 一、什么是JAVE
+  * JAVE(Java Audio Video Encoder),是一个包涵ffmpeg项目库。开发这可以运用它去实现音频（Audio）与视频（Video）文件的转码。
+  * 例如你要把AVI格式文件转为MPEG文件、WAV格式文件转为MP3格式文件，同时你还能调整文件大小与比例。JAVE兼容和支持很多格式之间的转码……
+
+### 二、典型案例分析
+  *  近期在做微信开发时，需要获取用户发给公众服务号的语音留言。而从微信服务端下载来的语音格式却是amr的格式，
+  *  同样的你手机录音、Android语音等也都是生成amr格式文件。但当你想在web页面去播放此文件时，就困难了。
+  * 因为无论是当前HTML5的<audio>标签，还是众多的播放插件都不支持amr格式文件的播放。所以，你不得不先把它转码为常见的MP3等类型文件。
+
+### 三、所需环境与配置
+  * JAVE requires a J2SE environment 1.4 or later and a Windows or Linux OS on a i386 / 32 bit hardware architecture. 
+  * JAVE can also be easily ported to other OS and hardware configurations, see the JAVE manual for details。
