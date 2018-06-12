@@ -17,11 +17,11 @@ import qing.yun.hui.common.constants.SymbolConstant;
 public class FileUtil {
 	
 	public static void main(String[] args){
-		String path="G:/stop/pleasNoOpen/success/ok/success/";
+		/*String path="G:/stop/pleasNoOpen/success/ok/success/";
 		List<File> listFiles=FileUtil.getFilesByPath(path);
 		String[] suffixs={".xml",".txt",".htm"};
 		int count=FileUtil.resetFilesName(listFiles, suffixs);
-		System.out.println("受影响的行数为:"+count+"条记录");
+		System.out.println("受影响的行数为:"+count+"条记录");*/
 		
 		
 		
@@ -32,9 +32,10 @@ public class FileUtil {
 		//盗墓笔记.The.Lost.Tomb.Season.1.E01.HD1080P.X264.AAC.Mandarin.CHS.Mp4Ba.mp4
 		//花千骨.未删减.Ep01.2015.HD720P.X264.AAC.Mandarin.CHS.mp4
 		
-		/*String path="E:/迅雷下载/芈月传";
+		String path="E:/BaiduYunDownload/2017年51CTO学院Spring Cloud公开课/";
+//		String path="F:/test/test";
 		List<File> listFiles=FileUtil.getFilesByPath(path);
-		for(File file:listFiles){*///[迅雷下载www.2tu.cc]大舜HDTV14.mp4
+		for(File file:listFiles){//[迅雷下载www.2tu.cc]大舜HDTV14.mp4
 			//file.renameTo(new File(modifyFileName(path, file.getPath(), "之城","华胥引之绝爱之城")));
 			//【电影天堂-www.dy2018.com】楚汉传奇[HD版]01.rmvb
 			//file.renameTo(new File(modifyFileName(path, file.getName(), "[HD版]","楚汉传奇",".rmvb")));
@@ -42,12 +43,12 @@ public class FileUtil {
 			//file.renameTo(new File(modifyFileName(path, file.getName(), "芈Y传","芈月传",".mkv")));
 			
 			//[迅雷下载www.xiamp4.com]M月传58.HDTV
-			/*String newFileName=modifyFileName(path, file.getName(), "芈月传月传传","芈月传",".mp4");
+			String newFileName=modifyFileName(path, file.getName(), "【IT教程网】","",".avi");
 			if(StringUtil.isEmpty(newFileName)){
 				continue;
 			}
-			file.renameTo(new File(newFileName));*/
-		//}
+			file.renameTo(new File(newFileName));
+		}
 	}
 	/***
 	 * E:/medio/TheDreamOfRedMansions/The.Dream.Of.Red.Mansions.E39.720p.HDTV.x264-NGB.mkv
@@ -188,6 +189,27 @@ public class FileUtil {
 			count++;
 		}
 		return count;
+	}
+	
+	
+	/**
+	 * <p>文件重命名</p>
+	 * @param sourceFilePath 命名后的文件
+	 * @param targetFilePath 待命名的文件
+	 * */
+	public static void resetFileName(String sourceFilePath,String targetFilePath,String suffix){
+		if(StringUtil.isEmpty(sourceFilePath,targetFilePath))return;
+		File targetFile=new File(targetFilePath);
+		File sourceFile=new File(sourceFilePath);
+		if(!targetFile.exists())return;
+		if(sourceFile.exists())deleteFile(sourceFilePath);
+		if(!StringUtil.isEmpty(suffix)){
+			int point=sourceFilePath.lastIndexOf(SymbolConstant.DOT);
+			point=point!=-1?point+1:sourceFilePath.length();
+			sourceFilePath=sourceFilePath.substring(0,point)+suffix;
+			sourceFile=new File(sourceFilePath);
+		}
+		targetFile.renameTo(sourceFile);
 	}
 	
 	/**

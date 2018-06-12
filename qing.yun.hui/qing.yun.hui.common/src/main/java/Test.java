@@ -1,6 +1,10 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import qing.yun.hui.common.utils.JaveUtil;
+import qing.yun.hui.common.utils.JaveUtil.Audio;
+import qing.yun.hui.common.utils.JaveUtil.Video;
+
 /***
  ** @category 请用一句话来描述其用途...
  ** @author qing.yunhui
@@ -10,7 +14,10 @@ import java.math.RoundingMode;
 public class Test {
 	
 	public static void main(String[] args) throws InterruptedException{
-		int investDay=120;//投资天数
+		
+		JaveUtil.asynDefaultEncoder("F:/test/javaTest/video/", new Audio("libfaac", 128000, 44100), new Video("mpeg4", 800000));
+		
+		/*int investDay=120;//投资天数
 		int investMoney=60000;// 投资金额
 		BigDecimal rate =new BigDecimal(0.08);//投资年华率
 		System.out.println("================>活期<====================");
@@ -22,7 +29,7 @@ public class Test {
 		System.out.println("\n================>定期<====================\n");
 		BigDecimal regularRevenue=getRegularRevenue(investDay, investMoney, rate);
 		BigDecimal totalRegularRevenue=new BigDecimal(investMoney).add(regularRevenue);
-		System.out.println("定期投资"+investDay+"天收益为："+regularRevenue.toString()+"元RMB，总收益为（本金+收益）："+totalRegularRevenue.toString()+"元RMB。");
+		System.out.println("定期投资"+investDay+"天收益为："+regularRevenue.toString()+"元RMB，总收益为（本金+收益）："+totalRegularRevenue.toString()+"元RMB。");*/
 	}
 	
 	/**
